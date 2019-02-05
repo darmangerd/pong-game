@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.btnTitre = new System.Windows.Forms.Button();
+            this.pbxExit = new System.Windows.Forms.PictureBox();
             this.btnLocal = new System.Windows.Forms.Button();
             this.btnMultiplayer = new System.Windows.Forms.Button();
             this.btnSinglePlayer = new System.Windows.Forms.Button();
-            this.pbxExit = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,6 +48,17 @@
             this.btnTitre.TabIndex = 4;
             this.btnTitre.Text = "PONG GAME";
             this.btnTitre.UseVisualStyleBackColor = true;
+            // 
+            // pbxExit
+            // 
+            this.pbxExit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbxExit.Image = global::PongGame.Properties.Resources.cross;
+            this.pbxExit.Location = new System.Drawing.Point(386, 5);
+            this.pbxExit.Name = "pbxExit";
+            this.pbxExit.Size = new System.Drawing.Size(34, 33);
+            this.pbxExit.TabIndex = 5;
+            this.pbxExit.TabStop = false;
+            this.pbxExit.Click += new System.EventHandler(this.pbxExit_Click);
             // 
             // btnLocal
             // 
@@ -105,23 +116,13 @@
             this.btnSinglePlayer.Text = "SOLO PLAYER";
             this.btnSinglePlayer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSinglePlayer.UseVisualStyleBackColor = false;
-            // 
-            // pbxExit
-            // 
-            this.pbxExit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbxExit.Image = global::PongGame.Properties.Resources.cross;
-            this.pbxExit.Location = new System.Drawing.Point(386, 5);
-            this.pbxExit.Name = "pbxExit";
-            this.pbxExit.Size = new System.Drawing.Size(34, 33);
-            this.pbxExit.TabIndex = 5;
-            this.pbxExit.TabStop = false;
-            this.pbxExit.Click += new System.EventHandler(this.pbxExit_Click);
+            this.btnSinglePlayer.Click += new System.EventHandler(this.btnSinglePlayer_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
             this.ClientSize = new System.Drawing.Size(422, 520);
             this.Controls.Add(this.pbxExit);
             this.Controls.Add(this.btnTitre);

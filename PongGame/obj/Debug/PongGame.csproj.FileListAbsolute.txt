@@ -18,3 +18,5 @@ D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.csproj.GenerateResource.cach
 D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.csproj.CoreCompileInputs.cache
 D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.exe
 D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.pdb
+D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.LobbySolo.resources
+D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.SoloGame.resources

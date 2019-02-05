@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PongGame
 {
-    public partial class Form1 : Form
+    public partial class LobbySolo : Form
     {
-        public Form1()
+        public LobbySolo()
         {
             InitializeComponent();
         }
@@ -25,9 +25,8 @@ namespace PongGame
         private void btnSinglePlayer_Click(object sender, EventArgs e)
         {
             this.Hide();
-            LobbySolo lobby = new LobbySolo();
-            lobby.Show();
-            
+            SoloGame solo = new SoloGame();
+            solo.Show();
         }
     }
 }
