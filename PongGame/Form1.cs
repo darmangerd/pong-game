@@ -16,5 +16,10 @@ namespace PongGame
         {
             InitializeComponent();
         }
+
+        private void pbxExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -28,57 +28,121 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnTitre = new System.Windows.Forms.Button();
+            this.btnLocal = new System.Windows.Forms.Button();
+            this.btnMultiplayer = new System.Windows.Forms.Button();
+            this.btnSinglePlayer = new System.Windows.Forms.Button();
+            this.pbxExit = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).BeginInit();
             this.SuspendLayout();
             // 
-            // panel1
+            // btnTitre
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(112, 450);
-            this.panel1.TabIndex = 0;
+            this.btnTitre.FlatAppearance.BorderSize = 5;
+            this.btnTitre.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTitre.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold);
+            this.btnTitre.ForeColor = System.Drawing.Color.White;
+            this.btnTitre.Location = new System.Drawing.Point(70, 72);
+            this.btnTitre.Name = "btnTitre";
+            this.btnTitre.Size = new System.Drawing.Size(279, 72);
+            this.btnTitre.TabIndex = 4;
+            this.btnTitre.Text = "PONG GAME";
+            this.btnTitre.UseVisualStyleBackColor = true;
             // 
-            // panel2
+            // btnLocal
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(195)))));
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(685, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(115, 450);
-            this.panel2.TabIndex = 1;
+            this.btnLocal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
+            this.btnLocal.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLocal.FlatAppearance.BorderSize = 0;
+            this.btnLocal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLocal.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
+            this.btnLocal.ForeColor = System.Drawing.Color.White;
+            this.btnLocal.Image = global::PongGame.Properties.Resources.local;
+            this.btnLocal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLocal.Location = new System.Drawing.Point(-9, 310);
+            this.btnLocal.Name = "btnLocal";
+            this.btnLocal.Padding = new System.Windows.Forms.Padding(53, 0, 30, 0);
+            this.btnLocal.Size = new System.Drawing.Size(431, 106);
+            this.btnLocal.TabIndex = 2;
+            this.btnLocal.Text = "LOCAL PLAYS";
+            this.btnLocal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLocal.UseVisualStyleBackColor = false;
             // 
-            // panel3
+            // btnMultiplayer
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.panel3.Location = new System.Drawing.Point(110, 47);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(577, 362);
-            this.panel3.TabIndex = 0;
+            this.btnMultiplayer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(41)))), ((int)(((byte)(82)))));
+            this.btnMultiplayer.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMultiplayer.FlatAppearance.BorderSize = 0;
+            this.btnMultiplayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMultiplayer.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
+            this.btnMultiplayer.ForeColor = System.Drawing.Color.White;
+            this.btnMultiplayer.Image = global::PongGame.Properties.Resources.multiplayer;
+            this.btnMultiplayer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnMultiplayer.Location = new System.Drawing.Point(-8, 415);
+            this.btnMultiplayer.Name = "btnMultiplayer";
+            this.btnMultiplayer.Padding = new System.Windows.Forms.Padding(53, 0, 30, 0);
+            this.btnMultiplayer.Size = new System.Drawing.Size(431, 106);
+            this.btnMultiplayer.TabIndex = 1;
+            this.btnMultiplayer.Text = "MULTIPLAYER";
+            this.btnMultiplayer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnMultiplayer.UseVisualStyleBackColor = false;
+            // 
+            // btnSinglePlayer
+            // 
+            this.btnSinglePlayer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
+            this.btnSinglePlayer.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSinglePlayer.FlatAppearance.BorderSize = 0;
+            this.btnSinglePlayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSinglePlayer.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSinglePlayer.ForeColor = System.Drawing.Color.White;
+            this.btnSinglePlayer.Image = global::PongGame.Properties.Resources.solo;
+            this.btnSinglePlayer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSinglePlayer.Location = new System.Drawing.Point(-4, 207);
+            this.btnSinglePlayer.Name = "btnSinglePlayer";
+            this.btnSinglePlayer.Padding = new System.Windows.Forms.Padding(53, 0, 30, 0);
+            this.btnSinglePlayer.Size = new System.Drawing.Size(431, 106);
+            this.btnSinglePlayer.TabIndex = 3;
+            this.btnSinglePlayer.Text = "SOLO PLAYER";
+            this.btnSinglePlayer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSinglePlayer.UseVisualStyleBackColor = false;
+            // 
+            // pbxExit
+            // 
+            this.pbxExit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbxExit.Image = global::PongGame.Properties.Resources.cross;
+            this.pbxExit.Location = new System.Drawing.Point(386, 5);
+            this.pbxExit.Name = "pbxExit";
+            this.pbxExit.Size = new System.Drawing.Size(34, 33);
+            this.pbxExit.TabIndex = 5;
+            this.pbxExit.TabStop = false;
+            this.pbxExit.Click += new System.EventHandler(this.pbxExit_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.panel2);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
+            this.ClientSize = new System.Drawing.Size(422, 520);
+            this.Controls.Add(this.pbxExit);
+            this.Controls.Add(this.btnTitre);
+            this.Controls.Add(this.btnLocal);
+            this.Controls.Add(this.btnMultiplayer);
+            this.Controls.Add(this.btnSinglePlayer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button btnMultiplayer;
+        private System.Windows.Forms.Button btnLocal;
+        private System.Windows.Forms.Button btnSinglePlayer;
+        private System.Windows.Forms.Button btnTitre;
+        private System.Windows.Forms.PictureBox pbxExit;
     }
 }
 

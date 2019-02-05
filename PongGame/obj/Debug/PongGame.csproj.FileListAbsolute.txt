@@ -8,3 +8,13 @@ D:\Darmangerd\PongGame\PongGame\obj\Debug\PongGame.csproj.GenerateResource.cache
 D:\Darmangerd\PongGame\PongGame\obj\Debug\PongGame.csproj.CoreCompileInputs.cache
 D:\Darmangerd\PongGame\PongGame\obj\Debug\PongGame.exe
 D:\Darmangerd\PongGame\PongGame\obj\Debug\PongGame.pdb
+D:\Darmangerd\pong-game\PongGame\bin\Debug\PongGame.exe.config
+D:\Darmangerd\pong-game\PongGame\bin\Debug\PongGame.exe
+D:\Darmangerd\pong-game\PongGame\bin\Debug\PongGame.pdb
+D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.csprojResolveAssemblyReference.cache
+D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.Form1.resources
+D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.Properties.Resources.resources
+D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.csproj.GenerateResource.cache
+D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.csproj.CoreCompileInputs.cache
+D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.exe
+D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.pdb
