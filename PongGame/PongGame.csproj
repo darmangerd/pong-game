@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Images\back.png" />
     <Content Include="Images\cross.png" />
     <Content Include="Images\local.png" />
     <Content Include="Images\multiplayer.png" />
