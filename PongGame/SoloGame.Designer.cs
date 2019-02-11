@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.lblPlayer1Score = new System.Windows.Forms.Label();
             this.lblPlayer2Score = new System.Windows.Forms.Label();
             this.pbxLine = new System.Windows.Forms.PictureBox();
             this.pbxPlayer1 = new System.Windows.Forms.PictureBox();
@@ -41,6 +40,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblNamePlayer1 = new System.Windows.Forms.Label();
             this.lblNamePlayer2 = new System.Windows.Forms.Label();
+            this.lblPlayer1Score = new System.Windows.Forms.Label();
+            this.pbxExit = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPlayer1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPlayer2)).BeginInit();
@@ -48,20 +49,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).BeginInit();
             this.SuspendLayout();
-            // 
-            // lblPlayer1Score
-            // 
-            this.lblPlayer1Score.AutoSize = true;
-            this.lblPlayer1Score.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
-            this.lblPlayer1Score.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblPlayer1Score.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayer1Score.ForeColor = System.Drawing.Color.White;
-            this.lblPlayer1Score.Location = new System.Drawing.Point(407, 66);
-            this.lblPlayer1Score.Name = "lblPlayer1Score";
-            this.lblPlayer1Score.Size = new System.Drawing.Size(64, 50);
-            this.lblPlayer1Score.TabIndex = 4;
-            this.lblPlayer1Score.Text = "00";
             // 
             // lblPlayer2Score
             // 
@@ -70,11 +59,11 @@
             this.lblPlayer2Score.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblPlayer2Score.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold);
             this.lblPlayer2Score.ForeColor = System.Drawing.Color.White;
-            this.lblPlayer2Score.Location = new System.Drawing.Point(583, 66);
+            this.lblPlayer2Score.Location = new System.Drawing.Point(575, 65);
             this.lblPlayer2Score.Name = "lblPlayer2Score";
-            this.lblPlayer2Score.Size = new System.Drawing.Size(64, 50);
+            this.lblPlayer2Score.Size = new System.Drawing.Size(43, 50);
             this.lblPlayer2Score.TabIndex = 5;
-            this.lblPlayer2Score.Text = "00";
+            this.lblPlayer2Score.Text = "0";
             // 
             // pbxLine
             // 
@@ -163,12 +152,36 @@
             // 
             this.lblNamePlayer2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNamePlayer2.ForeColor = System.Drawing.Color.White;
-            this.lblNamePlayer2.Location = new System.Drawing.Point(918, 266);
+            this.lblNamePlayer2.Location = new System.Drawing.Point(916, 205);
             this.lblNamePlayer2.Name = "lblNamePlayer2";
-            this.lblNamePlayer2.Size = new System.Drawing.Size(157, 63);
+            this.lblNamePlayer2.Size = new System.Drawing.Size(157, 256);
             this.lblNamePlayer2.TabIndex = 15;
-            this.lblNamePlayer2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblNamePlayer2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblNamePlayer2.Paint += new System.Windows.Forms.PaintEventHandler(this.lblNamePlayer2_Paint);
+            // 
+            // lblPlayer1Score
+            // 
+            this.lblPlayer1Score.AutoSize = true;
+            this.lblPlayer1Score.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
+            this.lblPlayer1Score.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold);
+            this.lblPlayer1Score.ForeColor = System.Drawing.Color.White;
+            this.lblPlayer1Score.Location = new System.Drawing.Point(445, 65);
+            this.lblPlayer1Score.Name = "lblPlayer1Score";
+            this.lblPlayer1Score.Size = new System.Drawing.Size(43, 50);
+            this.lblPlayer1Score.TabIndex = 16;
+            this.lblPlayer1Score.Text = "0";
+            // 
+            // pbxExit
+            // 
+            this.pbxExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
+            this.pbxExit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbxExit.Image = global::PongGame.Properties.Resources.cross;
+            this.pbxExit.Location = new System.Drawing.Point(1039, 5);
+            this.pbxExit.Name = "pbxExit";
+            this.pbxExit.Size = new System.Drawing.Size(34, 33);
+            this.pbxExit.TabIndex = 22;
+            this.pbxExit.TabStop = false;
+            this.pbxExit.Click += new System.EventHandler(this.pbxExit_Click);
             // 
             // SoloGame
             // 
@@ -176,13 +189,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
             this.ClientSize = new System.Drawing.Size(1077, 613);
+            this.Controls.Add(this.pbxExit);
+            this.Controls.Add(this.lblPlayer1Score);
             this.Controls.Add(this.lblNamePlayer2);
             this.Controls.Add(this.pbxPlayer1);
             this.Controls.Add(this.pbxPlayer2);
             this.Controls.Add(this.pbxBalle);
             this.Controls.Add(this.lblPlayer2Score);
             this.Controls.Add(this.pbxLine);
-            this.Controls.Add(this.lblPlayer1Score);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.panel1);
@@ -199,14 +213,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lblPlayer1Score;
         private System.Windows.Forms.Label lblPlayer2Score;
         private System.Windows.Forms.PictureBox pbxLine;
         private System.Windows.Forms.PictureBox pbxPlayer1;
@@ -218,5 +231,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblNamePlayer2;
         private System.Windows.Forms.Label lblNamePlayer1;
+        private System.Windows.Forms.Label lblPlayer1Score;
+        private System.Windows.Forms.PictureBox pbxExit;
     }
 }

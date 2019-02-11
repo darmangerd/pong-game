@@ -13,57 +13,106 @@ namespace PongGame
     public partial class SoloGame : Form
     {
         //Taille (position) du terrain de jeux
-        const int HAUT_TERRAIN = 38;
-        const int BAS_TERRAIN = 581;
-        const int GAUCHE_TERRAIN = 170;
-        const int DROITE_TERRAIN = 892;
-        const int MILIEU_TERRAIN = 533;
+        const int TOP_BOX = 38;
+        const int BOTTOM_BOX = 581;
+        const int LEFT_BOX = 170;
+        const int RIGHT_BOX = 892;
+        const int MIDDLE_BOX = 533;
 
-        bool bGoUp; //Detection du déplacement vers le haut du joueur
-        bool bGoDown; //Detection du déplacement vers le bas du joueur
+        bool bTwoPlayer; //Si la partie est en mode 2 joueur
+        bool bGoUpPlayer1; //Detection du déplacement vers le haut du joueur 1
+        bool bGoDownPlayer1; //Detection du déplacement vers le bas du joueur 1
+        bool bGoUpPlayer2; //Detection du déplacement vers le haut du joueur 2
+        bool bGoDownPlayer2; //Detection du déplacement vers le bas du joueur 2
         int iSpeed = 9;
         int iBallx = 5; //Vitesse de déplacement de la balle en vertical x
         int iBally = 5; //Vitesse de déplacement de la balle en horizontal y
         int iScorePlayer1 = 0;
         int iScorePlayer2 = 0;
-        string strPlayer1Name ="";
+        string strPlayer1Name = ""; //Nom du joueur 1
+        string strPlayer2Name = ""; //Nom du joueur 2
         Random random = new Random(); //Variable pour déplacement aléatoire de L'IA
 
 
-        public SoloGame(string strPlayer1_name, string strPlayer2_name)
+        public SoloGame(string strPlayer1_name, string strPlayer2_name, bool bTwoPlayers)
         {
             InitializeComponent();
-            strPlayer1Name = strPlayer1_name;
+            strPlayer1Name = strPlayer1_name; //Nom du joueur 1 entré dans le lobby
+            strPlayer2Name = strPlayer2_name; //Nom du joueur 2 entré dans le lobby ou de l'IA
+            bTwoPlayer = bTwoPlayers;
         }
 
+        #region Touches de déplacement du joueur 1
+
+        /// <summary>
+        /// Lorsque l'utilisateur appuie la touche UP/DOWN du clavier
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SoloGame_KeyDown(object sender, KeyEventArgs e)
         {
-            //Lorsque l'utilisateur appuie la touche UP/DOWN du clavier
-            if (e.KeyCode == Keys.Up)
+            //Déplacement du joueur 1
+            if (e.KeyCode == Keys.W)
             {
-                //UP
-                bGoUp = true;
+                bGoUpPlayer1 = true;
             }
-            else if (e.KeyCode == Keys.Down)
+            else if (e.KeyCode == Keys.S)
             {
-                //DOWN
-                bGoDown = true;
+                bGoDownPlayer1 = true;
             }
+
+            if (bTwoPlayer)
+            {
+
+            }
+                //Déplacement du joueur 2
+                if (e.KeyCode == Keys.Up)
+                {
+                    //UP
+                    bGoUpPlayer2 = true;
+                }
+                else if (e.KeyCode == Keys.Down)
+                {
+                    //DOWN
+                    bGoDownPlayer2 = true;
+                }
         }
 
+        /// <summary>
+        /// Lorsque l'utilisateur relâche la touche UP/DOWN du clavier
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SoloGame_KeyUp(object sender, KeyEventArgs e)
         {
-            //Lorsque l'utilisateur relâche la touche UP/DOWN du clavier
+            //Déplacement du joueur 1
+            if (e.KeyCode == Keys.W)
+            {
+                bGoUpPlayer1 = false;
+            }
+            else if (e.KeyCode == Keys.S)
+            {
+                bGoDownPlayer1 = false;
+            }
+
+            //Déplacement du joueur 2
             if (e.KeyCode == Keys.Up)
             {
-                bGoUp = false;
+                bGoUpPlayer2 = false;
             }
             else if (e.KeyCode == Keys.Down)
             {
-                bGoDown = false;
+                bGoDownPlayer2 = false;
             }
         }
 
+        #endregion
+
+        /// <summary>
+        /// Tick du timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tmrGameTimer_Tick(object sender, EventArgs e)
         {
             lblPlayer1Score.Text = "" + iScorePlayer1; //Score du joueur 1
@@ -75,34 +124,37 @@ namespace PongGame
             pbxBalle.Top -= iBally; //Position Y
             pbxBalle.Left -= iBallx; //Position X
 
-            //Vitesse/Direction du CPU (Commence par descendre)
-            pbxPlayer2.Top += iSpeed;
-
             #region IA
-
-            //Si le CPU atteint le top ou le bas de l'écran
-            if (pbxPlayer2.Top < HAUT_TERRAIN || pbxPlayer2.Top > (BAS_TERRAIN-140))
+                    
+            if (!bTwoPlayer)
             {
-                //On change sa direction
-                iSpeed = -iSpeed;
-            }
-            
+                //Vitesse/Direction du CPU (Commence par descendre)
+                pbxPlayer2.Top += iSpeed;
 
-            //VERSION AVEC IA - PAS FONCTIONNEL POUR L'INSTANT
-            /*if (iScorePlayer1 < 5)
-            {
                 //Si le CPU atteint le top ou le bas de l'écran
-                if (pbxPlayer2.Top < 0 || pbxPlayer2.Top > 480)
+                if (pbxPlayer2.Top < TOP_BOX || pbxPlayer2.Top > (BOTTOM_BOX - 140))
                 {
                     //On change sa direction
                     iSpeed = -iSpeed;
                 }
+
+
+                //VERSION AVEC IA - PAS FONCTIONNEL POUR L'INSTANT
+                /*if (iScorePlayer1 < 5)
+                {
+                    //Si le CPU atteint le top ou le bas de l'écran
+                    if (pbxPlayer2.Top < 0 || pbxPlayer2.Top > 480)
+                    {
+                        //On change sa direction
+                        iSpeed = -iSpeed;
+                    }
+                }
+                else
+                {
+                    //Amélioration de l'IA
+                    pbxPlayer2.Top = pbxBalle.Top + 20;
+                }*/
             }
-            else
-            {
-                //Amélioration de l'IA
-                pbxPlayer2.Top = pbxBalle.Top + 20;
-            }*/
 
             #endregion
 
@@ -110,10 +162,10 @@ namespace PongGame
             #region Marquage de la balle
 
             // Si la balle est marqué à gauche
-            if (pbxBalle.Left < GAUCHE_TERRAIN)
+            if (pbxBalle.Left < LEFT_BOX)
             {
                 //Reposition de la balle au milieu de l'écran
-                pbxBalle.Left = MILIEU_TERRAIN;
+                pbxBalle.Left = MIDDLE_BOX;
                 //Change la balle de direction
                 iBallx = -iBallx;
                 //Augmente la vitesse de la balle
@@ -122,10 +174,10 @@ namespace PongGame
                 iScorePlayer2++;
             }
             //Si la balle est marqué à droite
-            else if (pbxBalle.Left + pbxBalle.Width > DROITE_TERRAIN) 
+            else if (pbxBalle.Left + pbxBalle.Width > RIGHT_BOX) 
             {
                 //Reposition de la balle au milieu de l'écran
-                pbxBalle.Left = MILIEU_TERRAIN;
+                pbxBalle.Left = MIDDLE_BOX;
                 //Change la balle de direction
                 iBallx = -iBallx;
                 //Augmente la vitesse de la balle
@@ -139,7 +191,7 @@ namespace PongGame
             #region Rebonds et Collision de la balle
 
             //Si la balle atteint le haut de l'écran ou le bas
-            if (pbxBalle.Top < HAUT_TERRAIN || pbxBalle.Top + pbxBalle.Height > BAS_TERRAIN)
+            if (pbxBalle.Top < TOP_BOX || pbxBalle.Top + pbxBalle.Height > BOTTOM_BOX)
             {
                 //On change la direction de la balle
                 iBally = -iBally;
@@ -165,19 +217,39 @@ namespace PongGame
 
             #endregion
 
-            #region Déplacement des joueurs
+            #region Déplacement du joueur 1
 
             //Si le déplacement vers le haut est autorisé et que le joueur se trouve avant la limite supérieure
-            if (bGoUp == true && pbxPlayer1.Top > HAUT_TERRAIN)
+            if (bGoUpPlayer1 == true && pbxPlayer1.Top > TOP_BOX)
             {
                 //Déplacement vers le haut
                 pbxPlayer1.Top -= 8;
             }
             //Si le déplacement vers le bas est autorisé et que le joueur se trouve avant la limite inférieure
-            if (bGoDown == true && pbxPlayer1.Top < 452)
+            if (bGoDownPlayer1 == true && pbxPlayer1.Top < 452)
             {
                 //Déplacement vers le bas
                 pbxPlayer1.Top += 8;
+            }
+
+            #endregion
+
+            #region Déplacement du joueur 2
+
+            if (bTwoPlayer)
+            {
+                //Si le déplacement vers le haut est autorisé et que le joueur se trouve avant la limite supérieure
+                if (bGoUpPlayer2 == true && pbxPlayer2.Top > TOP_BOX)
+                {
+                    //Déplacement vers le haut
+                    pbxPlayer2.Top -= 8;
+                }
+                //Si le déplacement vers le bas est autorisé et que le joueur se trouve avant la limite inférieure
+                if (bGoDownPlayer2 == true && pbxPlayer2.Top < 452)
+                {
+                    //Déplacement vers le bas
+                    pbxPlayer2.Top += 8;
+                }
             }
 
             #endregion
@@ -200,6 +272,11 @@ namespace PongGame
             #endregion
         }
 
+        /// <summary>
+        /// Affichage du nom de l'utilisateur 1 entré dans le lobby
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lblNamePlayer1_Paint(object sender, PaintEventArgs e)
         {
             //Segoe UI; 15.75pt; style=Bold
@@ -210,13 +287,24 @@ namespace PongGame
             e.Graphics.DrawString(strPlayer1Name.ToUpper(), font, brush, 0, 0);
         }
 
+        /// <summary>
+        /// Affichage du nom de l'utilisateur 2 entré dans le lobby ou l'IA
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lblNamePlayer2_Paint(object sender, PaintEventArgs e)
         {
             Font font = new Font("Segoe UI", 15, FontStyle.Bold);
             Brush brush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
             e.Graphics.TranslateTransform(30, 20);
             e.Graphics.RotateTransform(90);
-            e.Graphics.DrawString("IA", font, brush, 0, 0);
+            e.Graphics.DrawString(strPlayer2Name.ToUpper(), font, brush, 0, 0);
+        }
+
+        private void pbxExit_Click(object sender, EventArgs e)
+        {
+            //Bouton de fermeture de l'application
+            Environment.Exit(1);
         }
     }
 }

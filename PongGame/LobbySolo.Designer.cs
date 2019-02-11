@@ -39,13 +39,13 @@
             this.rbtnHard = new System.Windows.Forms.RadioButton();
             this.btnTitre = new System.Windows.Forms.Button();
             this.btnSinglePlayer = new System.Windows.Forms.Button();
-            this.pbxRaquetteLogo = new System.Windows.Forms.PictureBox();
-            this.pbxExit = new System.Windows.Forms.PictureBox();
             this.pnlBackground = new System.Windows.Forms.Panel();
             this.pbxBack = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxRaquetteLogo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).BeginInit();
+            this.pbxExit = new System.Windows.Forms.PictureBox();
+            this.pbxRaquetteLogo = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbxBack)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxRaquetteLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // tbxName
@@ -176,29 +176,6 @@
             this.btnSinglePlayer.UseVisualStyleBackColor = false;
             this.btnSinglePlayer.Click += new System.EventHandler(this.btnSinglePlayer_Click);
             // 
-            // pbxRaquetteLogo
-            // 
-            this.pbxRaquetteLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
-            this.pbxRaquetteLogo.Image = global::PongGame.Properties.Resources.table_tennis;
-            this.pbxRaquetteLogo.Location = new System.Drawing.Point(407, 200);
-            this.pbxRaquetteLogo.Name = "pbxRaquetteLogo";
-            this.pbxRaquetteLogo.Size = new System.Drawing.Size(196, 177);
-            this.pbxRaquetteLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbxRaquetteLogo.TabIndex = 11;
-            this.pbxRaquetteLogo.TabStop = false;
-            // 
-            // pbxExit
-            // 
-            this.pbxExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
-            this.pbxExit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbxExit.Image = global::PongGame.Properties.Resources.cross;
-            this.pbxExit.Location = new System.Drawing.Point(645, 7);
-            this.pbxExit.Name = "pbxExit";
-            this.pbxExit.Size = new System.Drawing.Size(34, 33);
-            this.pbxExit.TabIndex = 12;
-            this.pbxExit.TabStop = false;
-            this.pbxExit.Click += new System.EventHandler(this.pbxExit_Click);
-            // 
             // pnlBackground
             // 
             this.pnlBackground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
@@ -217,6 +194,29 @@
             this.pbxBack.TabIndex = 14;
             this.pbxBack.TabStop = false;
             this.pbxBack.Click += new System.EventHandler(this.pbxBack_Click);
+            // 
+            // pbxExit
+            // 
+            this.pbxExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
+            this.pbxExit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbxExit.Image = global::PongGame.Properties.Resources.cross;
+            this.pbxExit.Location = new System.Drawing.Point(647, 7);
+            this.pbxExit.Name = "pbxExit";
+            this.pbxExit.Size = new System.Drawing.Size(34, 33);
+            this.pbxExit.TabIndex = 12;
+            this.pbxExit.TabStop = false;
+            this.pbxExit.Click += new System.EventHandler(this.pbxExit_Click);
+            // 
+            // pbxRaquetteLogo
+            // 
+            this.pbxRaquetteLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
+            this.pbxRaquetteLogo.Image = global::PongGame.Properties.Resources.table_tennis;
+            this.pbxRaquetteLogo.Location = new System.Drawing.Point(407, 200);
+            this.pbxRaquetteLogo.Name = "pbxRaquetteLogo";
+            this.pbxRaquetteLogo.Size = new System.Drawing.Size(196, 177);
+            this.pbxRaquetteLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbxRaquetteLogo.TabIndex = 11;
+            this.pbxRaquetteLogo.TabStop = false;
             // 
             // LobbySolo
             // 
@@ -242,9 +242,9 @@
             this.Name = "LobbySolo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LobbySolo";
-            ((System.ComponentModel.ISupportInitialize)(this.pbxRaquetteLogo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxBack)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxRaquetteLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

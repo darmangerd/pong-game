@@ -19,7 +19,7 @@ namespace PongGame
 
         private void pbxExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Environment.Exit(1);
         }
 
         private void btnSinglePlayer_Click(object sender, EventArgs e)
@@ -28,6 +28,13 @@ namespace PongGame
             LobbySolo lobby = new LobbySolo();
             lobby.Show();
             
+        }
+
+        private void btnLocal_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            LobbyLocal lobbyLocal = new LobbyLocal();
+            lobbyLocal.Show();
         }
     }
 }

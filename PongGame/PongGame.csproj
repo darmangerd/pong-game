@@ -51,6 +51,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="LobbyLocal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LobbyLocal.Designer.cs">
+      <DependentUpon>LobbyLocal.cs</DependentUpon>
+    </Compile>
     <Compile Include="LobbySolo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +73,9 @@
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LobbyLocal.resx">
+      <DependentUpon>LobbyLocal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LobbySolo.resx">
       <DependentUpon>LobbySolo.cs</DependentUpon>

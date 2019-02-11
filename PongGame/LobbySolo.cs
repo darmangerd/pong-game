@@ -17,18 +17,41 @@ namespace PongGame
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Test de la validation des champs (vides)
+        /// </summary>
+        /// <see cref="https://stackoverflow.com/questions/4202195/textbox-validation-in-a-windows-form"/>
+        /// <returns></returns>
+        private bool WithErrors()
+        {
+            // Retourne vrai si le champs est vide ou rempli avec des espaces
+            if (tbxName.Text.Trim() == String.Empty)
+                return true;
+            if (tbxSurname.Text.Trim() == String.Empty)
+                return true;
+
+            return false;
+        }
+
         private void pbxExit_Click(object sender, EventArgs e)
         {
             //Bouton de fermeture de l'application
-            this.Close();
+            Environment.Exit(1);
         }
 
         private void btnSinglePlayer_Click(object sender, EventArgs e)
         {
-            //Bouton de commencement de partie
-            this.Hide();
-            SoloGame solo = new SoloGame(tbxName.Text, null);
-            solo.Show();
+            if (WithErrors())
+            {
+                MessageBox.Show("Forms are not valid.");
+            }
+            else
+            {
+                //Bouton de commencement de partie
+                this.Hide();
+                SoloGame solo = new SoloGame(tbxName.Text, "IA", false);
+                solo.Show();
+            }
         }
 
         private void pbxBack_Click(object sender, EventArgs e)

@@ -78,6 +78,7 @@
             this.btnLocal.Text = "LOCAL PLAYS";
             this.btnLocal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnLocal.UseVisualStyleBackColor = false;
+            this.btnLocal.Click += new System.EventHandler(this.btnLocal_Click);
             // 
             // btnMultiplayer
             // 
