@@ -27,7 +27,7 @@ namespace PongGame
         {
             //Bouton de commencement de partie
             this.Hide();
-            SoloGame solo = new SoloGame();
+            SoloGame solo = new SoloGame(tbxName.Text, null);
             solo.Show();
         }
 

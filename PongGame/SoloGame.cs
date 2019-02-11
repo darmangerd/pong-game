@@ -26,12 +26,14 @@ namespace PongGame
         int iBally = 5; //Vitesse de déplacement de la balle en horizontal y
         int iScorePlayer1 = 0;
         int iScorePlayer2 = 0;
+        string strPlayer1Name ="";
         Random random = new Random(); //Variable pour déplacement aléatoire de L'IA
 
 
-        public SoloGame()
+        public SoloGame(string strPlayer1_name, string strPlayer2_name)
         {
             InitializeComponent();
+            strPlayer1Name = strPlayer1_name;
         }
 
         private void SoloGame_KeyDown(object sender, KeyEventArgs e)
@@ -79,7 +81,7 @@ namespace PongGame
             #region IA
 
             //Si le CPU atteint le top ou le bas de l'écran
-            if (pbxPlayer2.Top < HAUT_TERRAIN || pbxPlayer2.Top > (BAS_TERRAIN-50))
+            if (pbxPlayer2.Top < HAUT_TERRAIN || pbxPlayer2.Top > (BAS_TERRAIN-140))
             {
                 //On change sa direction
                 iSpeed = -iSpeed;
@@ -201,20 +203,20 @@ namespace PongGame
         private void lblNamePlayer1_Paint(object sender, PaintEventArgs e)
         {
             //Segoe UI; 15.75pt; style=Bold
-            Font font = new Font("Segoe UI", 20, FontStyle.Bold);
+            Font font = new Font("Segoe UI", 15, FontStyle.Bold);
             Brush brush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
-            e.Graphics.TranslateTransform(120, 120);
+            e.Graphics.TranslateTransform(130, 142);
             e.Graphics.RotateTransform(270);
-            e.Graphics.DrawString("Player 1", font, brush, 0, 0);
+            e.Graphics.DrawString(strPlayer1Name.ToUpper(), font, brush, 0, 0);
         }
 
         private void lblNamePlayer2_Paint(object sender, PaintEventArgs e)
         {
-            Font font = new Font("Segoe UI", 20, FontStyle.Bold);
+            Font font = new Font("Segoe UI", 15, FontStyle.Bold);
             Brush brush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
             e.Graphics.TranslateTransform(30, 20);
             e.Graphics.RotateTransform(90);
-            e.Graphics.DrawString("Player 2", font, brush, 0, 0);
+            e.Graphics.DrawString("IA", font, brush, 0, 0);
         }
     }
 }

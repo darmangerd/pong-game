@@ -152,20 +152,20 @@
             // 
             this.lblNamePlayer1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNamePlayer1.ForeColor = System.Drawing.Color.White;
-            this.lblNamePlayer1.Location = new System.Drawing.Point(-29, 222);
+            this.lblNamePlayer1.Location = new System.Drawing.Point(-17, 193);
             this.lblNamePlayer1.Name = "lblNamePlayer1";
-            this.lblNamePlayer1.Size = new System.Drawing.Size(163, 289);
+            this.lblNamePlayer1.Size = new System.Drawing.Size(163, 231);
             this.lblNamePlayer1.TabIndex = 14;
-            this.lblNamePlayer1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblNamePlayer1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblNamePlayer1.Paint += new System.Windows.Forms.PaintEventHandler(this.lblNamePlayer1_Paint);
             // 
             // lblNamePlayer2
             // 
             this.lblNamePlayer2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNamePlayer2.ForeColor = System.Drawing.Color.White;
-            this.lblNamePlayer2.Location = new System.Drawing.Point(918, 232);
+            this.lblNamePlayer2.Location = new System.Drawing.Point(918, 266);
             this.lblNamePlayer2.Name = "lblNamePlayer2";
-            this.lblNamePlayer2.Size = new System.Drawing.Size(157, 216);
+            this.lblNamePlayer2.Size = new System.Drawing.Size(157, 63);
             this.lblNamePlayer2.TabIndex = 15;
             this.lblNamePlayer2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lblNamePlayer2.Paint += new System.Windows.Forms.PaintEventHandler(this.lblNamePlayer2_Paint);
