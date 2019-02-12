@@ -72,7 +72,7 @@
             // 
             this.pbxLine.BackColor = System.Drawing.Color.White;
             this.pbxLine.Location = new System.Drawing.Point(707, 44);
-            this.pbxLine.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbxLine.Margin = new System.Windows.Forms.Padding(4);
             this.pbxLine.Name = "pbxLine";
             this.pbxLine.Size = new System.Drawing.Size(8, 672);
             this.pbxLine.TabIndex = 6;
@@ -102,7 +102,7 @@
             // 
             this.pbxBalle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(68)))), ((int)(((byte)(125)))));
             this.pbxBalle.Location = new System.Drawing.Point(688, 371);
-            this.pbxBalle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbxBalle.Margin = new System.Windows.Forms.Padding(4);
             this.pbxBalle.Name = "pbxBalle";
             this.pbxBalle.Size = new System.Drawing.Size(44, 39);
             this.pbxBalle.TabIndex = 9;
@@ -117,7 +117,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
             this.pictureBox1.Location = new System.Drawing.Point(227, 44);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(965, 672);
             this.pictureBox1.TabIndex = 10;
@@ -127,7 +127,7 @@
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
             this.pictureBox2.Location = new System.Drawing.Point(203, 21);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(1013, 714);
             this.pictureBox2.TabIndex = 11;
@@ -139,7 +139,7 @@
             this.panel1.Controls.Add(this.lblNamePlayer1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(715, 754);
             this.panel1.TabIndex = 12;
@@ -187,7 +187,7 @@
             this.pbxExit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbxExit.Image = global::PongGame.Properties.Resources.cross;
             this.pbxExit.Location = new System.Drawing.Point(1385, 6);
-            this.pbxExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbxExit.Margin = new System.Windows.Forms.Padding(4);
             this.pbxExit.Name = "pbxExit";
             this.pbxExit.Size = new System.Drawing.Size(45, 41);
             this.pbxExit.TabIndex = 22;
@@ -233,7 +233,7 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SoloGame";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SoloGame";

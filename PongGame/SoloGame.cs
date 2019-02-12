@@ -24,7 +24,7 @@ namespace PongGame
         bool bGoDownPlayer1; //Detection du déplacement vers le bas du joueur 1
         bool bGoUpPlayer2; //Detection du déplacement vers le haut du joueur 2
         bool bGoDownPlayer2; //Detection du déplacement vers le bas du joueur 2
-        int iSpeed = 9;
+        int iSpeed = 9; //Déplacement de l'IA
         int iBallx = 5; //Vitesse de déplacement de la balle en vertical x
         int iBally = 5; //Vitesse de déplacement de la balle en horizontal y
         int iStartCount = 3; //Compteur de comencement de la partie
@@ -42,6 +42,18 @@ namespace PongGame
             strPlayer2Name = strPlayer2_name; //Nom du joueur 2 entré dans le lobby ou de l'IA
             bTwoPlayer = bTwoPlayers;
             
+        }
+
+        private void RestartGame()
+        {
+            iScorePlayer1 = 0;
+            iScorePlayer2 = 0;
+            iBallx = 5;
+            iStartCount = 3;
+            lblStarTimer.Visible = true;
+            lblStarTimer.Text = iStartCount.ToString();
+            tmrGameTimer.Stop();
+            tmrStart.Start();
         }
 
         #region Touches de déplacement du joueur 1
@@ -261,17 +273,45 @@ namespace PongGame
 
             #region Fin de la partie
 
-            //Si le joueur 1 atteint 10, il a gagné
-            if (iScorePlayer1 > 10)
+            //Si le joueur 1 atteint 5, il a gagné
+            if (iScorePlayer1 > 5)
             {
                 tmrGameTimer.Stop();
-                MessageBox.Show("Player 1 a gagné");
+
+                //confirmation de fermeture de l'application
+                DialogResult result = MessageBox.Show(strPlayer1Name.ToUpper() + " a gagné ! Voulez-vous recommencez ?", "Victoire", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Information);
+
+                if (result == DialogResult.Abort)
+                {
+                    //Bouton de retour sur le menu
+                    this.Hide();
+                    Form1 menu = new Form1();
+                    menu.Show();
+                }
+                else if (result == DialogResult.Retry)
+                {
+                    RestartGame();
+                }
             }
-            //Si le joueur 2 atteint 10, il a gagné
-            else if (iScorePlayer2 > 10)
+            //Si le joueur 2 atteint 5, il a gagné
+            else if (iScorePlayer2 > 5)
             {
                 tmrGameTimer.Stop();
-                MessageBox.Show("Player 2 a gagné");
+
+                //confirmation de fermeture de l'application
+                DialogResult result = MessageBox.Show(strPlayer2Name.ToUpper() + " a gagné ! Voulez-vous recommencez ?", "Victoire", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Information);
+
+                if (result == DialogResult.Abort)
+                {
+                    //Bouton de retour sur le menu
+                    this.Hide();
+                    Form1 menu = new Form1();
+                    menu.Show();
+                }
+                else if (result == DialogResult.Retry)
+                {
+                    RestartGame();
+                }
             }
 
             #endregion
@@ -306,6 +346,11 @@ namespace PongGame
             e.Graphics.DrawString(strPlayer2Name.ToUpper(), font, brush, 0, 0);
         }
 
+        /// <summary>
+        /// Bouton de fermeture de l'application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pbxExit_Click(object sender, EventArgs e)
         {
             //confirmation de fermeture de l'application
@@ -317,12 +362,17 @@ namespace PongGame
             }
         }
 
+        /// <summary>
+        /// Compteur de début de jeu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tmrStart_Tick(object sender, EventArgs e)
         {
             if (iStartCount==0)
             {
-                tmrStart.Stop();
                 tmrGameTimer.Start();
+                tmrStart.Stop();
                 lblStarTimer.Visible = false;
             }
             else
