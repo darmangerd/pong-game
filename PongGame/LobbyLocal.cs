@@ -92,8 +92,13 @@ namespace PongGame
 
         private void pbxExit_Click(object sender, EventArgs e)
         {
-            //Bouton de fermeture de l'application
-            Environment.Exit(1);
+            //confirmation de fermeture de l'application
+            DialogResult result = MessageBox.Show("Do you really want to close the Program", "Closing", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+
+            if (result == DialogResult.Yes)
+            {
+                Environment.Exit(1);
+            }
         }
     }
 }

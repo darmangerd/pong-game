@@ -27,6 +27,7 @@ namespace PongGame
         int iSpeed = 9;
         int iBallx = 5; //Vitesse de déplacement de la balle en vertical x
         int iBally = 5; //Vitesse de déplacement de la balle en horizontal y
+        int iStartCount = 3; //Compteur de comencement de la partie
         int iScorePlayer1 = 0;
         int iScorePlayer2 = 0;
         string strPlayer1Name = ""; //Nom du joueur 1
@@ -40,6 +41,7 @@ namespace PongGame
             strPlayer1Name = strPlayer1_name; //Nom du joueur 1 entré dans le lobby
             strPlayer2Name = strPlayer2_name; //Nom du joueur 2 entré dans le lobby ou de l'IA
             bTwoPlayer = bTwoPlayers;
+            
         }
 
         #region Touches de déplacement du joueur 1
@@ -168,10 +170,10 @@ namespace PongGame
                 pbxBalle.Left = MIDDLE_BOX;
                 //Change la balle de direction
                 iBallx = -iBallx;
-                //Augmente la vitesse de la balle
-                iBallx -= 1;
                 //+1 au score du joueur 2 (droite)
                 iScorePlayer2++;
+                //On baisse la vitesse de la balle
+                iBallx = 8;
             }
             //Si la balle est marqué à droite
             else if (pbxBalle.Left + pbxBalle.Width > RIGHT_BOX) 
@@ -180,10 +182,10 @@ namespace PongGame
                 pbxBalle.Left = MIDDLE_BOX;
                 //Change la balle de direction
                 iBallx = -iBallx;
-                //Augmente la vitesse de la balle
-                iBallx += 1;
                 //+1 au score du joueur 2 (droite)
                 iScorePlayer1++;
+                //On baisse la vitesse de la balle
+                iBallx = 8;
             }
 
             #endregion
@@ -205,7 +207,8 @@ namespace PongGame
                 pbxBalle.Left += 4;
                 //On change la direction de la balle
                 iBallx = -iBallx;
-
+                //Augmente la vitesse de la balle
+                iBallx -= 2;
             }
             else if (pbxBalle.Bounds.IntersectsWith(pbxPlayer2.Bounds))
             {
@@ -213,6 +216,8 @@ namespace PongGame
                 pbxBalle.Left -= 4;
                 //On change la direction de la balle
                 iBallx = -iBallx;
+                //Augmente la vitesse de la balle
+                iBallx += 2;
             }
 
             #endregion
@@ -303,8 +308,28 @@ namespace PongGame
 
         private void pbxExit_Click(object sender, EventArgs e)
         {
-            //Bouton de fermeture de l'application
-            Environment.Exit(1);
+            //confirmation de fermeture de l'application
+            DialogResult result = MessageBox.Show("Do you really want to close the Program", "Closing", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+
+            if (result == DialogResult.Yes)
+            {
+                Environment.Exit(1);
+            }
+        }
+
+        private void tmrStart_Tick(object sender, EventArgs e)
+        {
+            if (iStartCount==0)
+            {
+                tmrStart.Stop();
+                tmrGameTimer.Start();
+                lblStarTimer.Visible = false;
+            }
+            else
+            {
+                iStartCount--;
+                lblStarTimer.Text = iStartCount.ToString();
+            }
         }
     }
 }
