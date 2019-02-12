@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -220,7 +221,7 @@ namespace PongGame
                 //On change la direction de la balle
                 iBallx = -iBallx;
                 //Augmente la vitesse de la balle
-                iBallx -= 2;
+                iBallx -= 1;
             }
             else if (pbxBalle.Bounds.IntersectsWith(pbxPlayer2.Bounds))
             {
@@ -273,12 +274,15 @@ namespace PongGame
 
             #region Fin de la partie
 
-            //Si le joueur 1 atteint 5, il a gagné
-            if (iScorePlayer1 > 5)
+            //Si le joueur 1 atteint 11, il a gagné
+            if (iScorePlayer1 >= 11)
             {
                 tmrGameTimer.Stop();
 
-                //confirmation de fermeture de l'application
+                //Ajout de la victoire du joueur à la base de donnée
+                
+
+                //Fin de partie
                 DialogResult result = MessageBox.Show(strPlayer1Name.ToUpper() + " a gagné ! Voulez-vous recommencez ?", "Victoire", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Information);
 
                 if (result == DialogResult.Abort)
@@ -293,12 +297,12 @@ namespace PongGame
                     RestartGame();
                 }
             }
-            //Si le joueur 2 atteint 5, il a gagné
-            else if (iScorePlayer2 > 5)
+            //Si le joueur 2 atteint 11, il a gagné
+            else if (iScorePlayer2 >= 11)
             {
                 tmrGameTimer.Stop();
 
-                //confirmation de fermeture de l'application
+                //Fin de partie
                 DialogResult result = MessageBox.Show(strPlayer2Name.ToUpper() + " a gagné ! Voulez-vous recommencez ?", "Victoire", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Information);
 
                 if (result == DialogResult.Abort)
@@ -354,7 +358,7 @@ namespace PongGame
         private void pbxExit_Click(object sender, EventArgs e)
         {
             //confirmation de fermeture de l'application
-            DialogResult result = MessageBox.Show("Do you really want to close the Program", "Closing", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            DialogResult result = MessageBox.Show("Êtes-vous sûr de vouloir fermer l'application ?", "Fermeture", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
 
             if (result == DialogResult.Yes)
             {
