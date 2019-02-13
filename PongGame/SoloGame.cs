@@ -20,6 +20,7 @@ namespace PongGame
         const int RIGHT_BOX = 892; //Position de la limite droite du terrain
         const int MIDDLE_X_BOX = 533; //Position moitié horizontal du terrain
         const int MIDDLE_Y_BOX = 260; //Position moitié vertical du terrain
+        const int POINTS = 2; //Nombre de points par set
 
         bool bTwoPlayer; //Si la partie est en mode 2 joueur
         bool bGoUpPlayer1; //Detection du déplacement vers le haut du joueur 1
@@ -32,8 +33,12 @@ namespace PongGame
         int iStartCount = 3; //Compteur de comencement de la partie
         int iScorePlayer1 = 0; //Score du joueur 1
         int iScorePlayer2 = 0; //Score du joueur 2 ou de l'IA
+        int iSetPlayer1 = 0; //Set gagné par le joueur 1
+        int iSetPlayer2 = 0; //Set gagné par le joueur 2 ou l'IA
+        int iSet = 0; //Le set actuel
         string strPlayer1Name = ""; //Nom du joueur 1
         string strPlayer2Name = ""; //Nom du joueur 2
+        int[,] tblSet = new int[3, 2]; //Table qui contenient le score des joueurs par set
         Random random = new Random(); //Variable pour déplacement aléatoire de L'IA
 
 
@@ -43,6 +48,16 @@ namespace PongGame
             strPlayer1Name = strPlayer1_name; //Nom du joueur 1 entré dans le lobby
             strPlayer2Name = strPlayer2_name; //Nom du joueur 2 entré dans le lobby ou de l'IA
             bTwoPlayer = bTwoPlayers; //2 Joueur ou 1 joueur contre 1 IA
+        }
+
+        /// <summary>
+        /// Ajoute le score des joueurs par set
+        /// </summary>
+        private void AddPointsBySet()
+        {
+            tblSet[iSet, 0] = iScorePlayer1; //Ajout du score du joueur 1 dans le tableau
+            tblSet[iSet, 1] = iScorePlayer1; //Ajout du score du joueur 2 ou IA dans le tableau
+            iSet++; //Nombre de set de la partie
         }
 
         /// <summary>
@@ -300,23 +315,53 @@ namespace PongGame
 
             #region Fin de la partie
 
-            //Si le joueur 1 atteint 11, il a gagné
-            if (iScorePlayer1 >= 11)
+            //Si le joueur 1 atteint le nombre de points pour gagner
+            if (iScorePlayer1 >= POINTS)
             {
                 tmrGameTimer.Stop();
 
+                //Score par set
+                AddPointsBySet();
+
+                iSetPlayer1++;
+                if (iSetPlayer1 >= 2)
+                {
+                    iSet = 0;
+                    iSetPlayer1 = 0;
+                    iSetPlayer2 = 0;
+                    tblSet = new int[3,2];
+                    //Message de fin de partie
+                    ShowMessageEndGame(strPlayer1Name);
+                }
+                else
+                {
+                    RestartGame();
+                }
                 //TODO - Ajout de la victoire du joueur à la base de donnée
-
-                //Message de fin de partie
-                ShowMessageEndGame(strPlayer1Name);
             }
-            //Si le joueur 2 atteint 11, il a gagné
-            else if (iScorePlayer2 >= 11)
+            //Si le joueur 2 atteint le nombre de points pour gagner
+            else if (iScorePlayer2 >= POINTS)
             {
                 tmrGameTimer.Stop();
 
-                //Message de fin de partie
-                ShowMessageEndGame(strPlayer2Name);
+                //Score par set
+                AddPointsBySet();
+
+                iSetPlayer2++;
+                if (iSetPlayer2 >= 2)
+                {
+                    iSet = 0;
+                    iSetPlayer1 = 0;
+                    iSetPlayer2 = 0;
+                    tblSet = new int[3, 2];
+                    //Message de fin de partie
+                    ShowMessageEndGame(strPlayer2Name);
+                }
+                else
+                {
+                    RestartGame();
+                }
+                //TODO - Ajout de la victoire du joueur à la base de donnée
             }
 
             #endregion
