@@ -14,11 +14,12 @@ namespace PongGame
     public partial class SoloGame : Form
     {
         //Taille (position) du terrain de jeux
-        const int TOP_BOX = 38;
-        const int BOTTOM_BOX = 581;
-        const int LEFT_BOX = 170;
-        const int RIGHT_BOX = 892;
-        const int MIDDLE_BOX = 533;
+        const int TOP_BOX = 38; //Position de la limite du haut du terrain
+        const int BOTTOM_BOX = 581; //Position de la limite du bas du terrain
+        const int LEFT_BOX = 170; //Position de la limite gauche du terrain
+        const int RIGHT_BOX = 892; //Position de la limite droite du terrain
+        const int MIDDLE_X_BOX = 533; //Position moitié horizontal du terrain
+        const int MIDDLE_Y_BOX = 260; //Position moitié vertical du terrain
 
         bool bTwoPlayer; //Si la partie est en mode 2 joueur
         bool bGoUpPlayer1; //Detection du déplacement vers le haut du joueur 1
@@ -29,8 +30,8 @@ namespace PongGame
         int iBallx = 5; //Vitesse de déplacement de la balle en vertical x
         int iBally = 5; //Vitesse de déplacement de la balle en horizontal y
         int iStartCount = 3; //Compteur de comencement de la partie
-        int iScorePlayer1 = 0;
-        int iScorePlayer2 = 0;
+        int iScorePlayer1 = 0; //Score du joueur 1
+        int iScorePlayer2 = 0; //Score du joueur 2 ou de l'IA
         string strPlayer1Name = ""; //Nom du joueur 1
         string strPlayer2Name = ""; //Nom du joueur 2
         Random random = new Random(); //Variable pour déplacement aléatoire de L'IA
@@ -41,19 +42,48 @@ namespace PongGame
             InitializeComponent();
             strPlayer1Name = strPlayer1_name; //Nom du joueur 1 entré dans le lobby
             strPlayer2Name = strPlayer2_name; //Nom du joueur 2 entré dans le lobby ou de l'IA
-            bTwoPlayer = bTwoPlayers;
-            
+            bTwoPlayer = bTwoPlayers; //2 Joueur ou 1 joueur contre 1 IA
         }
 
+        /// <summary>
+        /// Message qui s'affiche à la fin d'une partie
+        /// </summary>
+        /// <param name="playerName"></param>
+        private void ShowMessageEndGame(string playerName)
+        {
+            tmrGameTimer.Stop();
+
+            DialogResult result = MessageBox.Show(playerName.ToUpper() + " a gagné ! Voulez-vous recommencez ?", "Victoire", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Information);
+
+            if (result == DialogResult.Abort)
+            {
+                //Bouton de retour sur le menu
+                this.Hide();
+                Form1 menu = new Form1();
+                menu.Show();
+            }
+            else if (result == DialogResult.Retry)
+            {
+                RestartGame();
+            }
+        }
+
+        /// <summary>
+        /// Remise à zéro des valeurs
+        /// </summary>
         private void RestartGame()
         {
-            iScorePlayer1 = 0;
-            iScorePlayer2 = 0;
-            iBallx = 5;
-            iStartCount = 3;
-            lblStarTimer.Visible = true;
-            lblStarTimer.Text = iStartCount.ToString();
+            iScorePlayer1 = 0; //Remise du score du joueur 1 à zéro
+            iScorePlayer2 = 0; //Remise du score du joueur 2 ou IA à zéro
+            iBallx = 5; //Vitesse par défaut de la balle
+            iStartCount = 3; //Décompte avant le début de la partie
+            lblStarTimer.Visible = true; //Label du compteur visible
+            lblStarTimer.Text = iStartCount.ToString(); //Affichage du nombre du décompte
             tmrGameTimer.Stop();
+            pbxBalle.Left = MIDDLE_X_BOX; //Reposition de la balle au millieu du terrain (Axe X)
+            pbxBalle.Top = MIDDLE_Y_BOX; //Reposition de la balle au millieu du terrain (Axe Y)
+            pbxPlayer1.Top = MIDDLE_Y_BOX; //Reposition du joueur 1 au milieu du terrain
+            pbxPlayer2.Top = MIDDLE_Y_BOX; //Reposition du joueur 2 ou IA au milieu du terrain
             tmrStart.Start();
         }
 
@@ -76,21 +106,17 @@ namespace PongGame
                 bGoDownPlayer1 = true;
             }
 
-            if (bTwoPlayer)
+            //Déplacement du joueur 2
+            if (e.KeyCode == Keys.Up)
             {
-
+                //UP
+                bGoUpPlayer2 = true;
             }
-                //Déplacement du joueur 2
-                if (e.KeyCode == Keys.Up)
-                {
-                    //UP
-                    bGoUpPlayer2 = true;
-                }
-                else if (e.KeyCode == Keys.Down)
-                {
-                    //DOWN
-                    bGoDownPlayer2 = true;
-                }
+            else if (e.KeyCode == Keys.Down)
+            {
+                //DOWN
+                bGoDownPlayer2 = true;
+            }
         }
 
         /// <summary>
@@ -140,7 +166,7 @@ namespace PongGame
             pbxBalle.Left -= iBallx; //Position X
 
             #region IA
-                    
+
             if (!bTwoPlayer)
             {
                 //Vitesse/Direction du CPU (Commence par descendre)
@@ -180,7 +206,7 @@ namespace PongGame
             if (pbxBalle.Left < LEFT_BOX)
             {
                 //Reposition de la balle au milieu de l'écran
-                pbxBalle.Left = MIDDLE_BOX;
+                pbxBalle.Left = MIDDLE_X_BOX;
                 //Change la balle de direction
                 iBallx = -iBallx;
                 //+1 au score du joueur 2 (droite)
@@ -189,10 +215,10 @@ namespace PongGame
                 iBallx = 8;
             }
             //Si la balle est marqué à droite
-            else if (pbxBalle.Left + pbxBalle.Width > RIGHT_BOX) 
+            else if (pbxBalle.Left + pbxBalle.Width > RIGHT_BOX)
             {
                 //Reposition de la balle au milieu de l'écran
-                pbxBalle.Left = MIDDLE_BOX;
+                pbxBalle.Left = MIDDLE_X_BOX;
                 //Change la balle de direction
                 iBallx = -iBallx;
                 //+1 au score du joueur 2 (droite)
@@ -279,43 +305,18 @@ namespace PongGame
             {
                 tmrGameTimer.Stop();
 
-                //Ajout de la victoire du joueur à la base de donnée
-                
+                //TODO - Ajout de la victoire du joueur à la base de donnée
 
-                //Fin de partie
-                DialogResult result = MessageBox.Show(strPlayer1Name.ToUpper() + " a gagné ! Voulez-vous recommencez ?", "Victoire", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Information);
-
-                if (result == DialogResult.Abort)
-                {
-                    //Bouton de retour sur le menu
-                    this.Hide();
-                    Form1 menu = new Form1();
-                    menu.Show();
-                }
-                else if (result == DialogResult.Retry)
-                {
-                    RestartGame();
-                }
+                //Message de fin de partie
+                ShowMessageEndGame(strPlayer1Name);
             }
             //Si le joueur 2 atteint 11, il a gagné
             else if (iScorePlayer2 >= 11)
             {
                 tmrGameTimer.Stop();
 
-                //Fin de partie
-                DialogResult result = MessageBox.Show(strPlayer2Name.ToUpper() + " a gagné ! Voulez-vous recommencez ?", "Victoire", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Information);
-
-                if (result == DialogResult.Abort)
-                {
-                    //Bouton de retour sur le menu
-                    this.Hide();
-                    Form1 menu = new Form1();
-                    menu.Show();
-                }
-                else if (result == DialogResult.Retry)
-                {
-                    RestartGame();
-                }
+                //Message de fin de partie
+                ShowMessageEndGame(strPlayer2Name);
             }
 
             #endregion
@@ -373,7 +374,7 @@ namespace PongGame
         /// <param name="e"></param>
         private void tmrStart_Tick(object sender, EventArgs e)
         {
-            if (iStartCount==0)
+            if (iStartCount == 0)
             {
                 tmrGameTimer.Start();
                 tmrStart.Stop();
