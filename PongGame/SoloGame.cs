@@ -51,6 +51,15 @@ namespace PongGame
             bTwoPlayer = bTwoPlayers; //2 Joueur ou 1 joueur contre 1 IA
             lblNamePlayer1.Text = strPlayer1Name; //Affichage du nom du joueur 1 sur l'écran
             lblNamePlayer2.Text = strPlayer2Name; //Affichage du nom du joueur 2 sur l'écran
+
+            //Connexion à la base de données
+            OleDbConnection con = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0;Data Source=\\s2lfile3.s2.rpn.ch\CPLNpublic\Classes\ET\INF-HP\4INF-HP-M\module ict-153\dbScores.accdb");
+            OleDbCommand cmd = con.CreateCommand();
+            con.Open();
+            cmd.CommandText = "INSERT INTO tblScore ( Nom, Prenom, DateFin, HeureFin ) SELECT 'Correia', 'Steve', '2.10.2010', '12.2.2016';";
+            cmd.Connection = con;
+            cmd.ExecuteNonQuery();
+            con.Close();
         }
 
         /// <summary>
