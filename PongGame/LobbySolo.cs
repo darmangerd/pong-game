@@ -48,7 +48,7 @@ namespace PongGame
         {
             if (WithErrors())
             {
-                MessageBox.Show("Forms are not valid.");
+                MessageBox.Show("Les champs ne sont pas remplis correctement.");
             }
             else
             {

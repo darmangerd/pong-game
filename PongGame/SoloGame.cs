@@ -15,10 +15,10 @@ namespace PongGame
     {
         //Taille (position) du terrain de jeux
         const int TOP_BOX = 38; //Position de la limite du haut du terrain
-        const int BOTTOM_BOX = 581; //Position de la limite du bas du terrain
+        const int BOTTOM_BOX = 576; //Position de la limite du bas du terrain
         const int LEFT_BOX = 170; //Position de la limite gauche du terrain
         const int RIGHT_BOX = 892; //Position de la limite droite du terrain
-        const int MIDDLE_X_BOX = 533; //Position moitié horizontal du terrain
+        const int MIDDLE_X_BOX = 531; //Position moitié horizontal du terrain
         const int MIDDLE_Y_BOX = 260; //Position moitié vertical du terrain
         const int POINTS = 3; //Nombre de points par set
 
@@ -49,6 +49,8 @@ namespace PongGame
             strPlayer1Name = strPlayer1_name; //Nom du joueur 1 entré dans le lobby
             strPlayer2Name = strPlayer2_name; //Nom du joueur 2 entré dans le lobby ou de l'IA
             bTwoPlayer = bTwoPlayers; //2 Joueur ou 1 joueur contre 1 IA
+            lblNamePlayer1.Text = strPlayer1Name; //Affichage du nom du joueur 1 sur l'écran
+            lblNamePlayer2.Text = strPlayer2Name; //Affichage du nom du joueur 2 sur l'écran
         }
 
         /// <summary>
@@ -80,7 +82,7 @@ namespace PongGame
         {
             tmrGameTimer.Stop();
 
-            DialogResult result = MessageBox.Show(playerName.ToUpper() + " a gagné ! Voulez-vous recommencez ?", "Victoire", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Information);
+            DialogResult result = MessageBox.Show(playerName.ToUpper() + " a gagné ! Voulez-vous recommencer ?", "Victoire", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Information);
 
             if (result == DialogResult.Abort)
             {
@@ -202,12 +204,11 @@ namespace PongGame
                 pbxPlayer2.Top += iSpeed;
 
                 //Si le CPU atteint le top ou le bas de l'écran
-                if (pbxPlayer2.Top < TOP_BOX || pbxPlayer2.Top > (BOTTOM_BOX - 140))
+                if (pbxPlayer2.Top < TOP_BOX || pbxPlayer2.Top > (BOTTOM_BOX - 135))
                 {
                     //On change sa direction
                     iSpeed = -iSpeed;
                 }
-
 
                 //VERSION AVEC IA - PAS FONCTIONNEL POUR L'INSTANT
                 /*if (iScorePlayer1 < 5)
@@ -242,7 +243,7 @@ namespace PongGame
                 //+1 au score du joueur 2 (droite)
                 iScorePlayer2++;
                 //On baisse la vitesse de la balle
-                iBallx = 8;
+                iBallx = -8;
             }
             //Si la balle est marqué à droite
             else if (pbxBalle.Left + pbxBalle.Width > RIGHT_BOX)
@@ -254,7 +255,7 @@ namespace PongGame
                 //+1 au score du joueur 2 (droite)
                 iScorePlayer1++;
                 //On baisse la vitesse de la balle
-                iBallx = 8;
+                iBallx = +8;
             }
 
             #endregion
@@ -340,7 +341,6 @@ namespace PongGame
                 iPoints++;
             }
 
-
             //OPTIMISATION - Faire une fonction
             //Si le joueur 1 atteint le nombre de points pour gagner
             if (iScorePlayer1 >= iPoints)
@@ -394,35 +394,6 @@ namespace PongGame
             }
 
             #endregion
-        }
-
-        /// <summary>
-        /// Affichage du nom de l'utilisateur 1 entré dans le lobby
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void lblNamePlayer1_Paint(object sender, PaintEventArgs e)
-        {
-            //Segoe UI; 15.75pt; style=Bold
-            Font font = new Font("Segoe UI", 15, FontStyle.Bold);
-            Brush brush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
-            e.Graphics.TranslateTransform(130, 142);
-            e.Graphics.RotateTransform(270);
-            e.Graphics.DrawString(strPlayer1Name.ToUpper(), font, brush, 0, 0);
-        }
-
-        /// <summary>
-        /// Affichage du nom de l'utilisateur 2 entré dans le lobby ou l'IA
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void lblNamePlayer2_Paint(object sender, PaintEventArgs e)
-        {
-            Font font = new Font("Segoe UI", 15, FontStyle.Bold);
-            Brush brush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
-            e.Graphics.TranslateTransform(30, 20);
-            e.Graphics.RotateTransform(90);
-            e.Graphics.DrawString(strPlayer2Name.ToUpper(), font, brush, 0, 0);
         }
 
         /// <summary>

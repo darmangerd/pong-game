@@ -33,27 +33,27 @@
             this.pbxLine = new System.Windows.Forms.PictureBox();
             this.pbxPlayer1 = new System.Windows.Forms.PictureBox();
             this.pbxPlayer2 = new System.Windows.Forms.PictureBox();
-            this.pbxBalle = new System.Windows.Forms.PictureBox();
             this.tmrGameTimer = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblNamePlayer1 = new System.Windows.Forms.Label();
-            this.lblNamePlayer2 = new System.Windows.Forms.Label();
+            this.lblSetPlayer1 = new System.Windows.Forms.Label();
             this.lblPlayer1Score = new System.Windows.Forms.Label();
             this.pbxExit = new System.Windows.Forms.PictureBox();
             this.tmrStart = new System.Windows.Forms.Timer(this.components);
             this.lblStarTimer = new System.Windows.Forms.Label();
             this.lblSetPlayer2 = new System.Windows.Forms.Label();
-            this.lblSetPlayer1 = new System.Windows.Forms.Label();
+            this.lblNamePlayer1 = new System.Windows.Forms.Label();
+            this.lblNamePlayer2 = new System.Windows.Forms.Label();
+            this.pbxBalle = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPlayer1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPlayer2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxBalle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxBalle)).BeginInit();
             this.SuspendLayout();
             // 
             // lblPlayer2Score
@@ -98,15 +98,6 @@
             this.pbxPlayer2.TabIndex = 8;
             this.pbxPlayer2.TabStop = false;
             // 
-            // pbxBalle
-            // 
-            this.pbxBalle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(68)))), ((int)(((byte)(125)))));
-            this.pbxBalle.Location = new System.Drawing.Point(516, 301);
-            this.pbxBalle.Name = "pbxBalle";
-            this.pbxBalle.Size = new System.Drawing.Size(33, 32);
-            this.pbxBalle.TabIndex = 9;
-            this.pbxBalle.TabStop = false;
-            // 
             // tmrGameTimer
             // 
             this.tmrGameTimer.Interval = 20;
@@ -117,7 +108,7 @@
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
             this.pictureBox1.Location = new System.Drawing.Point(170, 36);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(724, 546);
+            this.pictureBox1.Size = new System.Drawing.Size(724, 543);
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
             // 
@@ -133,35 +124,25 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
-            this.panel1.Controls.Add(this.lblSetPlayer1);
             this.panel1.Controls.Add(this.lblNamePlayer1);
+            this.panel1.Controls.Add(this.lblSetPlayer1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(536, 702);
             this.panel1.TabIndex = 12;
             // 
-            // lblNamePlayer1
+            // lblSetPlayer1
             // 
-            this.lblNamePlayer1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNamePlayer1.ForeColor = System.Drawing.Color.White;
-            this.lblNamePlayer1.Location = new System.Drawing.Point(-17, 193);
-            this.lblNamePlayer1.Name = "lblNamePlayer1";
-            this.lblNamePlayer1.Size = new System.Drawing.Size(163, 231);
-            this.lblNamePlayer1.TabIndex = 14;
-            this.lblNamePlayer1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblNamePlayer1.Paint += new System.Windows.Forms.PaintEventHandler(this.lblNamePlayer1_Paint);
-            // 
-            // lblNamePlayer2
-            // 
-            this.lblNamePlayer2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNamePlayer2.ForeColor = System.Drawing.Color.White;
-            this.lblNamePlayer2.Location = new System.Drawing.Point(916, 205);
-            this.lblNamePlayer2.Name = "lblNamePlayer2";
-            this.lblNamePlayer2.Size = new System.Drawing.Size(157, 256);
-            this.lblNamePlayer2.TabIndex = 15;
-            this.lblNamePlayer2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblNamePlayer2.Paint += new System.Windows.Forms.PaintEventHandler(this.lblNamePlayer2_Paint);
+            this.lblSetPlayer1.AutoSize = true;
+            this.lblSetPlayer1.BackColor = System.Drawing.Color.Transparent;
+            this.lblSetPlayer1.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold);
+            this.lblSetPlayer1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
+            this.lblSetPlayer1.Location = new System.Drawing.Point(435, 625);
+            this.lblSetPlayer1.Name = "lblSetPlayer1";
+            this.lblSetPlayer1.Size = new System.Drawing.Size(43, 50);
+            this.lblSetPlayer1.TabIndex = 25;
+            this.lblSetPlayer1.Text = "0";
             // 
             // lblPlayer1Score
             // 
@@ -200,7 +181,7 @@
             this.lblStarTimer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblStarTimer.Font = new System.Drawing.Font("Segoe UI", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStarTimer.ForeColor = System.Drawing.Color.White;
-            this.lblStarTimer.Location = new System.Drawing.Point(486, 245);
+            this.lblStarTimer.Location = new System.Drawing.Point(483, 245);
             this.lblStarTimer.Name = "lblStarTimer";
             this.lblStarTimer.Size = new System.Drawing.Size(110, 128);
             this.lblStarTimer.TabIndex = 23;
@@ -211,23 +192,44 @@
             this.lblSetPlayer2.AutoSize = true;
             this.lblSetPlayer2.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold);
             this.lblSetPlayer2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
-            this.lblSetPlayer2.Location = new System.Drawing.Point(590, 627);
+            this.lblSetPlayer2.Location = new System.Drawing.Point(590, 625);
             this.lblSetPlayer2.Name = "lblSetPlayer2";
             this.lblSetPlayer2.Size = new System.Drawing.Size(43, 50);
             this.lblSetPlayer2.TabIndex = 24;
             this.lblSetPlayer2.Text = "0";
             // 
-            // lblSetPlayer1
+            // lblNamePlayer1
             // 
-            this.lblSetPlayer1.AutoSize = true;
-            this.lblSetPlayer1.BackColor = System.Drawing.Color.Transparent;
-            this.lblSetPlayer1.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold);
-            this.lblSetPlayer1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
-            this.lblSetPlayer1.Location = new System.Drawing.Point(435, 627);
-            this.lblSetPlayer1.Name = "lblSetPlayer1";
-            this.lblSetPlayer1.Size = new System.Drawing.Size(43, 50);
-            this.lblSetPlayer1.TabIndex = 25;
-            this.lblSetPlayer1.Text = "0";
+            this.lblNamePlayer1.AutoSize = true;
+            this.lblNamePlayer1.BackColor = System.Drawing.Color.Transparent;
+            this.lblNamePlayer1.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold);
+            this.lblNamePlayer1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
+            this.lblNamePlayer1.Location = new System.Drawing.Point(204, 625);
+            this.lblNamePlayer1.Name = "lblNamePlayer1";
+            this.lblNamePlayer1.Size = new System.Drawing.Size(171, 50);
+            this.lblNamePlayer1.TabIndex = 26;
+            this.lblNamePlayer1.Text = "Joueur 1";
+            // 
+            // lblNamePlayer2
+            // 
+            this.lblNamePlayer2.AutoSize = true;
+            this.lblNamePlayer2.BackColor = System.Drawing.Color.Transparent;
+            this.lblNamePlayer2.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold);
+            this.lblNamePlayer2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
+            this.lblNamePlayer2.Location = new System.Drawing.Point(686, 625);
+            this.lblNamePlayer2.Name = "lblNamePlayer2";
+            this.lblNamePlayer2.Size = new System.Drawing.Size(171, 50);
+            this.lblNamePlayer2.TabIndex = 28;
+            this.lblNamePlayer2.Text = "Joueur 2";
+            // 
+            // pbxBalle
+            // 
+            this.pbxBalle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(68)))), ((int)(((byte)(125)))));
+            this.pbxBalle.Location = new System.Drawing.Point(516, 301);
+            this.pbxBalle.Name = "pbxBalle";
+            this.pbxBalle.Size = new System.Drawing.Size(33, 32);
+            this.pbxBalle.TabIndex = 9;
+            this.pbxBalle.TabStop = false;
             // 
             // SoloGame
             // 
@@ -235,11 +237,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
             this.ClientSize = new System.Drawing.Size(1077, 702);
+            this.Controls.Add(this.lblNamePlayer2);
             this.Controls.Add(this.lblSetPlayer2);
             this.Controls.Add(this.lblStarTimer);
             this.Controls.Add(this.pbxExit);
             this.Controls.Add(this.lblPlayer1Score);
-            this.Controls.Add(this.lblNamePlayer2);
             this.Controls.Add(this.pbxPlayer1);
             this.Controls.Add(this.pbxPlayer2);
             this.Controls.Add(this.pbxBalle);
@@ -257,12 +259,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbxLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPlayer1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPlayer2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxBalle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxBalle)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,18 +275,18 @@
         private System.Windows.Forms.PictureBox pbxLine;
         private System.Windows.Forms.PictureBox pbxPlayer1;
         private System.Windows.Forms.PictureBox pbxPlayer2;
-        private System.Windows.Forms.PictureBox pbxBalle;
         private System.Windows.Forms.Timer tmrGameTimer;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lblNamePlayer2;
-        private System.Windows.Forms.Label lblNamePlayer1;
         private System.Windows.Forms.Label lblPlayer1Score;
         private System.Windows.Forms.PictureBox pbxExit;
         private System.Windows.Forms.Timer tmrStart;
         private System.Windows.Forms.Label lblStarTimer;
         private System.Windows.Forms.Label lblSetPlayer2;
         private System.Windows.Forms.Label lblSetPlayer1;
+        private System.Windows.Forms.Label lblNamePlayer1;
+        private System.Windows.Forms.Label lblNamePlayer2;
+        private System.Windows.Forms.PictureBox pbxBalle;
     }
 }
