@@ -20,13 +20,14 @@ namespace PongGame
         const int RIGHT_BOX = 892; //Position de la limite droite du terrain
         const int MIDDLE_X_BOX = 533; //Position moitié horizontal du terrain
         const int MIDDLE_Y_BOX = 260; //Position moitié vertical du terrain
-        const int POINTS = 2; //Nombre de points par set
+        const int POINTS = 3; //Nombre de points par set
 
         bool bTwoPlayer; //Si la partie est en mode 2 joueur
         bool bGoUpPlayer1; //Detection du déplacement vers le haut du joueur 1
         bool bGoDownPlayer1; //Detection du déplacement vers le bas du joueur 1
         bool bGoUpPlayer2; //Detection du déplacement vers le haut du joueur 2
         bool bGoDownPlayer2; //Detection du déplacement vers le bas du joueur 2
+        int iPoints = POINTS; //Nombre de points par set
         int iSpeed = 9; //Déplacement de l'IA
         int iBallx = 5; //Vitesse de déplacement de la balle en vertical x
         int iBally = 5; //Vitesse de déplacement de la balle en horizontal y
@@ -99,6 +100,7 @@ namespace PongGame
         /// </summary>
         private void RestartGame()
         {
+            iPoints = POINTS;
             iScorePlayer1 = 0; //Remise du score du joueur 1 à zéro
             iScorePlayer2 = 0; //Remise du score du joueur 2 ou IA à zéro
             iBallx = 5; //Vitesse par défaut de la balle
@@ -328,9 +330,20 @@ namespace PongGame
 
             #region Fin de la partie
 
+            //2 Points de différence
+            if (iScorePlayer1 == iPoints && iScorePlayer2 >= iPoints-2)
+            {
+                iPoints++;
+            }
+            else if (iScorePlayer2 == iPoints && iScorePlayer1 >= iPoints - 2)
+            {
+                iPoints++;
+            }
+
+
             //OPTIMISATION - Faire une fonction
             //Si le joueur 1 atteint le nombre de points pour gagner
-            if (iScorePlayer1 >= POINTS)
+            if (iScorePlayer1 >= iPoints)
             {
                 iSetPlayer1++;
                 SetScoreOnScreen();
@@ -355,7 +368,7 @@ namespace PongGame
                 //TODO - Ajout de la victoire du joueur à la base de donnée
             }
             //Si le joueur 2 atteint le nombre de points pour gagner
-            else if (iScorePlayer2 >= POINTS)
+            else if (iScorePlayer2 >= iPoints)
             {
                 iSetPlayer2++;
                 SetScoreOnScreen();
