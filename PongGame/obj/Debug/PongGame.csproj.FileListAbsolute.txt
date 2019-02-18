@@ -20,4 +20,4 @@ D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.pdb
 D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.LobbySolo.resources
 D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.SoloGame.resources
 D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.LobbyLocal.resources
-D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.csprojResolveAssemblyReference.cache
+D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.csprojAssemblyReference.cache

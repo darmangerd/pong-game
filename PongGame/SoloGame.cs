@@ -38,7 +38,7 @@ namespace PongGame
         int iSet = 0; //Le set actuel
         string strPlayer1Name = ""; //Nom du joueur 1
         string strPlayer2Name = ""; //Nom du joueur 2
-        int[,] tblSet = new int[3, 2]; //Table qui contenient le score des joueurs par set
+        int[,] tblSet = new int[5, 2]; //Table qui contient le score des joueurs par set
         Random random = new Random(); //Variable pour déplacement aléatoire de L'IA
 
 
@@ -48,6 +48,17 @@ namespace PongGame
             strPlayer1Name = strPlayer1_name; //Nom du joueur 1 entré dans le lobby
             strPlayer2Name = strPlayer2_name; //Nom du joueur 2 entré dans le lobby ou de l'IA
             bTwoPlayer = bTwoPlayers; //2 Joueur ou 1 joueur contre 1 IA
+        }
+
+        /// <summary>
+        /// Affiche les différents scores des joueurs sur l'écran
+        /// </summary>
+        private void SetScoreOnScreen()
+        {
+            lblPlayer1Score.Text = "" + iScorePlayer1; //Score du joueur 1
+            lblPlayer2Score.Text = "" + iScorePlayer2; //Score du joueur 2
+            lblSetPlayer1.Text = "" + iSetPlayer1; //Set gagné par le joueur 1
+            lblSetPlayer2.Text = "" + iSetPlayer2; //Set gagné par le joueur 2
         }
 
         /// <summary>
@@ -99,6 +110,7 @@ namespace PongGame
             pbxBalle.Top = MIDDLE_Y_BOX; //Reposition de la balle au millieu du terrain (Axe Y)
             pbxPlayer1.Top = MIDDLE_Y_BOX; //Reposition du joueur 1 au milieu du terrain
             pbxPlayer2.Top = MIDDLE_Y_BOX; //Reposition du joueur 2 ou IA au milieu du terrain
+            SetScoreOnScreen(); //Affichage des scores
             tmrStart.Start();
         }
 
@@ -171,8 +183,8 @@ namespace PongGame
         /// <param name="e"></param>
         private void tmrGameTimer_Tick(object sender, EventArgs e)
         {
-            lblPlayer1Score.Text = "" + iScorePlayer1; //Score du joueur 1
-            lblPlayer2Score.Text = "" + iScorePlayer2; //Score du joueur 2
+            //Affichage des scores des joueurs
+            SetScoreOnScreen();
 
             //Déplacement Horizontal et vertical de la balle. 
             // -= augmente la vitesse de la balle vers la gauche et le haut de l'écran
@@ -222,6 +234,7 @@ namespace PongGame
             {
                 //Reposition de la balle au milieu de l'écran
                 pbxBalle.Left = MIDDLE_X_BOX;
+                //TODO - Reposition Y
                 //Change la balle de direction
                 iBallx = -iBallx;
                 //+1 au score du joueur 2 (droite)
@@ -315,21 +328,23 @@ namespace PongGame
 
             #region Fin de la partie
 
+            //OPTIMISATION - Faire une fonction
             //Si le joueur 1 atteint le nombre de points pour gagner
             if (iScorePlayer1 >= POINTS)
             {
+                iSetPlayer1++;
+                SetScoreOnScreen();
                 tmrGameTimer.Stop();
 
                 //Score par set
                 AddPointsBySet();
 
-                iSetPlayer1++;
-                if (iSetPlayer1 >= 2)
+                if (iSetPlayer1 >= 3)
                 {
                     iSet = 0;
                     iSetPlayer1 = 0;
                     iSetPlayer2 = 0;
-                    tblSet = new int[3,2];
+                    tblSet = new int[5,2]; //OPTIMISATION - Clear le tableau
                     //Message de fin de partie
                     ShowMessageEndGame(strPlayer1Name);
                 }
@@ -342,18 +357,19 @@ namespace PongGame
             //Si le joueur 2 atteint le nombre de points pour gagner
             else if (iScorePlayer2 >= POINTS)
             {
+                iSetPlayer2++;
+                SetScoreOnScreen();
                 tmrGameTimer.Stop();
 
                 //Score par set
                 AddPointsBySet();
 
-                iSetPlayer2++;
-                if (iSetPlayer2 >= 2)
+                if (iSetPlayer2 >= 3)
                 {
                     iSet = 0;
                     iSetPlayer1 = 0;
                     iSetPlayer2 = 0;
-                    tblSet = new int[3, 2];
+                    tblSet = new int[5, 2]; //OPTIMISATION - Clear le tableau
                     //Message de fin de partie
                     ShowMessageEndGame(strPlayer2Name);
                 }
