@@ -68,7 +68,7 @@
             this.tbxSurnamePlayer1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbxSurnamePlayer1.ForeColor = System.Drawing.Color.White;
             this.tbxSurnamePlayer1.Location = new System.Drawing.Point(151, 393);
-            this.tbxSurnamePlayer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbxSurnamePlayer1.Margin = new System.Windows.Forms.Padding(4);
             this.tbxSurnamePlayer1.MaxLength = 10;
             this.tbxSurnamePlayer1.Name = "tbxSurnamePlayer1";
             this.tbxSurnamePlayer1.Size = new System.Drawing.Size(260, 32);
@@ -94,7 +94,7 @@
             this.tbxNamePlayer1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbxNamePlayer1.ForeColor = System.Drawing.Color.White;
             this.tbxNamePlayer1.Location = new System.Drawing.Point(151, 258);
-            this.tbxNamePlayer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbxNamePlayer1.Margin = new System.Windows.Forms.Padding(4);
             this.tbxNamePlayer1.MaxLength = 10;
             this.tbxNamePlayer1.Name = "tbxNamePlayer1";
             this.tbxNamePlayer1.Size = new System.Drawing.Size(260, 32);
@@ -120,7 +120,7 @@
             this.tbxSurnamePlayer2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbxSurnamePlayer2.ForeColor = System.Drawing.Color.White;
             this.tbxSurnamePlayer2.Location = new System.Drawing.Point(659, 393);
-            this.tbxSurnamePlayer2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbxSurnamePlayer2.Margin = new System.Windows.Forms.Padding(4);
             this.tbxSurnamePlayer2.MaxLength = 10;
             this.tbxSurnamePlayer2.Name = "tbxSurnamePlayer2";
             this.tbxSurnamePlayer2.Size = new System.Drawing.Size(260, 32);
@@ -146,7 +146,7 @@
             this.tbxNamePlayer2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbxNamePlayer2.ForeColor = System.Drawing.Color.White;
             this.tbxNamePlayer2.Location = new System.Drawing.Point(659, 258);
-            this.tbxNamePlayer2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbxNamePlayer2.Margin = new System.Windows.Forms.Padding(4);
             this.tbxNamePlayer2.MaxLength = 10;
             this.tbxNamePlayer2.Name = "tbxNamePlayer2";
             this.tbxNamePlayer2.Size = new System.Drawing.Size(260, 32);
@@ -162,7 +162,7 @@
             this.cbxReadyPlayer1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
             this.cbxReadyPlayer1.ForeColor = System.Drawing.Color.White;
             this.cbxReadyPlayer1.Location = new System.Drawing.Point(185, 497);
-            this.cbxReadyPlayer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxReadyPlayer1.Margin = new System.Windows.Forms.Padding(4);
             this.cbxReadyPlayer1.Name = "cbxReadyPlayer1";
             this.cbxReadyPlayer1.Size = new System.Drawing.Size(191, 58);
             this.cbxReadyPlayer1.TabIndex = 14;
@@ -180,7 +180,7 @@
             this.cbxReadyPlayer2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
             this.cbxReadyPlayer2.ForeColor = System.Drawing.Color.White;
             this.cbxReadyPlayer2.Location = new System.Drawing.Point(703, 497);
-            this.cbxReadyPlayer2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxReadyPlayer2.Margin = new System.Windows.Forms.Padding(4);
             this.cbxReadyPlayer2.Name = "cbxReadyPlayer2";
             this.cbxReadyPlayer2.Size = new System.Drawing.Size(191, 58);
             this.cbxReadyPlayer2.TabIndex = 15;
@@ -194,7 +194,7 @@
             this.pbxBack.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbxBack.Image = ((System.Drawing.Image)(resources.GetObject("pbxBack.Image")));
             this.pbxBack.Location = new System.Drawing.Point(8, 7);
-            this.pbxBack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbxBack.Margin = new System.Windows.Forms.Padding(4);
             this.pbxBack.Name = "pbxBack";
             this.pbxBack.Size = new System.Drawing.Size(41, 41);
             this.pbxBack.TabIndex = 20;
@@ -205,7 +205,7 @@
             // 
             this.pbxLine.BackColor = System.Drawing.Color.White;
             this.pbxLine.Location = new System.Drawing.Point(533, 244);
-            this.pbxLine.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbxLine.Margin = new System.Windows.Forms.Padding(4);
             this.pbxLine.Name = "pbxLine";
             this.pbxLine.Size = new System.Drawing.Size(9, 181);
             this.pbxLine.TabIndex = 19;
@@ -217,7 +217,7 @@
             this.pbxExit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbxExit.Image = global::PongGame.Properties.Resources.cross;
             this.pbxExit.Location = new System.Drawing.Point(1003, 10);
-            this.pbxExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbxExit.Margin = new System.Windows.Forms.Padding(4);
             this.pbxExit.Name = "pbxExit";
             this.pbxExit.Size = new System.Drawing.Size(45, 41);
             this.pbxExit.TabIndex = 21;
@@ -232,7 +232,7 @@
             this.lblTitlePlayer2.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitlePlayer2.ForeColor = System.Drawing.Color.White;
             this.lblTitlePlayer2.Location = new System.Drawing.Point(631, 73);
-            this.lblTitlePlayer2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lblTitlePlayer2.Margin = new System.Windows.Forms.Padding(4);
             this.lblTitlePlayer2.Name = "lblTitlePlayer2";
             this.lblTitlePlayer2.Size = new System.Drawing.Size(333, 86);
             this.lblTitlePlayer2.TabIndex = 22;
@@ -247,7 +247,7 @@
             this.lblTitlePlayer1.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitlePlayer1.ForeColor = System.Drawing.Color.White;
             this.lblTitlePlayer1.Location = new System.Drawing.Point(113, 73);
-            this.lblTitlePlayer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lblTitlePlayer1.Margin = new System.Windows.Forms.Padding(4);
             this.lblTitlePlayer1.Name = "lblTitlePlayer1";
             this.lblTitlePlayer1.Size = new System.Drawing.Size(333, 86);
             this.lblTitlePlayer1.TabIndex = 23;
@@ -276,7 +276,7 @@
             this.Controls.Add(this.lblNamePlayer1);
             this.Controls.Add(this.tbxNamePlayer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "LobbyLocal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LobbyLocal";

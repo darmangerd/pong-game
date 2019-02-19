@@ -21,3 +21,16 @@ D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.LobbySolo.resources
 D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.SoloGame.resources
 D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.LobbyLocal.resources
 D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.csprojAssemblyReference.cache
+D:\pong-game\PongGame\bin\Debug\PongGame.exe.config
+D:\pong-game\PongGame\bin\Debug\PongGame.exe
+D:\pong-game\PongGame\bin\Debug\PongGame.pdb
+D:\pong-game\PongGame\obj\Debug\PongGame.csprojResolveAssemblyReference.cache
+D:\pong-game\PongGame\obj\Debug\PongGame.Form1.resources
+D:\pong-game\PongGame\obj\Debug\PongGame.LobbyLocal.resources
+D:\pong-game\PongGame\obj\Debug\PongGame.LobbySolo.resources
+D:\pong-game\PongGame\obj\Debug\PongGame.Properties.Resources.resources
+D:\pong-game\PongGame\obj\Debug\PongGame.SoloGame.resources
+D:\pong-game\PongGame\obj\Debug\PongGame.csproj.GenerateResource.Cache
+D:\pong-game\PongGame\obj\Debug\PongGame.csproj.CoreCompileInputs.cache
+D:\pong-game\PongGame\obj\Debug\PongGame.exe
+D:\pong-game\PongGame\obj\Debug\PongGame.pdb

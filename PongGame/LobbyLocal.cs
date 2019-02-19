@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,9 @@ namespace PongGame
 {
     public partial class LobbyLocal : Form
     {
+        string[] tblPrenom; //Tableau contenant les prenoms des joueurs
+        string[] tblNom; //Tableau contenant les noms des joueurs
+
         public LobbyLocal()
         {
             InitializeComponent();
@@ -30,6 +34,36 @@ namespace PongGame
             }
             else
             {
+                tblNom = new string[2] {tbxNamePlayer1.Text, tbxNamePlayer2.Text};
+                tblPrenom = new string[2] { tbxSurnamePlayer1.Text, tbxSurnamePlayer2.Text };
+                //Ajout dans la BDD
+
+                OleDbConnection DBConnection = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0;Data Source=\\s2lfile3.s2.rpn.ch\CPLNpublic\Classes\ET\INF-HP\4INF-HP-M\module ict-153\dbScores.accdb");
+                DBConnection.Open();
+                for (int i = 0; i <= 1; i++)
+                {
+                    using (var cmd = DBConnection.CreateCommand())
+                    {
+                        cmd.CommandText =
+                        "INSERT INTO tblUsers ( nomUser, prenom )" +
+                        "VALUES(?, ?)";
+                        cmd.Parameters.Add(new OleDbParameter("?", OleDbType.VarChar) { Value = tblNom[i] });
+                        cmd.Parameters.Add(new OleDbParameter("?", OleDbType.VarChar) { Value = tblPrenom[i] });
+                        try
+                        {
+                            var numberOfRowsInserted = cmd.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            //OPTIMISATION - Faire plus propre
+                            //Rien
+                        }
+
+                    }
+                }
+                DBConnection.Close();
+
+                //Lancement de la partie
                 this.Hide();
                 SoloGame solo = new SoloGame(tbxNamePlayer1.Text, tbxNamePlayer2.Text, true);
                 solo.Show();
