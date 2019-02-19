@@ -15,6 +15,7 @@ namespace PongGame
     {
         string[] tblPrenom; //Tableau contenant les prenoms des joueurs
         string[] tblNom; //Tableau contenant les noms des joueurs
+        string[] tblId; //ID des utilisateurs provenant de la base de données
 
         public LobbyLocal()
         {
@@ -34,10 +35,14 @@ namespace PongGame
             }
             else
             {
+                #region Base de données
+
+                //Récupération des noms/prénoms des utilisateurs
                 tblNom = new string[2] {tbxNamePlayer1.Text, tbxNamePlayer2.Text};
                 tblPrenom = new string[2] { tbxSurnamePlayer1.Text, tbxSurnamePlayer2.Text };
-                //Ajout dans la BDD
-
+                string strConnection = @"Provider = Microsoft.ACE.OLEDB.12.0;Data Source=\\s2lfile3.s2.rpn.ch\CPLNpublic\Classes\ET\INF-HP\4INF-HP-M\module ict-153\dbScores.accdb";
+                tblId = new string[2];
+                //Ajout de l'utilisateur dans la BDD
                 OleDbConnection DBConnection = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0;Data Source=\\s2lfile3.s2.rpn.ch\CPLNpublic\Classes\ET\INF-HP\4INF-HP-M\module ict-153\dbScores.accdb");
                 DBConnection.Open();
                 for (int i = 0; i <= 1; i++)
@@ -58,14 +63,44 @@ namespace PongGame
                             //OPTIMISATION - Faire plus propre
                             //Rien
                         }
+                    }
 
+
+                    //BDD - Récupération de l'ID des joueurs
+                    string strSQL = "SELECT tblUsers.numero FROM tblUsers WHERE nomUser='" + tblNom[i] + "' AND prenom ='" + tblPrenom[i] + "';";
+
+                    //Création de la connection
+                    using (OleDbConnection connection = new OleDbConnection(strConnection))
+                    {
+                        //Création de la commande
+                        OleDbCommand command = new OleDbCommand(strSQL, connection);
+                        try
+                        {
+                            //Ouverture de la connection
+                            connection.Open();
+                            //Exécution de la commande 
+                            using (OleDbDataReader reader = command.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    tblId[i] = reader[0].ToString();
+                                }
+                            }
+                        }
+                        catch
+                        {
+
+                        }
                     }
                 }
-                DBConnection.Close();
+
+                DBConnection.Close();            
+
+                #endregion
 
                 //Lancement de la partie
                 this.Hide();
-                SoloGame solo = new SoloGame(tbxNamePlayer1.Text, tbxNamePlayer2.Text, true);
+                SoloGame solo = new SoloGame(tbxNamePlayer1.Text, tbxNamePlayer2.Text, tblId ,true);
                 solo.Show();
             }
         }

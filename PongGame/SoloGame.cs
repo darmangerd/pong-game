@@ -43,7 +43,7 @@ namespace PongGame
         Random random = new Random(); //Variable pour déplacement aléatoire de L'IA
 
 
-        public SoloGame(string strPlayer1_name, string strPlayer2_name, bool bTwoPlayers)
+        public SoloGame(string strPlayer1_name, string strPlayer2_name, string[] tblID, bool bTwoPlayers)
         {
             InitializeComponent();
             strPlayer1Name = strPlayer1_name; //Nom du joueur 1 entré dans le lobby
@@ -55,6 +55,7 @@ namespace PongGame
             //Connexion à la base de données
             
         }
+
 
         /// <summary>
         /// Affiche les différents scores des joueurs sur l'écran

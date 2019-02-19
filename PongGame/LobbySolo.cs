@@ -52,9 +52,10 @@ namespace PongGame
             }
             else
             {
+                string[] toDelete = new string[2] { "dwad", "dwadw" };
                 //Bouton de commencement de partie
                 this.Hide();
-                SoloGame solo = new SoloGame(tbxName.Text, "IA", false);
+                SoloGame solo = new SoloGame(tbxName.Text, "IA", toDelete, false);
                 solo.Show();
             }
         }
