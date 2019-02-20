@@ -27,6 +27,7 @@ namespace PongGame
         bool bGoDownPlayer1; //Detection du déplacement vers le bas du joueur 1
         bool bGoUpPlayer2; //Detection du déplacement vers le haut du joueur 2
         bool bGoDownPlayer2; //Detection du déplacement vers le bas du joueur 2
+        bool bRestartGame = false; //Utilisé pour vérifier si on recommence une partie
         int iPoints = POINTS; //Nombre de points par set
         int iSpeed = 9; //Déplacement de l'IA
         int iBallx = 5; //Vitesse de déplacement de la balle en vertical x
@@ -36,7 +37,8 @@ namespace PongGame
         int iScorePlayer2 = 0; //Score du joueur 2 ou de l'IA
         int iSetPlayer1 = 0; //Set gagné par le joueur 1
         int iSetPlayer2 = 0; //Set gagné par le joueur 2 ou l'IA
-        int iSet = 0; //Le set actuel
+        int iSet = 0; //Set actuel
+        int[] tblIDPlayers = new int[2];
         string strPlayer1Name = ""; //Nom du joueur 1
         string strPlayer2Name = ""; //Nom du joueur 2
         int[,] tblSet = new int[5, 2]; //Table qui contient le score des joueurs par set
@@ -52,8 +54,27 @@ namespace PongGame
             lblNamePlayer1.Text = strPlayer1Name; //Affichage du nom du joueur 1 sur l'écran
             lblNamePlayer2.Text = strPlayer2Name; //Affichage du nom du joueur 2 sur l'écran
 
+            //Récupération des IDs des joueurs provenant de la base de données
+            for (int i=0; i <= 1; i++)
+            {
+                tblIDPlayers[i] = Convert.ToInt32(tblID[i]);
+            }
+
+            //Ajout de la partie dans la base de donnée
+            AddGamesInBDD(tblIDPlayers);
+        }
+
+        private void AddGamesInBDD(int[] tblID)
+        {
             //Connexion à la base de données
-            
+            OleDbConnection con = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0;Data Source=\\s2lfile3.s2.rpn.ch\CPLNpublic\Classes\ET\INF-HP\4INF-HP-M\module ict-153\dbScores.accdb");
+            OleDbCommand cmd = con.CreateCommand();
+            con.Open();
+            //Requête SQL envoyé au serveur
+            cmd.CommandText = "INSERT into tblGames ( num_tblUsers1, num_tblUsers2, dateDebut, heureDebut ) VALUES ('" + Convert.ToInt32(tblID[0]) + "','" + Convert.ToInt32(tblID[1]) + "', '" + DateTime.Today.Day + "." + DateTime.Today.Month + "." + DateTime.Today.Year + "', '" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + "')";
+            cmd.Connection = con;
+            cmd.ExecuteNonQuery();
+            con.Close();
         }
 
 
@@ -97,6 +118,7 @@ namespace PongGame
             }
             else if (result == DialogResult.Retry)
             {
+                bRestartGame = true;
                 RestartGame();
             }
         }
@@ -428,6 +450,14 @@ namespace PongGame
                 tmrGameTimer.Start();
                 tmrStart.Stop();
                 lblStarTimer.Visible = false;
+                
+                //Si la partie a été relancée
+                if (bRestartGame)
+                {
+                    bRestartGame = false;
+                    //Ajout de la partie dans la base de donnée
+                    AddGamesInBDD(tblIDPlayers);
+                }
             }
             else
             {
