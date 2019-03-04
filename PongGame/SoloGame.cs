@@ -279,8 +279,8 @@ namespace PongGame
                 iBallx = -iBallx;
                 //+1 au score du joueur 2 (droite)
                 iScorePlayer2++;
-                //On baisse la vitesse de la balle
-                iBallx = -8;
+                /* On baisse la vitesse de la balle
+                iBallx = -8; */
             }
             //Si la balle est marqué à droite
             else if (pbxBalle.Left + pbxBalle.Width > RIGHT_BOX)
@@ -291,8 +291,8 @@ namespace PongGame
                 iBallx = -iBallx;
                 //+1 au score du joueur 2 (droite)
                 iScorePlayer1++;
-                //On baisse la vitesse de la balle
-                iBallx = +8;
+                /* On baisse la vitesse de la balle
+                iBallx = +8; */
             }
 
             #endregion
@@ -314,8 +314,8 @@ namespace PongGame
                 pbxBalle.Left += 4;
                 //On change la direction de la balle
                 iBallx = -iBallx;
-                //Augmente la vitesse de la balle
-                iBallx -= 1;
+                /*Augmente la vitesse de la balle
+                iBallx -= 1; */
             }
             else if (pbxBalle.Bounds.IntersectsWith(pbxPlayer2.Bounds))
             {
@@ -323,8 +323,8 @@ namespace PongGame
                 pbxBalle.Left -= 4;
                 //On change la direction de la balle
                 iBallx = -iBallx;
-                //Augmente la vitesse de la balle
-                iBallx += 2;
+                /*Augmente la vitesse de la balle
+                iBallx += 1;*/
             }
 
             #endregion

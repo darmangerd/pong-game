@@ -37,13 +37,13 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblNamePlayer1 = new System.Windows.Forms.Label();
             this.lblSetPlayer1 = new System.Windows.Forms.Label();
             this.lblPlayer1Score = new System.Windows.Forms.Label();
             this.pbxExit = new System.Windows.Forms.PictureBox();
             this.tmrStart = new System.Windows.Forms.Timer(this.components);
             this.lblStarTimer = new System.Windows.Forms.Label();
             this.lblSetPlayer2 = new System.Windows.Forms.Label();
-            this.lblNamePlayer1 = new System.Windows.Forms.Label();
             this.lblNamePlayer2 = new System.Windows.Forms.Label();
             this.pbxBalle = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLine)).BeginInit();
@@ -100,7 +100,7 @@
             // 
             // tmrGameTimer
             // 
-            this.tmrGameTimer.Interval = 20;
+            this.tmrGameTimer.Interval = 16;
             this.tmrGameTimer.Tick += new System.EventHandler(this.tmrGameTimer_Tick);
             // 
             // pictureBox1
@@ -131,6 +131,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(536, 702);
             this.panel1.TabIndex = 12;
+            // 
+            // lblNamePlayer1
+            // 
+            this.lblNamePlayer1.AutoSize = true;
+            this.lblNamePlayer1.BackColor = System.Drawing.Color.Transparent;
+            this.lblNamePlayer1.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold);
+            this.lblNamePlayer1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
+            this.lblNamePlayer1.Location = new System.Drawing.Point(204, 625);
+            this.lblNamePlayer1.Name = "lblNamePlayer1";
+            this.lblNamePlayer1.Size = new System.Drawing.Size(171, 50);
+            this.lblNamePlayer1.TabIndex = 26;
+            this.lblNamePlayer1.Text = "Joueur 1";
             // 
             // lblSetPlayer1
             // 
@@ -197,18 +209,6 @@
             this.lblSetPlayer2.Size = new System.Drawing.Size(43, 50);
             this.lblSetPlayer2.TabIndex = 24;
             this.lblSetPlayer2.Text = "0";
-            // 
-            // lblNamePlayer1
-            // 
-            this.lblNamePlayer1.AutoSize = true;
-            this.lblNamePlayer1.BackColor = System.Drawing.Color.Transparent;
-            this.lblNamePlayer1.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold);
-            this.lblNamePlayer1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
-            this.lblNamePlayer1.Location = new System.Drawing.Point(204, 625);
-            this.lblNamePlayer1.Name = "lblNamePlayer1";
-            this.lblNamePlayer1.Size = new System.Drawing.Size(171, 50);
-            this.lblNamePlayer1.TabIndex = 26;
-            this.lblNamePlayer1.Text = "Joueur 1";
             // 
             // lblNamePlayer2
             // 
