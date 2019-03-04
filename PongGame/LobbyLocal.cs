@@ -36,69 +36,18 @@ namespace PongGame
             else
             {
                 #region Base de données
+
                 //Récupération des noms/prénoms des utilisateurs
                 tblNom = new string[2] {tbxNamePlayer1.Text, tbxNamePlayer2.Text};
                 tblPrenom = new string[2] { tbxSurnamePlayer1.Text, tbxSurnamePlayer2.Text };
                 tblId = new string[2];
-                //BDD - Ajout de ou des utilisateurs
-                OleDbConnection DBConnection = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0;Data Source=\\s2lfile3.s2.rpn.ch\CPLNpublic\Classes\ET\INF-HP\4INF-HP-M\module ict-153\dbScores.accdb");
-                DBConnection.Open();
-                for (int i = 0; i <= 1; i++)
-                {
-                    using (var cmd = DBConnection.CreateCommand())
-                    {
-                        //Requête SQL envoyé au serveur
-                        cmd.CommandText =
-                        "INSERT INTO tblUsers ( nomUser, prenom )" +
-                        "VALUES(?, ?)";
-                        cmd.Parameters.Add(new OleDbParameter("?", OleDbType.VarChar) { Value = tblNom[i] });
-                        cmd.Parameters.Add(new OleDbParameter("?", OleDbType.VarChar) { Value = tblPrenom[i] });
-                        try
-                        {
-                            var numberOfRowsInserted = cmd.ExecuteNonQuery();
-                        }
-                        catch
-                        {
-                            //OPTIMISATION - Faire plus propre
-                            //Rien
-                        }
-                    }
-                    
-                }
-                DBConnection.Close();
 
-                //BDD - Récupération de l'ID des joueurs
-                string strConnection = @"Provider = Microsoft.ACE.OLEDB.12.0;Data Source=\\s2lfile3.s2.rpn.ch\CPLNpublic\Classes\ET\INF-HP\4INF-HP-M\module ict-153\dbScores.accdb";
-                for (int i=0; i<=1;i++)
-                {
-                    //Requête SQL envoyé au serveur
-                    string strSQL = "SELECT tblUsers.numero FROM tblUsers WHERE nomUser='" + tblNom[i] + "' AND prenom ='" + tblPrenom[i] + "';";
-
-                    //Création de la connection
-                    using (OleDbConnection connection = new OleDbConnection(strConnection))
-                    {
-                        //Création de la commande
-                        OleDbCommand command = new OleDbCommand(strSQL, connection);
-                        try
-                        {
-                            //Ouverture de la connection
-                            connection.Open();
-                            //Exécution de la commande 
-                            using (OleDbDataReader reader = command.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    //Récupération de l'ID des joueurs
-                                    tblId[i] = reader[0].ToString();
-                                }
-                            }
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Erreur avec la base de données");
-                        }
-                    }
-                }
+                //Classe permettant d'ajouter des données des utilisateurs dans la base Access
+                UserInDB userInDB = new UserInDB();
+                //Ajout des utilisateurs s'ils n'existe pas dans la base de données
+                userInDB.AddUserInDB(tblNom, tblPrenom);
+                //Récupération des IDs des joueurs dans la base de données
+                tblId = userInDB.GetIdFromPlayer(tblNom, tblPrenom);
 
                 #endregion
 

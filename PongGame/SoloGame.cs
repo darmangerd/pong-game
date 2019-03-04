@@ -37,11 +37,12 @@ namespace PongGame
         int iScorePlayer2 = 0; //Score du joueur 2 ou de l'IA
         int iSetPlayer1 = 0; //Set gagné par le joueur 1
         int iSetPlayer2 = 0; //Set gagné par le joueur 2 ou l'IA
-        int iSet = 0; //Set actuel
+        int iSet = 1; //Set actuel
+        int IdGame; //ID de la partie dans la base de donnée
         int[] tblIDPlayers = new int[2];
         string strPlayer1Name = ""; //Nom du joueur 1
         string strPlayer2Name = ""; //Nom du joueur 2
-        int[,] tblSet = new int[5, 2]; //Table qui contient le score des joueurs par set
+        string strQuerySelectId = "Select @@Identity"; //Permettra de récupérer l'ID d'une partie lors de l'ajout dans la BDD
         Random random = new Random(); //Variable pour déplacement aléatoire de L'IA
 
 
@@ -74,6 +75,9 @@ namespace PongGame
             cmd.CommandText = "INSERT into tblGames ( num_tblUsers1, num_tblUsers2, dateDebut, heureDebut ) VALUES ('" + Convert.ToInt32(tblID[0]) + "','" + Convert.ToInt32(tblID[1]) + "', '" + DateTime.Today.Day + "." + DateTime.Today.Month + "." + DateTime.Today.Year + "', '" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + "')";
             cmd.Connection = con;
             cmd.ExecuteNonQuery();
+            //Récupération de l'ID de la partie qui vient d'être ajouté dans la BDD. Source de la solution : https://stackoverflow.com/questions/7230200/how-to-get-the-last-record-number-after-inserting-record-to-database-in-access
+            cmd.CommandText = strQuerySelectId;
+            IdGame = (int)cmd.ExecuteScalar();
             con.Close();
         }
 
@@ -94,8 +98,16 @@ namespace PongGame
         /// </summary>
         private void AddPointsBySet()
         {
-            tblSet[iSet, 0] = iScorePlayer1; //Ajout du score du joueur 1 dans le tableau
-            tblSet[iSet, 1] = iScorePlayer1; //Ajout du score du joueur 2 ou IA dans le tableau
+
+            //Connexion à la base de données
+            OleDbConnection con = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0;Data Source=\\s2lfile3.s2.rpn.ch\CPLNpublic\Classes\ET\INF-HP\4INF-HP-M\module ict-153\dbScores.accdb");
+            OleDbCommand cmd = con.CreateCommand();
+            con.Open();
+            //Requête SQL envoyé au serveur
+            cmd.CommandText = "INSERT INTO tblSets ( num_tblGames, scoreJoueur1, scoreJoueur2, numeroSet ) VALUES ('" + IdGame + "','" + iScorePlayer1 + "', '" + iScorePlayer2 +  "', '" + iSet + "')";
+            cmd.Connection = con;
+            cmd.ExecuteNonQuery();
+            con.Close();
             iSet++; //Nombre de set de la partie
         }
 
@@ -255,7 +267,6 @@ namespace PongGame
 
             #endregion
 
-
             #region Marquage de la balle
 
             // Si la balle est marqué à gauche
@@ -358,11 +369,11 @@ namespace PongGame
             #region Fin de la partie
 
             //2 Points de différence
-            if (iScorePlayer1 == iPoints && iScorePlayer2 >= iPoints-2)
+            if (iScorePlayer1 == iPoints && iScorePlayer2 >= iPoints-1)
             {
                 iPoints++;
             }
-            else if (iScorePlayer2 == iPoints && iScorePlayer1 >= iPoints - 2)
+            else if (iScorePlayer2 == iPoints && iScorePlayer1 >= iPoints - 1)
             {
                 iPoints++;
             }
@@ -380,10 +391,9 @@ namespace PongGame
 
                 if (iSetPlayer1 >= 3)
                 {
-                    iSet = 0;
+                    iSet = 1;
                     iSetPlayer1 = 0;
                     iSetPlayer2 = 0;
-                    tblSet = new int[5,2]; //OPTIMISATION - Clear le tableau
                     //Message de fin de partie
                     ShowMessageEndGame(strPlayer1Name);
                 }
@@ -405,10 +415,9 @@ namespace PongGame
 
                 if (iSetPlayer2 >= 3)
                 {
-                    iSet = 0;
+                    iSet = 1;
                     iSetPlayer1 = 0;
                     iSetPlayer2 = 0;
-                    tblSet = new int[5, 2]; //OPTIMISATION - Clear le tableau
                     //Message de fin de partie
                     ShowMessageEndGame(strPlayer2Name);
                 }

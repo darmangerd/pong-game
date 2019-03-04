@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,10 @@ namespace PongGame
 {
     public partial class LobbySolo : Form
     {
+        string[] tblPrenom; //Tableau contenant les prenoms des joueurs
+        string[] tblNom; //Tableau contenant les noms des joueurs
+        string[] tblId; //ID des utilisateurs provenant de la base de données
+
         public LobbySolo()
         {
             InitializeComponent();
@@ -52,10 +57,26 @@ namespace PongGame
             }
             else
             {
-                string[] toDelete = new string[2] { "dwad", "dwadw" };
+                #region Base de données
+
+                //Récupération des noms/prénoms de l'utilisateur
+                //L'IA est considéré comme un joueur. Son nom: IA et son prénom : (ordinateur)
+                tblNom = new string[2] { tbxName.Text, "IA" };
+                tblPrenom = new string[2] { tbxSurname.Text, "(ordinateur)" };
+                tblId = new string[2];
+
+                //Classe permettant d'ajouter des données de l'utilisateur dans la base Access
+                UserInDB userInDB = new UserInDB();
+                //Ajout de l'utilisateur s'il n'existe pas dans la base de données
+                userInDB.AddUserInDB(tblNom, tblPrenom);
+                //Récupération des IDs du joueur et de l'IA dans la base de données
+                tblId = userInDB.GetIdFromPlayer(tblNom, tblPrenom);
+
+                #endregion
+
                 //Bouton de commencement de partie
                 this.Hide();
-                SoloGame solo = new SoloGame(tbxName.Text, "IA", toDelete, false);
+                SoloGame solo = new SoloGame(tbxName.Text, "IA", tblId, false);
                 solo.Show();
             }
         }
