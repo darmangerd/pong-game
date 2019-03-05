@@ -38,7 +38,7 @@ namespace PongGame
         int iSetPlayer1 = 0; //Set gagné par le joueur 1
         int iSetPlayer2 = 0; //Set gagné par le joueur 2 ou l'IA
         int iSet = 1; //Set actuel
-        int IdGame; //ID de la partie dans la base de donnée
+        int iIdGame; //ID de la partie dans la base de donnée
         int[] tblIDPlayers = new int[2];
         string strPlayer1Name = ""; //Nom du joueur 1
         string strPlayer2Name = ""; //Nom du joueur 2
@@ -77,7 +77,7 @@ namespace PongGame
             cmd.ExecuteNonQuery();
             //Récupération de l'ID de la partie qui vient d'être ajouté dans la BDD. Source de la solution : https://stackoverflow.com/questions/7230200/how-to-get-the-last-record-number-after-inserting-record-to-database-in-access
             cmd.CommandText = strQuerySelectId;
-            IdGame = (int)cmd.ExecuteScalar();
+            iIdGame = (int)cmd.ExecuteScalar();
             con.Close();
         }
 
@@ -104,7 +104,7 @@ namespace PongGame
             OleDbCommand cmd = con.CreateCommand();
             con.Open();
             //Requête SQL envoyé au serveur
-            cmd.CommandText = "INSERT INTO tblSets ( num_tblGames, scoreJoueur1, scoreJoueur2, numeroSet ) VALUES ('" + IdGame + "','" + iScorePlayer1 + "', '" + iScorePlayer2 +  "', '" + iSet + "')";
+            cmd.CommandText = "INSERT INTO tblSets ( num_tblGames, scoreJoueur1, scoreJoueur2, numeroSet ) VALUES ('" + iIdGame + "','" + iScorePlayer1 + "', '" + iScorePlayer2 +  "', '" + iSet + "')";
             cmd.Connection = con;
             cmd.ExecuteNonQuery();
             con.Close();
