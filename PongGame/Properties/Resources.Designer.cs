@@ -61,6 +61,15 @@ namespace PongGame.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à @&quot;Provider = Microsoft.ACE.OLEDB.12.0;Data Source=\\s2lfile3.s2.rpn.ch\CPLNpublic\Classes\ET\INF-HP\4INF-HP-M\module ict-153\dbScores.accdb&quot;.
+        /// </summary>
+        internal static string Bdd {
+            get {
+                return ResourceManager.GetString("Bdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap cross {

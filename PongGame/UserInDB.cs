@@ -12,8 +12,11 @@ namespace PongGame
     {
         public void AddUserInDB(string[] noms, string[] prenoms)
         {
+            //Récupération du contenu du fichier texte Bdd.txt pour accèder à la base de données
+            var PathToBdd = Properties.Resources.Bdd;
+
             //BDD - Ajout de ou des utilisateurs
-            OleDbConnection DBConnection = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0;Data Source=\\s2lfile3.s2.rpn.ch\CPLNpublic\Classes\ET\INF-HP\4INF-HP-M\module ict-153\dbScores.accdb");
+            OleDbConnection DBConnection = new OleDbConnection(@"" + PathToBdd.ToString());
             DBConnection.Open();
             for (int i = 0; i <= 1; i++)
             {

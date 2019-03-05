@@ -115,6 +115,7 @@
     <Content Include="Images\multiplayer.png" />
     <Content Include="Images\solo.png" />
     <Content Include="Images\table-tennis.png" />
+    <None Include="Resources\Bdd.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
