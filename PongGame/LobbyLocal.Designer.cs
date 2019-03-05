@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LobbyLocal));
-            this.lblFirstNamePlayer1 = new System.Windows.Forms.Label();
+            this.lblSurnamePlayer1 = new System.Windows.Forms.Label();
             this.tbxSurnamePlayer1 = new System.Windows.Forms.TextBox();
             this.lblNamePlayer1 = new System.Windows.Forms.Label();
             this.tbxNamePlayer1 = new System.Windows.Forms.TextBox();
-            this.lblFirstNamePlayer2 = new System.Windows.Forms.Label();
+            this.lblSurnamePlayer2 = new System.Windows.Forms.Label();
             this.tbxSurnamePlayer2 = new System.Windows.Forms.TextBox();
             this.lblNamePlayer2 = new System.Windows.Forms.Label();
             this.tbxNamePlayer2 = new System.Windows.Forms.TextBox();
@@ -49,17 +49,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).BeginInit();
             this.SuspendLayout();
             // 
-            // lblFirstNamePlayer1
+            // lblSurnamePlayer1
             // 
-            this.lblFirstNamePlayer1.AutoSize = true;
-            this.lblFirstNamePlayer1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFirstNamePlayer1.ForeColor = System.Drawing.Color.White;
-            this.lblFirstNamePlayer1.Location = new System.Drawing.Point(144, 346);
-            this.lblFirstNamePlayer1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblFirstNamePlayer1.Name = "lblFirstNamePlayer1";
-            this.lblFirstNamePlayer1.Size = new System.Drawing.Size(133, 37);
-            this.lblFirstNamePlayer1.TabIndex = 7;
-            this.lblFirstNamePlayer1.Text = "PRÉNOM";
+            this.lblSurnamePlayer1.AutoSize = true;
+            this.lblSurnamePlayer1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSurnamePlayer1.ForeColor = System.Drawing.Color.White;
+            this.lblSurnamePlayer1.Location = new System.Drawing.Point(144, 346);
+            this.lblSurnamePlayer1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSurnamePlayer1.Name = "lblSurnamePlayer1";
+            this.lblSurnamePlayer1.Size = new System.Drawing.Size(133, 37);
+            this.lblSurnamePlayer1.TabIndex = 7;
+            this.lblSurnamePlayer1.Text = "PRÉNOM";
             // 
             // tbxSurnamePlayer1
             // 
@@ -101,17 +101,17 @@
             this.tbxNamePlayer1.TabIndex = 4;
             this.tbxNamePlayer1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblFirstNamePlayer2
+            // lblSurnamePlayer2
             // 
-            this.lblFirstNamePlayer2.AutoSize = true;
-            this.lblFirstNamePlayer2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFirstNamePlayer2.ForeColor = System.Drawing.Color.White;
-            this.lblFirstNamePlayer2.Location = new System.Drawing.Point(652, 346);
-            this.lblFirstNamePlayer2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblFirstNamePlayer2.Name = "lblFirstNamePlayer2";
-            this.lblFirstNamePlayer2.Size = new System.Drawing.Size(133, 37);
-            this.lblFirstNamePlayer2.TabIndex = 11;
-            this.lblFirstNamePlayer2.Text = "PRÉNOM";
+            this.lblSurnamePlayer2.AutoSize = true;
+            this.lblSurnamePlayer2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSurnamePlayer2.ForeColor = System.Drawing.Color.White;
+            this.lblSurnamePlayer2.Location = new System.Drawing.Point(652, 346);
+            this.lblSurnamePlayer2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSurnamePlayer2.Name = "lblSurnamePlayer2";
+            this.lblSurnamePlayer2.Size = new System.Drawing.Size(133, 37);
+            this.lblSurnamePlayer2.TabIndex = 11;
+            this.lblSurnamePlayer2.Text = "PRÉNOM";
             // 
             // tbxSurnamePlayer2
             // 
@@ -157,6 +157,7 @@
             // 
             this.cbxReadyPlayer1.Appearance = System.Windows.Forms.Appearance.Button;
             this.cbxReadyPlayer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
+            this.cbxReadyPlayer1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cbxReadyPlayer1.FlatAppearance.BorderSize = 0;
             this.cbxReadyPlayer1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbxReadyPlayer1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
@@ -175,6 +176,7 @@
             // 
             this.cbxReadyPlayer2.Appearance = System.Windows.Forms.Appearance.Button;
             this.cbxReadyPlayer2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
+            this.cbxReadyPlayer2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cbxReadyPlayer2.FlatAppearance.BorderSize = 0;
             this.cbxReadyPlayer2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbxReadyPlayer2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
@@ -267,11 +269,11 @@
             this.Controls.Add(this.pbxLine);
             this.Controls.Add(this.cbxReadyPlayer2);
             this.Controls.Add(this.cbxReadyPlayer1);
-            this.Controls.Add(this.lblFirstNamePlayer2);
+            this.Controls.Add(this.lblSurnamePlayer2);
             this.Controls.Add(this.tbxSurnamePlayer2);
             this.Controls.Add(this.lblNamePlayer2);
             this.Controls.Add(this.tbxNamePlayer2);
-            this.Controls.Add(this.lblFirstNamePlayer1);
+            this.Controls.Add(this.lblSurnamePlayer1);
             this.Controls.Add(this.tbxSurnamePlayer1);
             this.Controls.Add(this.lblNamePlayer1);
             this.Controls.Add(this.tbxNamePlayer1);
@@ -290,11 +292,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblFirstNamePlayer1;
+        private System.Windows.Forms.Label lblSurnamePlayer1;
         private System.Windows.Forms.TextBox tbxSurnamePlayer1;
         private System.Windows.Forms.Label lblNamePlayer1;
         private System.Windows.Forms.TextBox tbxNamePlayer1;
-        private System.Windows.Forms.Label lblFirstNamePlayer2;
+        private System.Windows.Forms.Label lblSurnamePlayer2;
         private System.Windows.Forms.TextBox tbxSurnamePlayer2;
         private System.Windows.Forms.Label lblNamePlayer2;
         private System.Windows.Forms.TextBox tbxNamePlayer2;

@@ -34,3 +34,4 @@ D:\pong-game\PongGame\obj\Debug\PongGame.csproj.GenerateResource.Cache
 D:\pong-game\PongGame\obj\Debug\PongGame.csproj.CoreCompileInputs.cache
 D:\pong-game\PongGame\obj\Debug\PongGame.exe
 D:\pong-game\PongGame\obj\Debug\PongGame.pdb
+D:\pong-game\PongGame\obj\Debug\PongGame.LobbyMultiplayer.resources

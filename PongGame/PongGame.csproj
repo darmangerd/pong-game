@@ -57,6 +57,12 @@
     <Compile Include="LobbyLocal.Designer.cs">
       <DependentUpon>LobbyLocal.cs</DependentUpon>
     </Compile>
+    <Compile Include="LobbyMultiplayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LobbyMultiplayer.Designer.cs">
+      <DependentUpon>LobbyMultiplayer.cs</DependentUpon>
+    </Compile>
     <Compile Include="LobbySolo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,6 +83,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LobbyLocal.resx">
       <DependentUpon>LobbyLocal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LobbyMultiplayer.resx">
+      <DependentUpon>LobbyMultiplayer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LobbySolo.resx">
       <DependentUpon>LobbySolo.cs</DependentUpon>

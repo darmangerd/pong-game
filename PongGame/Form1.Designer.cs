@@ -102,6 +102,7 @@
             this.btnMultiplayer.Text = "MULTIJOUEUR";
             this.btnMultiplayer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnMultiplayer.UseVisualStyleBackColor = false;
+            this.btnMultiplayer.Click += new System.EventHandler(this.btnMultiplayer_Click);
             // 
             // btnSinglePlayer
             // 

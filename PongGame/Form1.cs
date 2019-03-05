@@ -44,5 +44,12 @@ namespace PongGame
             LobbyLocal lobbyLocal = new LobbyLocal();
             lobbyLocal.Show();
         }
+
+        private void btnMultiplayer_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            LobbyMultiplayer lobbyMultiplayer = new LobbyMultiplayer();
+            lobbyMultiplayer.Show();
+        }
     }
 }
