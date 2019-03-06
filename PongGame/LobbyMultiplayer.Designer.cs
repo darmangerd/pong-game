@@ -46,6 +46,7 @@
             this.tbxIpClient = new System.Windows.Forms.TextBox();
             this.tbxIPServer = new System.Windows.Forms.TextBox();
             this.tmrCheck = new System.Windows.Forms.Timer(this.components);
+            this.btnCancelServer = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbxBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLine)).BeginInit();
@@ -246,6 +247,23 @@
             this.tmrCheck.Interval = 20;
             this.tmrCheck.Tick += new System.EventHandler(this.tmrCheck_Tick);
             // 
+            // btnCancelServer
+            // 
+            this.btnCancelServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(67)))), ((int)(((byte)(67)))));
+            this.btnCancelServer.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelServer.FlatAppearance.BorderSize = 0;
+            this.btnCancelServer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelServer.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelServer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(14)))), ((int)(((byte)(98)))));
+            this.btnCancelServer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelServer.Location = new System.Drawing.Point(116, 381);
+            this.btnCancelServer.Name = "btnCancelServer";
+            this.btnCancelServer.Size = new System.Drawing.Size(143, 44);
+            this.btnCancelServer.TabIndex = 44;
+            this.btnCancelServer.Text = "ANNULER";
+            this.btnCancelServer.UseVisualStyleBackColor = false;
+            this.btnCancelServer.Click += new System.EventHandler(this.btnCancelServer_Click);
+            // 
             // LobbyMultiplayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -267,6 +285,7 @@
             this.Controls.Add(this.tbxNamePlayer);
             this.Controls.Add(this.pbxExit);
             this.Controls.Add(this.pbxBack);
+            this.Controls.Add(this.btnCancelServer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "LobbyMultiplayer";
@@ -298,5 +317,6 @@
         private System.Windows.Forms.TextBox tbxIpClient;
         private System.Windows.Forms.TextBox tbxIPServer;
         private System.Windows.Forms.Timer tmrCheck;
+        private System.Windows.Forms.Button btnCancelServer;
     }
 }

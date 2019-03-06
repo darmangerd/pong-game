@@ -16,7 +16,8 @@ namespace PongGame
     public partial class LobbyMultiplayer : Form
     {
         Thread threadServer; //Thread créé lors du lancement de serveur
- 
+        //private volatile bool m_StopThread; //Utilisé pour stopper un thread proprement
+
         public LobbyMultiplayer()
         {
             InitializeComponent();
@@ -97,18 +98,23 @@ namespace PongGame
         /// </summary>
         private void StartServer()
         {
-            //Création du socket
-            SocketServer server = new SocketServer(tbxIPServer.Text);
 
-            server.Wait();
+            //while (m_StopThread)
+            //{
+                //Création du socket
+                SocketServer server = new SocketServer(tbxIPServer.Text);
 
-            //Envoie d'un message au client
-            server.Send("Connexion réussi !");
+                server.Wait();
 
-            server.Close();
+                //Envoie d'un message au client
+                server.Send("Connexion réussi !");
 
-            //Arrêt du thread
-            threadServer.Abort();
+                server.Close();
+
+                //Arrêt du thread
+                threadServer.Abort();
+            //}
+            
         }
         
         private void btnServer_Click(object sender, EventArgs e)
@@ -116,6 +122,9 @@ namespace PongGame
             //Vérifie si la le champs n'est pas vide ET que l'adresse IP donnée est valide
             if (!IsEmpty(tbxIPServer) && IsAddressValid(tbxIPServer.Text))
             {
+                btnServer.Visible = false;
+                btnCancelServer.Visible = true;
+                m_StopThread = true;
                 threadServer = new Thread(new ThreadStart(StartServer));                    
                 threadServer.Start();
                 tmrCheck.Start();
@@ -176,5 +185,13 @@ namespace PongGame
         }
 
         #endregion
+
+        private void btnCancelServer_Click(object sender, EventArgs e)
+        {
+            //m_StopThread = false;
+            //threadServer.Abort();
+            btnCancelServer.Visible = false;
+            btnServer.Visible=true;
+        }
     }
 }
