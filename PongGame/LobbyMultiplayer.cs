@@ -11,14 +11,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using EZSocket;
 
-
 namespace PongGame
 {
     public partial class LobbyMultiplayer : Form
     {
         Thread threadServer; //Thread créé lors du lancement de serveur
-        MessageBox messageBox; //MessageBox affiché lors du lancement du serveur en attente d'un client
-
+ 
         public LobbyMultiplayer()
         {
             InitializeComponent();
@@ -36,6 +34,19 @@ namespace PongGame
         }
 
         /// <summary>
+        /// Lancement de la partie.
+        /// </summary>
+        /// <param name="client">Permet de définir si le joueur est le client ou le serveur</param>
+        private void StartGame(bool client)
+        {
+            MultiplayerGame multiplayer = new MultiplayerGame(client);
+            multiplayer.Show();
+
+            //Commencement d'une partie en ligne
+            this.Close();
+        }
+
+        /// <summary>
         /// Test de la validation des champs (vides)
         /// </summary>
         /// <see cref="https://stackoverflow.com/questions/4202195/textbox-validation-in-a-windows-form"/>
@@ -50,6 +61,11 @@ namespace PongGame
             return false;
         }
 
+        /// <summary>
+        /// Retour sur le menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pbxBack_Click(object sender, EventArgs e)
         {
             //Bouton de retour sur le menu
@@ -58,6 +74,11 @@ namespace PongGame
             menu.Show();
         }
 
+        /// <summary>
+        /// Fermeture de l'application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pbxExit_Click(object sender, EventArgs e)
         {
             //confirmation de fermeture de l'application
@@ -68,6 +89,8 @@ namespace PongGame
                 Environment.Exit(1);
             }
         }
+
+        #region Processus de lancement pour le server
 
         /// <summary>
         /// Fonction utilisé dans le thread de lancement du serveur
@@ -80,73 +103,78 @@ namespace PongGame
             server.Wait();
 
             //Envoie d'un message au client
-            server.Send("salut tu es connecté (serveur)");
-
-            //Affichage du message reçu du client
-            //lblIpServer.Text = server.Receive().ToString();
+            server.Send("Connexion réussi !");
 
             server.Close();
 
             //Arrêt du thread
             threadServer.Abort();
         }
-
+        
         private void btnServer_Click(object sender, EventArgs e)
         {
-            if (!IsEmpty(tbxIPServer))
+            //Vérifie si la le champs n'est pas vide ET que l'adresse IP donnée est valide
+            if (!IsEmpty(tbxIPServer) && IsAddressValid(tbxIPServer.Text))
             {
-                if (IsAddressValid(tbxIPServer.Text))
-                {
-                    threadServer = new Thread(new ThreadStart(StartServer));
-                    threadServer.Start();
-                }
-                else
-                {
-                    MessageBox.Show("L'adresse IP entrée n'est pas valide");
-                }
+                threadServer = new Thread(new ThreadStart(StartServer));                    
+                threadServer.Start();
+                tmrCheck.Start();
             }
             else
             {
-                MessageBox.Show("Le champ Adresse IP du serveur est vide.");
+                MessageBox.Show("Le champ Adresse IP du serveur est vide ou n'est pas valide");
             }
 
         }
+
+        private void tmrCheck_Tick(object sender, EventArgs e)
+        {
+            if (!threadServer.IsAlive)
+            {
+                StartGame(false);
+                tmrCheck.Stop();
+                tmrCheck.Dispose();
+            }
+        }
+
+        #endregion
+
+        #region Processus de lancement pour le client
 
         private void btnClient_Click(object sender, EventArgs e)
         {
-            if (!IsEmpty(tbxIpClient))
+            //Vérifie si la le champs n'est pas vide ET que l'adresse IP donnée est valide
+            if (!IsEmpty(tbxIpClient) && IsAddressValid(tbxIpClient.Text))
             {
-                if (IsAddressValid(tbxIpClient.Text))
+                try
                 {
-                    try
-                    {
-                        //Création du socket
-                        SocketClient client = new SocketClient(tbxIpClient.Text);
+                    //Création du socket
+                    SocketClient client = new SocketClient(tbxIpClient.Text);
 
-                        client.Connect();
+                    client.Connect();
 
-                        //Affichage du message reçu du serveur
-                        lblIpClient.Text = client.Receive().ToString();
+                    //Affichage du message reçu du serveur
+                    lblIpClient.Text = client.Receive().ToString();
 
-                        //Envoie d'un message au serveur
-                        client.Send("Salut je suis connecté (client)");
+                    //Envoie d'un message au serveur
+                    client.Send("Connexion réussi !");
 
-                        client.Close();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Impossible de contacter le serveur");
-                    }
+                    client.Close();
+
+                    //Commencement d'une partie en ligne
+                    StartGame(true);
                 }
-                else
+                catch
                 {
-                    MessageBox.Show("L'adresse IP entrée n'est pas valide");
+                    MessageBox.Show("Impossible de contacter le serveur");
                 }
             }
             else
             {
-                MessageBox.Show("Le champ Adresse IP du client est vide.");
+                MessageBox.Show("Le champ Adresse IP du client est vide ou n'est pas valide");
             }
         }
+
+        #endregion
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LobbyMultiplayer));
             this.pbxBack = new System.Windows.Forms.PictureBox();
             this.pbxExit = new System.Windows.Forms.PictureBox();
@@ -44,6 +45,7 @@
             this.btnClient = new System.Windows.Forms.Button();
             this.tbxIpClient = new System.Windows.Forms.TextBox();
             this.tbxIPServer = new System.Windows.Forms.TextBox();
+            this.tmrCheck = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbxBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxExit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLine)).BeginInit();
@@ -53,10 +55,9 @@
             // 
             this.pbxBack.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbxBack.Image = ((System.Drawing.Image)(resources.GetObject("pbxBack.Image")));
-            this.pbxBack.Location = new System.Drawing.Point(8, 7);
-            this.pbxBack.Margin = new System.Windows.Forms.Padding(4);
+            this.pbxBack.Location = new System.Drawing.Point(6, 6);
             this.pbxBack.Name = "pbxBack";
-            this.pbxBack.Size = new System.Drawing.Size(41, 41);
+            this.pbxBack.Size = new System.Drawing.Size(31, 33);
             this.pbxBack.TabIndex = 21;
             this.pbxBack.TabStop = false;
             this.pbxBack.Click += new System.EventHandler(this.pbxBack_Click);
@@ -66,10 +67,9 @@
             this.pbxExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
             this.pbxExit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbxExit.Image = global::PongGame.Properties.Resources.cross;
-            this.pbxExit.Location = new System.Drawing.Point(1003, 10);
-            this.pbxExit.Margin = new System.Windows.Forms.Padding(4);
+            this.pbxExit.Location = new System.Drawing.Point(752, 8);
             this.pbxExit.Name = "pbxExit";
-            this.pbxExit.Size = new System.Drawing.Size(45, 41);
+            this.pbxExit.Size = new System.Drawing.Size(34, 33);
             this.pbxExit.TabIndex = 22;
             this.pbxExit.TabStop = false;
             this.pbxExit.Click += new System.EventHandler(this.pbxExit_Click);
@@ -79,10 +79,9 @@
             this.lblSurnamePlayer.AutoSize = true;
             this.lblSurnamePlayer.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSurnamePlayer.ForeColor = System.Drawing.Color.White;
-            this.lblSurnamePlayer.Location = new System.Drawing.Point(570, 61);
-            this.lblSurnamePlayer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSurnamePlayer.Location = new System.Drawing.Point(428, 50);
             this.lblSurnamePlayer.Name = "lblSurnamePlayer";
-            this.lblSurnamePlayer.Size = new System.Drawing.Size(133, 37);
+            this.lblSurnamePlayer.Size = new System.Drawing.Size(104, 30);
             this.lblSurnamePlayer.TabIndex = 26;
             this.lblSurnamePlayer.Text = "PRÉNOM";
             // 
@@ -92,11 +91,10 @@
             this.tbxSurnamePlayer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbxSurnamePlayer.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbxSurnamePlayer.ForeColor = System.Drawing.Color.White;
-            this.tbxSurnamePlayer.Location = new System.Drawing.Point(577, 102);
-            this.tbxSurnamePlayer.Margin = new System.Windows.Forms.Padding(4);
+            this.tbxSurnamePlayer.Location = new System.Drawing.Point(433, 83);
             this.tbxSurnamePlayer.MaxLength = 10;
             this.tbxSurnamePlayer.Name = "tbxSurnamePlayer";
-            this.tbxSurnamePlayer.Size = new System.Drawing.Size(260, 32);
+            this.tbxSurnamePlayer.Size = new System.Drawing.Size(195, 26);
             this.tbxSurnamePlayer.TabIndex = 25;
             this.tbxSurnamePlayer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -105,10 +103,9 @@
             this.lblNamePlayer.AutoSize = true;
             this.lblNamePlayer.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNamePlayer.ForeColor = System.Drawing.Color.White;
-            this.lblNamePlayer.Location = new System.Drawing.Point(170, 61);
-            this.lblNamePlayer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNamePlayer.Location = new System.Drawing.Point(128, 50);
             this.lblNamePlayer.Name = "lblNamePlayer";
-            this.lblNamePlayer.Size = new System.Drawing.Size(84, 37);
+            this.lblNamePlayer.Size = new System.Drawing.Size(66, 30);
             this.lblNamePlayer.TabIndex = 24;
             this.lblNamePlayer.Text = "NOM";
             // 
@@ -118,11 +115,10 @@
             this.tbxNamePlayer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbxNamePlayer.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbxNamePlayer.ForeColor = System.Drawing.Color.White;
-            this.tbxNamePlayer.Location = new System.Drawing.Point(177, 102);
-            this.tbxNamePlayer.Margin = new System.Windows.Forms.Padding(4);
+            this.tbxNamePlayer.Location = new System.Drawing.Point(133, 83);
             this.tbxNamePlayer.MaxLength = 10;
             this.tbxNamePlayer.Name = "tbxNamePlayer";
-            this.tbxNamePlayer.Size = new System.Drawing.Size(260, 32);
+            this.tbxNamePlayer.Size = new System.Drawing.Size(195, 26);
             this.tbxNamePlayer.TabIndex = 23;
             this.tbxNamePlayer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -131,10 +127,9 @@
             this.lblIpServer.AutoSize = true;
             this.lblIpServer.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblIpServer.ForeColor = System.Drawing.Color.White;
-            this.lblIpServer.Location = new System.Drawing.Point(89, 345);
-            this.lblIpServer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblIpServer.Location = new System.Drawing.Point(67, 280);
             this.lblIpServer.Name = "lblIpServer";
-            this.lblIpServer.Size = new System.Drawing.Size(165, 37);
+            this.lblIpServer.Size = new System.Drawing.Size(129, 30);
             this.lblIpServer.TabIndex = 29;
             this.lblIpServer.Text = "ADRESSE IP";
             // 
@@ -143,14 +138,13 @@
             this.lblTitleServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(14)))), ((int)(((byte)(98)))));
             this.lblTitleServer.FlatAppearance.BorderSize = 5;
             this.lblTitleServer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblTitleServer.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitleServer.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitleServer.ForeColor = System.Drawing.Color.White;
-            this.lblTitleServer.Location = new System.Drawing.Point(93, 202);
-            this.lblTitleServer.Margin = new System.Windows.Forms.Padding(4);
+            this.lblTitleServer.Location = new System.Drawing.Point(70, 164);
             this.lblTitleServer.Name = "lblTitleServer";
-            this.lblTitleServer.Size = new System.Drawing.Size(333, 86);
+            this.lblTitleServer.Size = new System.Drawing.Size(250, 70);
             this.lblTitleServer.TabIndex = 31;
-            this.lblTitleServer.Text = "SERVEUR";
+            this.lblTitleServer.Text = "CRÉER UNE SALLE";
             this.lblTitleServer.UseVisualStyleBackColor = false;
             // 
             // lblTitleClient
@@ -158,23 +152,21 @@
             this.lblTitleClient.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(137)))), ((int)(((byte)(250)))));
             this.lblTitleClient.FlatAppearance.BorderSize = 5;
             this.lblTitleClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblTitleClient.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitleClient.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitleClient.ForeColor = System.Drawing.Color.White;
-            this.lblTitleClient.Location = new System.Drawing.Point(606, 202);
-            this.lblTitleClient.Margin = new System.Windows.Forms.Padding(4);
+            this.lblTitleClient.Location = new System.Drawing.Point(454, 164);
             this.lblTitleClient.Name = "lblTitleClient";
-            this.lblTitleClient.Size = new System.Drawing.Size(333, 86);
+            this.lblTitleClient.Size = new System.Drawing.Size(250, 70);
             this.lblTitleClient.TabIndex = 30;
-            this.lblTitleClient.Text = "CLIENT";
+            this.lblTitleClient.Text = "REJOINDRE UNE SALLE";
             this.lblTitleClient.UseVisualStyleBackColor = false;
             // 
             // pbxLine
             // 
             this.pbxLine.BackColor = System.Drawing.Color.White;
-            this.pbxLine.Location = new System.Drawing.Point(513, 311);
-            this.pbxLine.Margin = new System.Windows.Forms.Padding(4);
+            this.pbxLine.Location = new System.Drawing.Point(385, 136);
             this.pbxLine.Name = "pbxLine";
-            this.pbxLine.Size = new System.Drawing.Size(9, 181);
+            this.pbxLine.Size = new System.Drawing.Size(7, 303);
             this.pbxLine.TabIndex = 32;
             this.pbxLine.TabStop = false;
             // 
@@ -183,10 +175,9 @@
             this.lblIpClient.AutoSize = true;
             this.lblIpClient.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblIpClient.ForeColor = System.Drawing.Color.White;
-            this.lblIpClient.Location = new System.Drawing.Point(600, 345);
-            this.lblIpClient.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblIpClient.Location = new System.Drawing.Point(450, 280);
             this.lblIpClient.Name = "lblIpClient";
-            this.lblIpClient.Size = new System.Drawing.Size(165, 37);
+            this.lblIpClient.Size = new System.Drawing.Size(129, 30);
             this.lblIpClient.TabIndex = 38;
             this.lblIpClient.Text = "ADRESSE IP";
             // 
@@ -199,10 +190,9 @@
             this.btnServer.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnServer.ForeColor = System.Drawing.Color.White;
             this.btnServer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnServer.Location = new System.Drawing.Point(155, 469);
-            this.btnServer.Margin = new System.Windows.Forms.Padding(4);
+            this.btnServer.Location = new System.Drawing.Point(116, 381);
             this.btnServer.Name = "btnServer";
-            this.btnServer.Size = new System.Drawing.Size(191, 54);
+            this.btnServer.Size = new System.Drawing.Size(143, 44);
             this.btnServer.TabIndex = 40;
             this.btnServer.Text = "JOUER";
             this.btnServer.UseVisualStyleBackColor = false;
@@ -217,10 +207,9 @@
             this.btnClient.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClient.ForeColor = System.Drawing.Color.White;
             this.btnClient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClient.Location = new System.Drawing.Point(677, 469);
-            this.btnClient.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClient.Location = new System.Drawing.Point(508, 381);
             this.btnClient.Name = "btnClient";
-            this.btnClient.Size = new System.Drawing.Size(191, 54);
+            this.btnClient.Size = new System.Drawing.Size(143, 44);
             this.btnClient.TabIndex = 41;
             this.btnClient.Text = "JOUER";
             this.btnClient.UseVisualStyleBackColor = false;
@@ -232,11 +221,10 @@
             this.tbxIpClient.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbxIpClient.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbxIpClient.ForeColor = System.Drawing.Color.White;
-            this.tbxIpClient.Location = new System.Drawing.Point(607, 386);
-            this.tbxIpClient.Margin = new System.Windows.Forms.Padding(4);
+            this.tbxIpClient.Location = new System.Drawing.Point(455, 314);
             this.tbxIpClient.MaxLength = 0;
             this.tbxIpClient.Name = "tbxIpClient";
-            this.tbxIpClient.Size = new System.Drawing.Size(332, 32);
+            this.tbxIpClient.Size = new System.Drawing.Size(249, 26);
             this.tbxIpClient.TabIndex = 42;
             this.tbxIpClient.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -246,20 +234,24 @@
             this.tbxIPServer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbxIPServer.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbxIPServer.ForeColor = System.Drawing.Color.White;
-            this.tbxIPServer.Location = new System.Drawing.Point(93, 386);
-            this.tbxIPServer.Margin = new System.Windows.Forms.Padding(4);
+            this.tbxIPServer.Location = new System.Drawing.Point(70, 314);
             this.tbxIPServer.MaxLength = 0;
             this.tbxIPServer.Name = "tbxIPServer";
-            this.tbxIPServer.Size = new System.Drawing.Size(332, 32);
+            this.tbxIPServer.Size = new System.Drawing.Size(249, 26);
             this.tbxIPServer.TabIndex = 43;
             this.tbxIPServer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // tmrCheck
+            // 
+            this.tmrCheck.Interval = 20;
+            this.tmrCheck.Tick += new System.EventHandler(this.tmrCheck_Tick);
+            // 
             // LobbyMultiplayer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.ClientSize = new System.Drawing.Size(1055, 573);
+            this.ClientSize = new System.Drawing.Size(791, 466);
             this.Controls.Add(this.tbxIPServer);
             this.Controls.Add(this.tbxIpClient);
             this.Controls.Add(this.btnClient);
@@ -276,6 +268,7 @@
             this.Controls.Add(this.pbxExit);
             this.Controls.Add(this.pbxBack);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "LobbyMultiplayer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LobbyMultiplayer";
@@ -304,5 +297,6 @@
         private System.Windows.Forms.Button btnClient;
         private System.Windows.Forms.TextBox tbxIpClient;
         private System.Windows.Forms.TextBox tbxIPServer;
+        private System.Windows.Forms.Timer tmrCheck;
     }
 }

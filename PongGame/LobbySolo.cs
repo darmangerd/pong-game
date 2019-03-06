@@ -74,7 +74,7 @@ namespace PongGame
 
                 #endregion
 
-                //Bouton de commencement de partie
+                //Commencement de partie
                 this.Hide();
                 SoloGame solo = new SoloGame(tbxName.Text, "IA", tblId, false);
                 solo.Show();

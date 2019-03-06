@@ -195,6 +195,7 @@ namespace PongGame
         /// <param name="e"></param>
         private void SoloGame_KeyUp(object sender, KeyEventArgs e)
         {
+            //OPTIMISATION - FAIRE UN SWITCH
             //Déplacement du joueur 1
             if (e.KeyCode == Keys.W)
             {
