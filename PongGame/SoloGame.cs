@@ -259,6 +259,7 @@ namespace PongGame
 
             #region Marquage de la balle
 
+            //OPTIMISATION - FAIRE UNE FONCTION
             // Si la balle est marqué à gauche
             if (pbxBalle.Left < LEFT_BOX)
             {
@@ -296,6 +297,7 @@ namespace PongGame
                 ball.y = -ball.y;
             }
 
+            //OPTIMISATION - FAIRE UNE FONCTION
             //Si la balle touche un des joueurs
             //if (pbxBalle.Bounds.IntersectsWith(pbxPlayer1.Bounds) || pbxBalle.Bounds.IntersectsWith(pbxPlayer2.Bounds))
             if (pbxBalle.Bounds.IntersectsWith(pbxPlayer1.Bounds))
@@ -320,7 +322,7 @@ namespace PongGame
             #endregion
 
             #region Déplacement du joueur 1
-
+            //OPTIMISATION - FAIRE UNE FONCTION
             //Si le déplacement vers le haut est autorisé et que le joueur se trouve avant la limite supérieure
             if (tblPlayers[0].MoveUp == true && pbxPlayer1.Top > TOP_BOX)
             {
@@ -357,7 +359,7 @@ namespace PongGame
             #endregion
 
             #region Fin de la partie
-
+            //OPTIMISATION - FAIRE UNE FONCTION
             // Gagner avec 2 Points de différence
             if (tblPlayers[0].Score == iPoints && tblPlayers[1].Score >= iPoints-1)
             {

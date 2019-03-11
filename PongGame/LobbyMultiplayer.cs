@@ -15,9 +15,7 @@ namespace PongGame
 {
     public partial class LobbyMultiplayer : Form
     {
-        Thread threadServer; //Thread créé lors du lancement de serveur
-        private volatile bool m_StopThread; //Utilisé pour stopper un thread proprement (volatile permet au compileur de savoir qu'il sera accedé par plusieurs threads)
-        
+        Thread threadServer; //Thread créé lors du lancement de serveur        
 
         public LobbyMultiplayer()
         {
@@ -27,7 +25,7 @@ namespace PongGame
         /// <summary>
         /// Vérifie si le texte reçu est une adresse IP valide
         /// </summary>
-        /// <param name="addrString"></param>
+        /// <param name="addrString">Adresse IP entré</param>
         /// <returns></returns>
         public bool IsAddressValid(string strAddress)
         {
@@ -41,7 +39,20 @@ namespace PongGame
         /// <param name="client">Permet de définir si le joueur est le client ou le serveur</param>
         private void StartGame(bool client)
         {
+            //Commencement d'une partie en ligne
             MultiplayerGame multiplayer = new MultiplayerGame(client);
+            multiplayer.Show();
+            this.Close();
+            this.Dispose();
+        }
+
+        /// <summary>
+        /// Lancement de la partie.
+        /// </summary>
+        /// <param name="client">Permet de définir si le joueur est le client ou le serveur</param>
+        private void StartGame(bool client, string ipServer)
+        {
+            MultiplayerGame multiplayer = new MultiplayerGame(client, ipServer);
             multiplayer.Show();
 
             //Commencement d'une partie en ligne
@@ -99,23 +110,20 @@ namespace PongGame
         /// </summary>
         private void StartServer()
         {
+            //Création du socket
+            SocketServer server = new SocketServer(tbxIPServer.Text);
 
-            while (!m_StopThread)
-            {
-                //Création du socket
-                SocketServer server = new SocketServer(tbxIPServer.Text);
+            server.Wait();
 
-                server.Wait();
+            //Envoie d'un message au client
+            server.Send("Connexion réussi !");
 
-                //Envoie d'un message au client
-                server.Send("Connexion réussi !");
+            //strIpClient = server.Receive().ToString();
 
-                server.Close();
+            server.Close();
 
-                //Arrêt du thread
-                threadServer.Abort();
-            }
-            
+            //Arrêt du thread
+            threadServer.Abort();            
         }
         
         private void btnServer_Click(object sender, EventArgs e)
@@ -125,7 +133,6 @@ namespace PongGame
             {
                 btnServer.Visible = false;
                 btnCancelServer.Visible = true;
-                m_StopThread = false;
                 threadServer = new Thread(new ThreadStart(StartServer));
                 threadServer.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
                 threadServer.Start();
@@ -142,9 +149,9 @@ namespace PongGame
         {
             if (!threadServer.IsAlive)
             {
-                StartGame(false);
                 tmrCheck.Stop();
                 tmrCheck.Dispose();
+                StartGame(false,tbxIPServer.Text);
             }
         }
 
@@ -170,6 +177,7 @@ namespace PongGame
                     //Envoie d'un message au serveur
                     client.Send("Connexion réussi !");
 
+
                     client.Close();
 
                     //Commencement d'une partie en ligne
@@ -190,7 +198,6 @@ namespace PongGame
 
         private void btnCancelServer_Click(object sender, EventArgs e)
         {
-            m_StopThread = true;
             btnCancelServer.Visible = false;
             btnServer.Visible=true;
         }
