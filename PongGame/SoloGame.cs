@@ -13,7 +13,8 @@ namespace PongGame
 {
     public partial class SoloGame : Form
     {
-        //Taille (position) du terrain de jeux
+        #region Déclaration des constantes
+
         const int TOP_BOX = 38; //Position de la limite du haut du terrain
         const int BOTTOM_BOX = 576; //Position de la limite du bas du terrain
         const int LEFT_BOX = 170; //Position de la limite gauche du terrain
@@ -22,57 +23,52 @@ namespace PongGame
         const int MIDDLE_Y_BOX = 260; //Position moitié vertical du terrain
         const int POINTS = 3; //Nombre de points par set
 
-        bool bTwoPlayer; //Si la partie est en mode 2 joueur
-        bool bGoUpPlayer1; //Detection du déplacement vers le haut du joueur 1
-        bool bGoDownPlayer1; //Detection du déplacement vers le bas du joueur 1
-        bool bGoUpPlayer2; //Detection du déplacement vers le haut du joueur 2
-        bool bGoDownPlayer2; //Detection du déplacement vers le bas du joueur 2
+        #endregion
+
+        #region Déclaration des variables
+
+        bool bTwoPlayer; //Si la partie est en mode 2 joueur (utilisateur contre utilisateur)
         bool bRestartGame = false; //Utilisé pour vérifier si on recommence une partie
         int iPoints = POINTS; //Nombre de points par set
         int iSpeed = 9; //Déplacement de l'IA
-        int iBallx = 5; //Vitesse de déplacement de la balle en vertical x
-        int iBally = 5; //Vitesse de déplacement de la balle en horizontal y
         int iStartCount = 3; //Compteur de comencement de la partie
-        int iScorePlayer1 = 0; //Score du joueur 1
-        int iScorePlayer2 = 0; //Score du joueur 2 ou de l'IA
-        int iSetPlayer1 = 0; //Set gagné par le joueur 1
-        int iSetPlayer2 = 0; //Set gagné par le joueur 2 ou l'IA
         int iSet = 1; //Set actuel
         int iIdGame; //ID de la partie dans la base de donnée
-        int[] tblIDPlayers = new int[2];
-        string strPlayer1Name = ""; //Nom du joueur 1
-        string strPlayer2Name = ""; //Nom du joueur 2
         string strQuerySelectId = "Select @@Identity"; //Permettra de récupérer l'ID d'une partie lors de l'ajout dans la BDD
+        Ball ball = new Ball(5, 5); //Vitesse de la balle
         Random random = new Random(); //Variable pour déplacement aléatoire de L'IA
+        Player[] tblPlayers = new Player[2] {new Player(), new Player() }; //Tableau de joueurs
+
+        #endregion
 
 
         public SoloGame(string strPlayer1_name, string strPlayer2_name, string[] tblID, bool bTwoPlayers)
         {
             InitializeComponent();
-            strPlayer1Name = strPlayer1_name; //Nom du joueur 1 entré dans le lobby
-            strPlayer2Name = strPlayer2_name; //Nom du joueur 2 entré dans le lobby ou de l'IA
+            tblPlayers[0].Name = strPlayer1_name; //Nom du joueur 1 entré dans le lobby
+            tblPlayers[1].Name = strPlayer2_name; //Nom du joueur 2 entré dans le lobby ou de l'IA
             bTwoPlayer = bTwoPlayers; //2 Joueur ou 1 joueur contre 1 IA
-            lblNamePlayer1.Text = strPlayer1Name; //Affichage du nom du joueur 1 sur l'écran
-            lblNamePlayer2.Text = strPlayer2Name; //Affichage du nom du joueur 2 sur l'écran
+            lblNamePlayer1.Text = tblPlayers[0].Name; //Affichage du nom du joueur 1 sur l'écran
+            lblNamePlayer2.Text = tblPlayers[1].Name; //Affichage du nom du joueur 2 sur l'écran
 
             //Récupération des IDs des joueurs provenant de la base de données
             for (int i=0; i <= 1; i++)
             {
-                tblIDPlayers[i] = Convert.ToInt32(tblID[i]);
+                tblPlayers[i].Id = Convert.ToInt32(tblID[i]);
             }
 
             //Ajout de la partie dans la base de donnée
-            AddGamesInBDD(tblIDPlayers);
+            AddGamesInBDD(tblPlayers[0].Id, tblPlayers[1].Id);
         }
 
-        private void AddGamesInBDD(int[] tblID)
+        private void AddGamesInBDD(int IDJoueur1, int IDJoueur2)
         {
             //Connexion à la base de données
             OleDbConnection con = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0;Data Source=\\s2lfile3.s2.rpn.ch\CPLNpublic\Classes\ET\INF-HP\4INF-HP-M\module ict-153\dbScores.accdb");
             OleDbCommand cmd = con.CreateCommand();
             con.Open();
             //Requête SQL envoyé au serveur
-            cmd.CommandText = "INSERT into tblGames ( num_tblUsers1, num_tblUsers2, dateDebut, heureDebut ) VALUES ('" + Convert.ToInt32(tblID[0]) + "','" + Convert.ToInt32(tblID[1]) + "', '" + DateTime.Today.Day + "." + DateTime.Today.Month + "." + DateTime.Today.Year + "', '" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + "')";
+            cmd.CommandText = "INSERT into tblGames ( num_tblUsers1, num_tblUsers2, dateDebut, heureDebut ) VALUES ('" + IDJoueur1 + "','" + IDJoueur2 + "', '" + DateTime.Today.Day + "." + DateTime.Today.Month + "." + DateTime.Today.Year + "', '" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + "')";
             cmd.Connection = con;
             cmd.ExecuteNonQuery();
             //Récupération de l'ID de la partie qui vient d'être ajouté dans la BDD. Source de la solution : https://stackoverflow.com/questions/7230200/how-to-get-the-last-record-number-after-inserting-record-to-database-in-access
@@ -87,10 +83,10 @@ namespace PongGame
         /// </summary>
         private void SetScoreOnScreen()
         {
-            lblPlayer1Score.Text = "" + iScorePlayer1; //Score du joueur 1
-            lblPlayer2Score.Text = "" + iScorePlayer2; //Score du joueur 2
-            lblSetPlayer1.Text = "" + iSetPlayer1; //Set gagné par le joueur 1
-            lblSetPlayer2.Text = "" + iSetPlayer2; //Set gagné par le joueur 2
+            lblPlayer1Score.Text = "" + tblPlayers[0].Score; //Score du joueur 1
+            lblPlayer2Score.Text = "" + tblPlayers[1].Score; //Score du joueur 2
+            lblSetPlayer1.Text = "" + tblPlayers[0].WinSet; //Set gagné par le joueur 1
+            lblSetPlayer2.Text = "" + tblPlayers[1].WinSet; //Set gagné par le joueur 2
         }
 
         /// <summary>
@@ -104,7 +100,7 @@ namespace PongGame
             OleDbCommand cmd = con.CreateCommand();
             con.Open();
             //Requête SQL envoyé au serveur
-            cmd.CommandText = "INSERT INTO tblSets ( num_tblGames, scoreJoueur1, scoreJoueur2, numeroSet ) VALUES ('" + iIdGame + "','" + iScorePlayer1 + "', '" + iScorePlayer2 +  "', '" + iSet + "')";
+            cmd.CommandText = "INSERT INTO tblSets ( num_tblGames, scoreJoueur1, scoreJoueur2, numeroSet ) VALUES ('" + iIdGame + "','" + tblPlayers[0].Score + "', '" + tblPlayers[1].Score +  "', '" + iSet + "')";
             cmd.Connection = con;
             cmd.ExecuteNonQuery();
             con.Close();
@@ -141,9 +137,12 @@ namespace PongGame
         private void RestartGame()
         {
             iPoints = POINTS;
-            iScorePlayer1 = 0; //Remise du score du joueur 1 à zéro
-            iScorePlayer2 = 0; //Remise du score du joueur 2 ou IA à zéro
-            iBallx = 5; //Vitesse par défaut de la balle
+            //Remise du score des joueurs à zéro
+            for (int i=0; i < tblPlayers.Length; i++)
+            {
+                tblPlayers[i].Score = 0;
+            }
+            ball.x = 5; //Vitesse par défaut de la balle
             iStartCount = 3; //Décompte avant le début de la partie
             lblStarTimer.Visible = true; //Label du compteur visible
             lblStarTimer.Text = iStartCount.ToString(); //Affichage du nombre du décompte
@@ -156,65 +155,55 @@ namespace PongGame
             tmrStart.Start();
         }
 
-        #region Touches de déplacement du joueur 1
+        #region Touches de déplacement
 
         /// <summary>
-        /// Lorsque l'utilisateur appuie la touche UP/DOWN du clavier
+        /// Lorsque l'utilisateur appuie ou relâche une touche de déplacement du clavier
+        /// </summary>
+        /// <param name="movePlayers">//Detection de la posibilité de déplacement vers le haut/bas des joueurs</param>
+        /// <param name="bKeyDown">Touche appuyé = true ou relaché = false</param>
+        private void KeyMove(Player[] tblPlayers, bool bKeyDown, KeyEventArgs e)
+        {
+            switch(e.KeyCode)
+            {
+                //Déplacement du joueur 1
+                case Keys.W:
+                    tblPlayers[0].MoveUp = bKeyDown;
+                    break;
+
+                case Keys.S:
+                    tblPlayers[0].MoveDown = bKeyDown;
+                    break;
+
+                //Déplacement du joueur 2
+                case Keys.Up:
+                    tblPlayers[1].MoveUp = bKeyDown;
+                    break;
+
+                case Keys.Down:
+                    tblPlayers[1].MoveDown = bKeyDown;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Lorsque l'utilisateur appuie sur une touche de déplacement du clavier
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SoloGame_KeyDown(object sender, KeyEventArgs e)
         {
-            //Déplacement du joueur 1
-            if (e.KeyCode == Keys.W)
-            {
-                bGoUpPlayer1 = true;
-            }
-            else if (e.KeyCode == Keys.S)
-            {
-                bGoDownPlayer1 = true;
-            }
-
-            //Déplacement du joueur 2
-            if (e.KeyCode == Keys.Up)
-            {
-                //UP
-                bGoUpPlayer2 = true;
-            }
-            else if (e.KeyCode == Keys.Down)
-            {
-                //DOWN
-                bGoDownPlayer2 = true;
-            }
+            KeyMove(tblPlayers, true, e);
         }
 
         /// <summary>
-        /// Lorsque l'utilisateur relâche la touche UP/DOWN du clavier
+        /// Lorsque l'utilisateur relâche une touche de déplacement du clavier
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SoloGame_KeyUp(object sender, KeyEventArgs e)
         {
-            //OPTIMISATION - FAIRE UN SWITCH
-            //Déplacement du joueur 1
-            if (e.KeyCode == Keys.W)
-            {
-                bGoUpPlayer1 = false;
-            }
-            else if (e.KeyCode == Keys.S)
-            {
-                bGoDownPlayer1 = false;
-            }
-
-            //Déplacement du joueur 2
-            if (e.KeyCode == Keys.Up)
-            {
-                bGoUpPlayer2 = false;
-            }
-            else if (e.KeyCode == Keys.Down)
-            {
-                bGoDownPlayer2 = false;
-            }
+            KeyMove(tblPlayers, false, e);
         }
 
         #endregion
@@ -232,8 +221,8 @@ namespace PongGame
             //Déplacement Horizontal et vertical de la balle. 
             // -= augmente la vitesse de la balle vers la gauche et le haut de l'écran
             // += augmente la vitesse de la balle vers la droite et le bas de l'écran
-            pbxBalle.Top -= iBally; //Position Y
-            pbxBalle.Left -= iBallx; //Position X
+            pbxBalle.Top -= ball.y; //axe Y
+            pbxBalle.Left -= ball.x; //axe X
 
             #region IA
 
@@ -250,7 +239,7 @@ namespace PongGame
                 }
 
                 //VERSION AVEC IA - PAS FONCTIONNEL POUR L'INSTANT
-                /*if (iScorePlayer1 < 5)
+                /*if (tblPlayers[0].Score < 5)
                 {
                     //Si le CPU atteint le top ou le bas de l'écran
                     if (pbxPlayer2.Top < 0 || pbxPlayer2.Top > 480)
@@ -277,11 +266,11 @@ namespace PongGame
                 pbxBalle.Left = MIDDLE_X_BOX;
                 //TODO - Reposition Y
                 //Change la balle de direction
-                iBallx = -iBallx;
+                ball.x = -ball.x;
                 //+1 au score du joueur 2 (droite)
-                iScorePlayer2++;
+                tblPlayers[1].Score++;
                 /* On baisse la vitesse de la balle
-                iBallx = -8; */
+                ball.x = -8; */
             }
             //Si la balle est marqué à droite
             else if (pbxBalle.Left + pbxBalle.Width > RIGHT_BOX)
@@ -289,11 +278,11 @@ namespace PongGame
                 //Reposition de la balle au milieu de l'écran
                 pbxBalle.Left = MIDDLE_X_BOX;
                 //Change la balle de direction
-                iBallx = -iBallx;
-                //+1 au score du joueur 2 (droite)
-                iScorePlayer1++;
+                ball.x = -ball.x;
+                //+1 au score du joueur 1 (gauche)
+                tblPlayers[0].Score++;
                 /* On baisse la vitesse de la balle
-                iBallx = +8; */
+                ball.x = +8; */
             }
 
             #endregion
@@ -304,7 +293,7 @@ namespace PongGame
             if (pbxBalle.Top < TOP_BOX || pbxBalle.Top + pbxBalle.Height > BOTTOM_BOX)
             {
                 //On change la direction de la balle
-                iBally = -iBally;
+                ball.y = -ball.y;
             }
 
             //Si la balle touche un des joueurs
@@ -314,18 +303,18 @@ namespace PongGame
                 //Problème de collision
                 pbxBalle.Left += 4;
                 //On change la direction de la balle
-                iBallx = -iBallx;
+                ball.x = -ball.x;
                 /*Augmente la vitesse de la balle
-                iBallx -= 1; */
+                ball.x -= 1; */
             }
             else if (pbxBalle.Bounds.IntersectsWith(pbxPlayer2.Bounds))
             {
                 //Problème de collision
                 pbxBalle.Left -= 4;
                 //On change la direction de la balle
-                iBallx = -iBallx;
+                ball.x = -ball.x;
                 /*Augmente la vitesse de la balle
-                iBallx += 1;*/
+               ball.x += 1;*/
             }
 
             #endregion
@@ -333,13 +322,13 @@ namespace PongGame
             #region Déplacement du joueur 1
 
             //Si le déplacement vers le haut est autorisé et que le joueur se trouve avant la limite supérieure
-            if (bGoUpPlayer1 == true && pbxPlayer1.Top > TOP_BOX)
+            if (tblPlayers[0].MoveUp == true && pbxPlayer1.Top > TOP_BOX)
             {
                 //Déplacement vers le haut
                 pbxPlayer1.Top -= 8;
             }
             //Si le déplacement vers le bas est autorisé et que le joueur se trouve avant la limite inférieure
-            if (bGoDownPlayer1 == true && pbxPlayer1.Top < 452)
+            if (tblPlayers[0].MoveDown == true && pbxPlayer1.Top < 452)
             {
                 //Déplacement vers le bas
                 pbxPlayer1.Top += 8;
@@ -351,14 +340,14 @@ namespace PongGame
 
             if (bTwoPlayer)
             {
-                //Si le déplacement vers le haut est autorisé et que le joueur se trouve avant la limite supérieure
-                if (bGoUpPlayer2 == true && pbxPlayer2.Top > TOP_BOX)
+                //Si le déplacement vers le bas est autorisé et que le joueur se trouve avant la limite supérieure
+                if (tblPlayers[1].MoveUp == true && pbxPlayer2.Top > TOP_BOX)
                 {
                     //Déplacement vers le haut
                     pbxPlayer2.Top -= 8;
                 }
                 //Si le déplacement vers le bas est autorisé et que le joueur se trouve avant la limite inférieure
-                if (bGoDownPlayer2 == true && pbxPlayer2.Top < 452)
+                if (tblPlayers[1].MoveDown == true && pbxPlayer2.Top < 452)
                 {
                     //Déplacement vers le bas
                     pbxPlayer2.Top += 8;
@@ -369,64 +358,61 @@ namespace PongGame
 
             #region Fin de la partie
 
-            //2 Points de différence
-            if (iScorePlayer1 == iPoints && iScorePlayer2 >= iPoints-1)
+            // Gagner avec 2 Points de différence
+            if (tblPlayers[0].Score == iPoints && tblPlayers[1].Score >= iPoints-1)
             {
                 iPoints++;
             }
-            else if (iScorePlayer2 == iPoints && iScorePlayer1 >= iPoints - 1)
+            else if (tblPlayers[1].Score == iPoints && tblPlayers[0].Score >= iPoints - 1)
             {
                 iPoints++;
             }
 
-            //OPTIMISATION - Faire une fonction
             //Si le joueur 1 atteint le nombre de points pour gagner
-            if (iScorePlayer1 >= iPoints)
+            if (tblPlayers[0].Score >= iPoints)
             {
-                iSetPlayer1++;
+                tblPlayers[0].WinSet++;
                 SetScoreOnScreen();
                 tmrGameTimer.Stop();
 
                 //Score par set
                 AddPointsBySet();
 
-                if (iSetPlayer1 >= 3)
+                if (tblPlayers[0].WinSet >= 3)
                 {
                     iSet = 1;
-                    iSetPlayer1 = 0;
-                    iSetPlayer2 = 0;
+                    tblPlayers[0].WinSet = 0;
+                    tblPlayers[1].WinSet = 0;
                     //Message de fin de partie
-                    ShowMessageEndGame(strPlayer1Name);
+                    ShowMessageEndGame(tblPlayers[0].Name);
                 }
                 else
                 {
                     RestartGame();
                 }
-                //TODO - Ajout de la victoire du joueur à la base de donnée
             }
             //Si le joueur 2 atteint le nombre de points pour gagner
-            else if (iScorePlayer2 >= iPoints)
+            else if (tblPlayers[1].Score >= iPoints)
             {
-                iSetPlayer2++;
+                tblPlayers[1].WinSet++;
                 SetScoreOnScreen();
                 tmrGameTimer.Stop();
 
                 //Score par set
                 AddPointsBySet();
 
-                if (iSetPlayer2 >= 3)
+                if (tblPlayers[1].WinSet >= 3)
                 {
                     iSet = 1;
-                    iSetPlayer1 = 0;
-                    iSetPlayer2 = 0;
+                    tblPlayers[0].WinSet = 0;
+                    tblPlayers[1].WinSet = 0;
                     //Message de fin de partie
-                    ShowMessageEndGame(strPlayer2Name);
+                    ShowMessageEndGame(tblPlayers[1].Name);
                 }
                 else
                 {
                     RestartGame();
                 }
-                //TODO - Ajout de la victoire du joueur à la base de donnée
             }
 
             #endregion
@@ -466,7 +452,7 @@ namespace PongGame
                 {
                     bRestartGame = false;
                     //Ajout de la partie dans la base de donnée
-                    AddGamesInBDD(tblIDPlayers);
+                    AddGamesInBDD(tblPlayers[0].Id, tblPlayers[1].Id);
                 }
             }
             else

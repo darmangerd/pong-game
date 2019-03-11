@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Net.Sockets;
 using System.Net;
+using System.Diagnostics;
 
 namespace EZSocket
 {
@@ -225,6 +226,15 @@ namespace EZSocket
 
 
         public void Wait()
+        {
+            
+            this.socket = new Socket(AF, ST, PT);
+            this.socket.Bind(new IPEndPoint(IPAddress.Parse(this.IPServeur), PORT));
+            this.socket.Listen(MAXCO);
+            this.socket = this.socket.Accept();
+        }
+
+        public void Wait(bool bTimeout)
         {
             this.socket = new Socket(AF, ST, PT);
             this.socket.Bind(new IPEndPoint(IPAddress.Parse(this.IPServeur), PORT));

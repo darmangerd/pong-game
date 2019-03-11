@@ -16,7 +16,8 @@ namespace PongGame
     public partial class LobbyMultiplayer : Form
     {
         Thread threadServer; //Thread créé lors du lancement de serveur
-        //private volatile bool m_StopThread; //Utilisé pour stopper un thread proprement
+        private volatile bool m_StopThread; //Utilisé pour stopper un thread proprement (volatile permet au compileur de savoir qu'il sera accedé par plusieurs threads)
+        
 
         public LobbyMultiplayer()
         {
@@ -99,8 +100,8 @@ namespace PongGame
         private void StartServer()
         {
 
-            //while (m_StopThread)
-            //{
+            while (!m_StopThread)
+            {
                 //Création du socket
                 SocketServer server = new SocketServer(tbxIPServer.Text);
 
@@ -113,7 +114,7 @@ namespace PongGame
 
                 //Arrêt du thread
                 threadServer.Abort();
-            //}
+            }
             
         }
         
@@ -124,8 +125,9 @@ namespace PongGame
             {
                 btnServer.Visible = false;
                 btnCancelServer.Visible = true;
-                m_StopThread = true;
-                threadServer = new Thread(new ThreadStart(StartServer));                    
+                m_StopThread = false;
+                threadServer = new Thread(new ThreadStart(StartServer));
+                threadServer.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
                 threadServer.Start();
                 tmrCheck.Start();
             }
@@ -188,8 +190,7 @@ namespace PongGame
 
         private void btnCancelServer_Click(object sender, EventArgs e)
         {
-            //m_StopThread = false;
-            //threadServer.Abort();
+            m_StopThread = true;
             btnCancelServer.Visible = false;
             btnServer.Visible=true;
         }
