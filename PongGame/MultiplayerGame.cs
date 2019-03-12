@@ -19,7 +19,7 @@ namespace PongGame
         const int TOP_BOX = 0; //Position de la limite du haut du terrain
         const int BOTTOM_BOX = 472; //Position de la limite du bas du terrain
         const int LEFT_BOX = 0; //Position de la limite gauche du terrain
-        const int RIGHT_BOX = 606; //Position de la limite droite du terrain
+        const int RIGHT_BOX = 826; //Position de la limite droite du terrain
         //const int MIDDLE_X_BOX = 531; //Position moitié horizontal du terrain
         //const int MIDDLE_Y_BOX = 260; //Position moitié vertical du terrain
         const int POINTS = 3; //Nombre de points par set
@@ -36,6 +36,7 @@ namespace PongGame
         bool bBallPass=false;
         Player[] tblPlayers = new Player[2] { new Player(), new Player() }; //Tableau de joueurs
         Ball ball = new Ball(5, 5); //Vitesse de la balle
+        Thread threadServer;
         //Thread threadServer; //Thread créé lors du lancement de serveur
 
         #endregion
@@ -55,9 +56,7 @@ namespace PongGame
                 lblWho.Text = "Je suis serveur";
             }
 
-            Thread threadClient = new Thread(new ThreadStart(StartClient));
-            threadClient.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
-            //threadClient.Start();
+            
         }
 
         public MultiplayerGame(bool bClient, string adresseIPServeur)
@@ -70,15 +69,19 @@ namespace PongGame
             {
                 pbxPlayer1.Left = RIGHT_BOX-10;
                 lblWho.Text = "Je suis client";
+                Thread threadClient = new Thread(new ThreadStart(StartClient));
+                threadClient.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
+                threadClient.Start();
             }
             else
             {
                 lblWho.Text = "Je suis serveur :" + strAddressIP ;
+                threadServer = new Thread(new ThreadStart(StartServer));
+                threadServer.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
+                threadServer.Start();
             }
 
-            Thread threadServer = new Thread(new ThreadStart(StartServer));
-            threadServer.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
-            //threadServer.Start();
+            
         }
 
         /// <summary>
@@ -89,23 +92,35 @@ namespace PongGame
             //Création du socket
             SocketServer server = new SocketServer(strAddressIP);
 
-            server.Wait();
-            while (!bStopServer)
+            server.WaitInGame();
+
+            int iPos;
+
+            iPos = Convert.ToInt32(server.Receive());
+
+            pbxBalle.Top = iPos;
+            pbxBalle.Left = 726;
+            ball.x = 5; //Vitesse par défaut de la balle
+
+            //server.Send("Je te passe la ball");
+
+            /*while (!bStopServer)
             {
-                if (bBallPass)
+                if (pbxBalle.Left >= RIGHT_BOX)
                 {
                     //Envoie d'un message au client
-                    server.Send("Connexion réussi !");
+                    server.Send("Connexion réussi (Serveur) !");
                 }
                 else
                 {
-                    server.Receive();
+                    //Affichage du message reçu du serveur
+                    //lblWho.Text = server.Receive().ToString();
                 }
-            }
+            }*/
             server.Close();
 
             //Arrêt du thread
-            //threadServer.Abort();
+            threadServer.Abort();
 
         }
 
@@ -113,22 +128,31 @@ namespace PongGame
         {
             //Création du socket
             SocketClient client = new SocketClient(strAddressIP);
-            
 
-            client.Connect();
+            client.ConnectInGame();
 
-            while (!bStopServer)
+            //lblWho.Text = client.Receive().ToString();
+
+            //Envoie d'un message au client
+            //client.Send("Connexion réussi (Super)!");
+
+            while (!bStopClient)
             {
-                //Affichage du message reçu du serveur
-                lblWho.Text = client.Receive().ToString();
+                if (bBallPass)
+                {
+                    //Envoie d'un message au client
+                    client.Send(pbxBalle.Top.ToString());
+                }
+                else
+                {
+                    //Affichage du message reçu du serveur
+                    //lblWho.Text = client.Receive().ToString();
+                }
 
                 //Envoie d'un message au serveur
                 //client.Send("Connexion réussi !");
             }
-
             client.Close();
-
-
         }
 
         #region Touches de déplacement

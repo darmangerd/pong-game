@@ -24,6 +24,11 @@ namespace EZSocket
         protected const int PORT = 27114;
 
         /// <summary>
+        /// Port utilisé en jeu
+        /// </summary>
+        protected const int PORT_IN_GAME = 27115;
+
+        /// <summary>
         /// Nombre maximum de connexion en même temps
         /// </summary>
         protected const int MAXCO = 10;
@@ -196,7 +201,21 @@ namespace EZSocket
             try
             {
                 this.socket = new Socket(AF, ST, PT);
-                this.socket.Connect(new IPEndPoint(IPAddress.Parse(this.IPServeur), PORT));
+                this.socket.Connect(new IPEndPoint(IPAddress.Parse(this.IPServeur), PORT_IN_GAME));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool ConnectInGame()
+        {
+            try
+            {
+                this.socket = new Socket(AF, ST, PT);
+                this.socket.Connect(new IPEndPoint(IPAddress.Parse(this.IPServeur), PORT ));
                 return true;
             }
             catch
@@ -227,14 +246,13 @@ namespace EZSocket
 
         public void Wait()
         {
-            
             this.socket = new Socket(AF, ST, PT);
-            this.socket.Bind(new IPEndPoint(IPAddress.Parse(this.IPServeur), PORT));
+            this.socket.Bind(new IPEndPoint(IPAddress.Parse(this.IPServeur), PORT_IN_GAME ));
             this.socket.Listen(MAXCO);
             this.socket = this.socket.Accept();
         }
 
-        public void Wait(bool bTimeout)
+        public void WaitInGame()
         {
             this.socket = new Socket(AF, ST, PT);
             this.socket.Bind(new IPEndPoint(IPAddress.Parse(this.IPServeur), PORT));

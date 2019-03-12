@@ -40,28 +40,30 @@
             // lblWho
             // 
             this.lblWho.AutoSize = true;
-            this.lblWho.Location = new System.Drawing.Point(256, 9);
+            this.lblWho.Location = new System.Drawing.Point(341, 11);
+            this.lblWho.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblWho.Name = "lblWho";
-            this.lblWho.Size = new System.Drawing.Size(35, 13);
+            this.lblWho.Size = new System.Drawing.Size(46, 17);
             this.lblWho.TabIndex = 0;
             this.lblWho.Text = "label1";
             // 
             // pbxPlayer1
             // 
             this.pbxPlayer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
-            this.pbxPlayer1.Location = new System.Drawing.Point(9, 156);
-            this.pbxPlayer1.Margin = new System.Windows.Forms.Padding(8);
+            this.pbxPlayer1.Location = new System.Drawing.Point(12, 192);
+            this.pbxPlayer1.Margin = new System.Windows.Forms.Padding(11, 10, 11, 10);
             this.pbxPlayer1.Name = "pbxPlayer1";
-            this.pbxPlayer1.Size = new System.Drawing.Size(18, 127);
+            this.pbxPlayer1.Size = new System.Drawing.Size(24, 156);
             this.pbxPlayer1.TabIndex = 8;
             this.pbxPlayer1.TabStop = false;
             // 
             // pbxBalle
             // 
             this.pbxBalle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(68)))), ((int)(((byte)(125)))));
-            this.pbxBalle.Location = new System.Drawing.Point(472, 205);
+            this.pbxBalle.Location = new System.Drawing.Point(629, 252);
+            this.pbxBalle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pbxBalle.Name = "pbxBalle";
-            this.pbxBalle.Size = new System.Drawing.Size(21, 21);
+            this.pbxBalle.Size = new System.Drawing.Size(28, 26);
             this.pbxBalle.TabIndex = 10;
             this.pbxBalle.TabStop = false;
             // 
@@ -73,12 +75,13 @@
             // 
             // MultiplayerGame
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(617, 483);
+            this.ClientSize = new System.Drawing.Size(823, 594);
             this.Controls.Add(this.pbxBalle);
             this.Controls.Add(this.pbxPlayer1);
             this.Controls.Add(this.lblWho);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MultiplayerGame";
             this.Text = "MultiplayerGame";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MultiplayerGame_KeyDown);

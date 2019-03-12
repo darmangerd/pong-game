@@ -15,7 +15,8 @@ namespace PongGame
 {
     public partial class LobbyMultiplayer : Form
     {
-        Thread threadServer; //Thread créé lors du lancement de serveur        
+        bool bStartClientGame=false;
+        Thread threadServer; //Thread créé lors du lancement de serveur     
 
         public LobbyMultiplayer()
         {
@@ -55,8 +56,9 @@ namespace PongGame
             MultiplayerGame multiplayer = new MultiplayerGame(client, ipServer);
             multiplayer.Show();
 
-            //Commencement d'une partie en ligne
+            //Clean
             this.Close();
+            this.Dispose();
         }
 
         /// <summary>
@@ -122,6 +124,12 @@ namespace PongGame
 
             server.Close();
 
+            /*while(!server.Closed)
+            {
+                server.Send("Fin");
+                server.Close();
+            }*/
+
             //Arrêt du thread
             threadServer.Abort();            
         }
@@ -177,13 +185,24 @@ namespace PongGame
                     //Envoie d'un message au serveur
                     client.Send("Connexion réussi !");
 
-
                     client.Close();
 
-                    //Commencement d'une partie en ligne
-                    StartGame(true);
+                    StartGame(true, tbxIpClient.Text);
+
+                    /*if (client.Receive()=="false")
+                    {
+
+                    }*/
+                    
+                    //while(client.Receive().ToString() == "Fin")
+                    //{
+                        //Commencement d'une partie en ligne
+                    
+                    //}
+
+                    
                 }
-                catch
+                catch 
                 {
                     MessageBox.Show("Impossible de contacter le serveur");
                 }
