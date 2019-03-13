@@ -41,24 +41,6 @@ namespace PongGame
 
         #endregion
 
-        public MultiplayerGame(bool bClient)
-        {
-            InitializeComponent();
-            bEstClient = bClient;
-
-            if (bEstClient)
-            {
-                pbxPlayer1.Left = RIGHT_BOX - 10;
-                lblWho.Text = "Je suis client";
-            }
-            else
-            {
-                lblWho.Text = "Je suis serveur";
-            }
-
-            
-        }
-
         public MultiplayerGame(bool bClient, string adresseIPServeur)
         {
             InitializeComponent();
@@ -67,7 +49,8 @@ namespace PongGame
 
             if (bEstClient)
             {
-                pbxPlayer1.Left = RIGHT_BOX-10;
+                pbxPlayer1.Left = this.ClientSize.Width - 30;
+                pbxBalle.Left = -10;
                 lblWho.Text = "Je suis client";
                 Thread threadClient = new Thread(new ThreadStart(StartClient));
                 threadClient.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
@@ -79,9 +62,7 @@ namespace PongGame
                 threadServer = new Thread(new ThreadStart(StartServer));
                 threadServer.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
                 threadServer.Start();
-            }
-
-            
+            }            
         }
 
         /// <summary>
@@ -93,14 +74,30 @@ namespace PongGame
             SocketServer server = new SocketServer(strAddressIP);
 
             server.WaitInGame();
-
             int iPos;
 
-            iPos = Convert.ToInt32(server.Receive());
+            while (!bStopServer)
+            {
+                if (pbxBalle.Left >= this.ClientSize.Width)
+                {
+                    server.Send(pbxBalle.Top.ToString());
+                   
+                    /*pbxBalle.Invoke(new Action(() =>
+                    {
+                        pbxBalle.Left = -20;
+                    }));*/
 
-            pbxBalle.Top = iPos;
-            pbxBalle.Left = 726;
-            ball.x = 5; //Vitesse par défaut de la balle
+                    iPos = Convert.ToInt32(server.Receive());
+
+                    ball.x = 5; //Vitesse par défaut de la balle
+
+                    pbxBalle.Invoke(new Action(() =>
+                    {
+                        pbxBalle.Top = iPos;
+                        pbxBalle.Left = this.ClientSize.Width;
+                    }));
+                }
+            }
 
             //server.Send("Je te passe la ball");
 
@@ -131,23 +128,49 @@ namespace PongGame
 
             client.ConnectInGame();
 
+            int iPos;
+
             //lblWho.Text = client.Receive().ToString();
 
             //Envoie d'un message au client
             //client.Send("Connexion réussi (Super)!");
 
+            iPos = Convert.ToInt32(client.Receive());
+
+            ball.x = -5; //Vitesse par défaut de la balle
+            pbxBalle.Invoke(new Action(() =>
+            {
+                pbxBalle.Top = iPos;
+                pbxBalle.Left = 1;
+            }));
+
             while (!bStopClient)
             {
-                if (bBallPass)
+                if (pbxBalle.Left < 0)
                 {
                     //Envoie d'un message au client
-                    client.Send(pbxBalle.Top.ToString());
+                    /*client.Send(pbxBalle.Top.ToString());
+
+                    pbxBalle.Invoke(new Action(() =>
+                    {
+                        pbxBalle.Left = 700;
+                    }));*/                
+
+                    iPos = Convert.ToInt32(client.Receive());
+
+                    ball.x = -5; //Vitesse par défaut de la balle
+
+                    pbxBalle.Invoke(new Action(() =>
+                    {
+                        pbxBalle.Top = iPos;
+                        pbxBalle.Left = 1;
+                    }));
                 }
-                else
+                /*else
                 {
                     //Affichage du message reçu du serveur
                     //lblWho.Text = client.Receive().ToString();
-                }
+                }*/
 
                 //Envoie d'un message au serveur
                 //client.Send("Connexion réussi !");
@@ -262,12 +285,25 @@ namespace PongGame
             //if (pbxBalle.Bounds.IntersectsWith(pbxPlayer1.Bounds) || pbxBalle.Bounds.IntersectsWith(pbxPlayer2.Bounds))
             if (pbxBalle.Bounds.IntersectsWith(pbxPlayer1.Bounds))
             {
-                //Problème de collision
-                pbxBalle.Left += 4;
-                //On change la direction de la balle
-                ball.x = -ball.x;
-                /*Augmente la vitesse de la balle
-                ball.x -= 1; */
+                if(bEstClient)
+                {
+                    //Problème de collision
+                    pbxBalle.Left -= 4;
+                    //On change la direction de la balle
+                    ball.x = 5;
+                    /*Augmente la vitesse de la balle
+                    ball.x -= 1; */
+                }
+                else
+                {
+                    //Problème de collision
+                    pbxBalle.Left += 4;
+                    //On change la direction de la balle
+                    ball.x = -5;
+                    /*Augmente la vitesse de la balle
+                   ball.x += 1;*/
+                }
+
             }
             /*else if (pbxBalle.Bounds.IntersectsWith(pbxPlayer2.Bounds))
             {
