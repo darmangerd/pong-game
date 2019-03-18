@@ -15,8 +15,9 @@ namespace PongGame
 {
     public partial class LobbyMultiplayer : Form
     {
-        bool bStartClientGame=false;
         Thread threadServer; //Thread créé lors du lancement de serveur     
+        Player PlayerClient = new Player(); //Joueur client
+        Player[] tblPlayers = new Player[2] { new Player(), new Player() }; //Tableau de joueurs
 
         public LobbyMultiplayer()
         {
@@ -41,6 +42,36 @@ namespace PongGame
         private void StartGame(bool client, string ipServer)
         {
             MultiplayerGame multiplayer = new MultiplayerGame(client, ipServer);
+            multiplayer.Show();
+
+            //Clean
+            this.Close();
+            this.Dispose();
+        }
+
+        /// <summary>
+        /// Lancement de la partie en ajoutant les utilisateur à la base de données
+        /// </summary>
+        /// <param name="client">Permet de définir si le joueur est le client ou le serveur</param>
+        private void StartGame(bool client, string ipServer, Player[] players)
+        {
+            #region Base de données
+
+            //Récupération des noms/prénoms des utilisateurs
+            string[] tblNom = new string[2] { players[0].Name, players[1].Name };
+            string[] tblPrenom = new string[2] { players[0].Surname, players[1].Surname };
+            string[] tblId = new string[2];
+
+            //Classe permettant d'ajouter des données des utilisateurs dans la base Access
+            UserInDB userInDB = new UserInDB();
+            //Ajout des utilisateurs s'ils n'existe pas dans la base de données
+            userInDB.AddUserInDB(tblNom, tblPrenom);
+            //Récupération des IDs des joueurs dans la base de données
+            tblId = userInDB.GetIdFromPlayer(tblNom, tblPrenom);
+            
+            #endregion
+
+            MultiplayerGame multiplayer = new MultiplayerGame(client, ipServer, tblNom, tblId);
             multiplayer.Show();
 
             //Clean
@@ -104,10 +135,19 @@ namespace PongGame
 
             server.Wait();
 
-            //Envoie d'un message au client
-            server.Send("Connexion réussi !");
+            //Contiendra le message brut du client
+            string strReponse;
 
-            //strIpClient = server.Receive().ToString();
+            //Envoie d'un message au client
+            //server.Send("Connexion réussi !");
+
+            //Récupération du message du client contenant son nom et prénom
+            strReponse = server.Receive().ToString();
+            //Séparation en tableau du nom et prénom. Car le message est envoyé comme ceci: "nom,prenom"
+            string[] tblReponses = strReponse.Split(',');
+
+            tblPlayers[1].Name = tblReponses[0];
+            tblPlayers[1].Surname = tblReponses[1];
 
             server.Close();
 
@@ -123,11 +163,16 @@ namespace PongGame
         
         private void btnServer_Click(object sender, EventArgs e)
         {
-            //Vérifie si la le champs n'est pas vide ET que l'adresse IP donnée est valide
-            if (!IsEmpty(tbxIPServer) && IsAddressValid(tbxIPServer.Text))
+            //Vérifie si la les champs ne sont pas vide ET que l'adresse IP donnée est valide
+            if (!IsEmpty(tbxIPServer) && !IsEmpty(tbxNamePlayer) && !IsEmpty(tbxSurnamePlayer) && IsAddressValid(tbxIPServer.Text))
             {
+                //Récupération du nom et prénom du client
+                tblPlayers[0].Name = tbxNamePlayer.Text;
+                tblPlayers[0].Surname = tbxSurnamePlayer.Text;
+                //Changement entre les boutons
                 btnServer.Visible = false;
                 btnCancelServer.Visible = true;
+                //Lancement du thread
                 threadServer = new Thread(new ThreadStart(StartServer));
                 threadServer.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
                 threadServer.Start();
@@ -135,18 +180,23 @@ namespace PongGame
             }
             else
             {
-                MessageBox.Show("Le champ Adresse IP du serveur est vide ou n'est pas valide");
+                MessageBox.Show("Les champs ne sont pas remplis correctement");
             }
 
         }
 
+        /// <summary>
+        /// Utilisé pour vérification de l'arrêt d'un thread
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tmrCheck_Tick(object sender, EventArgs e)
         {
             if (!threadServer.IsAlive)
             {
                 tmrCheck.Stop();
                 tmrCheck.Dispose();
-                StartGame(false,tbxIPServer.Text);
+                StartGame(false,tbxIPServer.Text, tblPlayers);
             }
         }
 
@@ -157,8 +207,10 @@ namespace PongGame
         private void btnClient_Click(object sender, EventArgs e)
         {
             //Vérifie si la le champs n'est pas vide ET que l'adresse IP donnée est valide
-            if (!IsEmpty(tbxIpClient) && IsAddressValid(tbxIpClient.Text))
+            if (!IsEmpty(tbxIpClient) && !IsEmpty(tbxNamePlayer) && !IsEmpty(tbxSurnamePlayer) && IsAddressValid(tbxIpClient.Text))
             {
+                PlayerClient.Name = tbxNamePlayer.Text;
+                PlayerClient.Surname = tbxSurnamePlayer.Text;
                 try
                 {
                     //Création du socket
@@ -167,10 +219,10 @@ namespace PongGame
                     client.Connect();
 
                     //Affichage du message reçu du serveur
-                    lblIpClient.Text = client.Receive().ToString();
+                    //lblIpClient.Text = client.Receive().ToString();
 
                     //Envoie d'un message au serveur
-                    client.Send("Connexion réussi !");
+                    client.Send(PlayerClient.Name + ',' + PlayerClient.Surname);
 
                     client.Close();
 
@@ -196,7 +248,7 @@ namespace PongGame
             }
             else
             {
-                MessageBox.Show("Le champ Adresse IP du client est vide ou n'est pas valide");
+                MessageBox.Show("Les champs ne sont pas remplis correctement");
             }
         }
 

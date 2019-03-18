@@ -210,19 +210,56 @@ namespace EZSocket
             }
         }
 
+        /// <summary>
+        /// Se connecter à une partie en fesant plusieurs essaie
+        /// source : https://stackoverflow.com/questions/1905627/most-effective-way-to-connect-retry-connecting-using-c
+        /// </summary>
+        /// <returns></returns>
         public bool ConnectInGame()
+        {
+            bool bConnected = false;
+            int iTry = 0;
+            while (!bConnected)
+            {
+                try
+                {
+                    this.socket = new Socket(AF, ST, PT);
+                    this.socket.Connect(new IPEndPoint(IPAddress.Parse(this.IPServeur), PORT));
+                    bConnected = true;
+                }
+                catch
+                {
+                    System.Threading.Thread.Sleep(2000);
+
+                    if (iTry == 5)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        iTry++;
+                        continue;
+                    }
+
+                }
+            }
+            return true;
+        }
+        /*public bool ConnectInGame()
         {
             try
             {
                 this.socket = new Socket(AF, ST, PT);
-                this.socket.Connect(new IPEndPoint(IPAddress.Parse(this.IPServeur), PORT ));
+                this.socket.Connect(new IPEndPoint(IPAddress.Parse(this.IPServeur), PORT));
                 return true;
             }
             catch
             {
                 return false;
-            }
-        }
+            }         
+        }*/
+
+
         #endregion
     }
     #endregion

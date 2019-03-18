@@ -26,50 +26,66 @@ namespace PongGame
 
         #endregion
 
-        #region Déclaration des variables
+        #region Déclaration des variables pour les règles du jeux
+
+        bool bRestartGame = false; //Utilisé pour vérifier si on recommence une partie
+        int iPoints = POINTS; //Nombre de points par set
+        int iStartCount = 3; //Compteur de comencement de la partie
+        int iSet = 1; //Set actuel
+        int iIdGame; //ID de la partie dans la base de donnée
+        string strQuerySelectId = "Select @@Identity"; //Permettra de récupérer l'ID d'une partie lors de l'ajout dans la BDD
+        Player[] tblPlayers = new Player[2] { new Player(), new Player() }; //Tableau de joueurs
+        Ball ball = new Ball(5, 5); //Vitesse de la balle
+        
+        #endregion
+
+        #region Variables nécessaire au mode en ligne
 
         string strAddressIP; //Adresse IPs des joueurs | [0] -> Server / [1] -> Client
-        string strMessageServer;
         bool bEstClient; //Interface Client ou Serveur
         bool bStopServer=false; //Utilisé pour stopper le serveur
         bool bStopClient=false; //Utilisé pour stopper le client
-        bool bBallPass=false;
-        Player[] tblPlayers = new Player[2] { new Player(), new Player() }; //Tableau de joueurs
-        Ball ball = new Ball(5, 5); //Vitesse de la balle
-        Thread threadServer;
-        Thread threadClient;
-        //Thread threadServer; //Thread créé lors du lancement de serveur
+        Thread threadServer; //Thread créé lors du lancement de serveur
+        Thread threadClient; //Thread créé lors du lancement du client
 
         #endregion
+
+        public MultiplayerGame(bool bClient, string adresseIPServeur, string[] tblNoms, string[] tblID)
+        {
+            InitializeComponent();
+            //Permettra de déterminer si le joueur est client ou serveur
+            bEstClient = bClient;
+            //Récupération de l'adresse IP du serveur
+            strAddressIP = adresseIPServeur;
+            //Taille écran
+            Rectangle r = Screen.PrimaryScreen.WorkingArea;
+            this.StartPosition = FormStartPosition.Manual;
+            
+            this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - this.Width,
+                (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2));
+            lblWho.Text = "Je suis serveur :" + strAddressIP;
+            threadServer = new Thread(new ThreadStart(StartServer));
+            threadServer.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
+            threadServer.Start();
+        }
 
         public MultiplayerGame(bool bClient, string adresseIPServeur)
         {
             InitializeComponent();
+            //Permettra de déterminer si le joueur est client ou serveur
             bEstClient = bClient;
+            //Récupération de l'adresse IP du serveur
             strAddressIP = adresseIPServeur;
             Rectangle r = Screen.PrimaryScreen.WorkingArea;
-            if (bEstClient)
-            {
-                this.StartPosition = FormStartPosition.Manual;
-                this.Location = new Point(0,
-                    (Screen.PrimaryScreen.WorkingArea.Height/2) - (this.Height/2));
-                pbxPlayer1.Left = this.ClientSize.Width - 30;
-                pbxBalle.Left = -10;
-                lblWho.Text = "Je suis client";
-                threadClient = new Thread(new ThreadStart(StartClient));
-                threadClient.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
-                threadClient.Start();
-            }
-            else
-            {
-                this.StartPosition = FormStartPosition.Manual;
-                this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - this.Width,
-                    (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2));
-                lblWho.Text = "Je suis serveur :" + strAddressIP ;
-                threadServer = new Thread(new ThreadStart(StartServer));
-                threadServer.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
-                threadServer.Start();
-            }            
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = new Point(0,
+                (Screen.PrimaryScreen.WorkingArea.Height/2) - (this.Height/2));
+            pbxPlayer1.Left = this.ClientSize.Width - 30;
+            pbxBalle.Left = -10;
+            lblWho.Text = "Je suis client";
+            threadClient = new Thread(new ThreadStart(StartClient));
+            threadClient.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
+            threadClient.Start();
         }
 
         /// <summary>
@@ -267,34 +283,6 @@ namespace PongGame
 
         private void tmrGameTimer_Tick(object sender, EventArgs e)
         {
-            #region Passage de données
-
-            if (bEstClient)
-            {
-                if (pbxBalle.Left <= 0)
-                {
-                    bBallPass = true;
-                }
-                else
-                {
-                    bBallPass = false;
-                }
-            }
-            else
-            {
-                if (pbxBalle.Left >= RIGHT_BOX)
-                {
-                    bBallPass = true;
-                }
-                else
-                {
-                    bBallPass = false;
-                }
-
-            }
-
-            #endregion
-
             //Déplacement Horizontal et vertical de la balle. 
             // -= augmente la vitesse de la balle vers la gauche et le haut de l'écran
             // += augmente la vitesse de la balle vers la droite et le bas de l'écran

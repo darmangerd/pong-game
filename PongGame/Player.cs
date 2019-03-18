@@ -11,9 +11,14 @@ namespace PongGame
         #region Déclaration des variables
 
         /// <summary>
-        /// Nom du joueurs
+        /// Nom du joueur
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Prénom du joueur
+        /// </summary>
+        public string Surname { get; set; }
 
         /// <summary>
         /// ID du joueur (venant de la base de données)
@@ -50,13 +55,12 @@ namespace PongGame
             WinSet = 0;
         }
 
-        public Player(string name, int id)
+        public Player(string name, string surname)
         {
             this.Name = name;
-            this.Id = id;
-            Score = 0;
-            WinSet = 0;
+            this.Surname = surname;
         }
+
 
         #endregion
     }
