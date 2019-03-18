@@ -40,17 +40,19 @@
             // lblWho
             // 
             this.lblWho.AutoSize = true;
-            this.lblWho.Location = new System.Drawing.Point(256, 9);
+            this.lblWho.Font = new System.Drawing.Font("Segoe UI", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWho.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(14)))), ((int)(((byte)(98)))));
+            this.lblWho.Location = new System.Drawing.Point(250, 9);
             this.lblWho.Name = "lblWho";
-            this.lblWho.Size = new System.Drawing.Size(35, 13);
+            this.lblWho.Size = new System.Drawing.Size(99, 40);
             this.lblWho.TabIndex = 0;
-            this.lblWho.Text = "label1";
+            this.lblWho.Text = "Name";
             // 
             // pbxPlayer1
             // 
-            this.pbxPlayer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
+            this.pbxPlayer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(137)))), ((int)(((byte)(250)))));
             this.pbxPlayer1.Location = new System.Drawing.Point(9, 156);
-            this.pbxPlayer1.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.pbxPlayer1.Margin = new System.Windows.Forms.Padding(8);
             this.pbxPlayer1.Name = "pbxPlayer1";
             this.pbxPlayer1.Size = new System.Drawing.Size(18, 127);
             this.pbxPlayer1.TabIndex = 8;
@@ -75,11 +77,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
             this.ClientSize = new System.Drawing.Size(617, 483);
             this.Controls.Add(this.pbxBalle);
             this.Controls.Add(this.pbxPlayer1);
             this.Controls.Add(this.lblWho);
+            this.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "MultiplayerGame";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "MultiplayerGame";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MultiplayerGame_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MultiplayerGame_KeyUp);

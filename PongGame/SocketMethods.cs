@@ -229,9 +229,9 @@ namespace EZSocket
                 }
                 catch
                 {
-                    System.Threading.Thread.Sleep(2000);
+                    System.Threading.Thread.Sleep(4000);
 
-                    if (iTry == 5)
+                    if (iTry >= 5)
                     {
                         return false;
                     }

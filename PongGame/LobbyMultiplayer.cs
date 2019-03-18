@@ -39,9 +39,9 @@ namespace PongGame
         /// Lancement de la partie.
         /// </summary>
         /// <param name="client">Permet de définir si le joueur est le client ou le serveur</param>
-        private void StartGame(bool client, string ipServer)
+        private void StartGame(bool client, string ipServer, string name)
         {
-            MultiplayerGame multiplayer = new MultiplayerGame(client, ipServer);
+            MultiplayerGame multiplayer = new MultiplayerGame(client, ipServer, name);
             multiplayer.Show();
 
             //Clean
@@ -226,7 +226,7 @@ namespace PongGame
 
                     client.Close();
 
-                    StartGame(true, tbxIpClient.Text);
+                    StartGame(true, tbxIpClient.Text, PlayerClient.Name);
 
                     /*if (client.Receive()=="false")
                     {

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -50,7 +51,7 @@ namespace PongGame
 
         #endregion
 
-        public MultiplayerGame(bool bClient, string adresseIPServeur, string[] tblNoms, string[] tblID)
+        public MultiplayerGame(bool bClient, string adresseIPServeur, string[] tblNames, string[] tblID)
         {
             InitializeComponent();
             //Permettra de déterminer si le joueur est client ou serveur
@@ -60,33 +61,70 @@ namespace PongGame
             //Taille écran
             Rectangle r = Screen.PrimaryScreen.WorkingArea;
             this.StartPosition = FormStartPosition.Manual;
-            
+            //Position de la form
             this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - this.Width,
                 (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2));
-            lblWho.Text = "Je suis serveur :" + strAddressIP;
+
+            //Récupération des informations des joueurs
+            for (int i = 0; i <= 1; i++)
+            {
+                tblPlayers[i].Name = tblNames[i];
+                tblPlayers[i].Id = Convert.ToInt32(tblID[i]);
+            }
+
+            //Ajout de la partie dans la base de donnée
+            AddGamesInBDD(tblPlayers[0].Id, tblPlayers[1].Id);
+
+            lblWho.Text = tblNames[0];
+            //Lancement du thread
             threadServer = new Thread(new ThreadStart(StartServer));
             threadServer.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
             threadServer.Start();
         }
 
-        public MultiplayerGame(bool bClient, string adresseIPServeur)
+        public MultiplayerGame(bool bClient, string adresseIPServeur, string strNameClient)
         {
             InitializeComponent();
             //Permettra de déterminer si le joueur est client ou serveur
             bEstClient = bClient;
             //Récupération de l'adresse IP du serveur
             strAddressIP = adresseIPServeur;
+            //Taille écran
             Rectangle r = Screen.PrimaryScreen.WorkingArea;
+            //Position de la form
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(0,
                 (Screen.PrimaryScreen.WorkingArea.Height/2) - (this.Height/2));
+            //Position du joueur et de la balle
             pbxPlayer1.Left = this.ClientSize.Width - 30;
             pbxBalle.Left = -10;
-            lblWho.Text = "Je suis client";
+
+            lblWho.Text = strNameClient;
+            //Lancement du thread
             threadClient = new Thread(new ThreadStart(StartClient));
             threadClient.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
             threadClient.Start();
         }
+
+        #region Ajout d'une partie dans la base de données
+
+        private void AddGamesInBDD(int IDJoueur1, int IDJoueur2)
+        {
+            //Connexion à la base de données
+            OleDbConnection con = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0;Data Source=\\s2lfile3.s2.rpn.ch\CPLNpublic\Classes\ET\INF-HP\4INF-HP-M\module ict-153\dbScores.accdb");
+            OleDbCommand cmd = con.CreateCommand();
+            con.Open();
+            //Requête SQL envoyé au serveur
+            cmd.CommandText = "INSERT into tblGames ( num_tblUsers1, num_tblUsers2, dateDebut, heureDebut ) VALUES ('" + IDJoueur1 + "','" + IDJoueur2 + "', '" + DateTime.Today.Day + "." + DateTime.Today.Month + "." + DateTime.Today.Year + "', '" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + "')";
+            cmd.Connection = con;
+            cmd.ExecuteNonQuery();
+            //Récupération de l'ID de la partie qui vient d'être ajouté dans la BDD. Source de la solution : https://stackoverflow.com/questions/7230200/how-to-get-the-last-record-number-after-inserting-record-to-database-in-access
+            cmd.CommandText = strQuerySelectId;
+            iIdGame = (int)cmd.ExecuteScalar();
+            con.Close();
+        }
+
+        #endregion
 
         /// <summary>
         /// Fonction utilisé dans le thread de lancement du serveur
@@ -346,7 +384,7 @@ namespace PongGame
                 pbxPlayer1.Top -= 8;
             }
             //Si le déplacement vers le bas est autorisé et que le joueur se trouve avant la limite inférieure
-            if (tblPlayers[0].MoveDown == true && pbxPlayer1.Top < BOTTOM_BOX-123)
+            if (tblPlayers[0].MoveDown == true && pbxPlayer1.Top < this.ClientSize.Height - 126)
             {
                 //Déplacement vers le bas
                 pbxPlayer1.Top += 8;

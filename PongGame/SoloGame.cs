@@ -51,7 +51,7 @@ namespace PongGame
             lblNamePlayer1.Text = tblPlayers[0].Name; //Affichage du nom du joueur 1 sur l'écran
             lblNamePlayer2.Text = tblPlayers[1].Name; //Affichage du nom du joueur 2 sur l'écran
 
-            //Récupération des IDs des joueurs provenant de la base de données
+            //Récupération des IDs des joueurs
             for (int i=0; i <= 1; i++)
             {
                 tblPlayers[i].Id = Convert.ToInt32(tblID[i]);
