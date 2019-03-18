@@ -37,6 +37,7 @@ namespace PongGame
         Player[] tblPlayers = new Player[2] { new Player(), new Player() }; //Tableau de joueurs
         Ball ball = new Ball(5, 5); //Vitesse de la balle
         Thread threadServer;
+        Thread threadClient;
         //Thread threadServer; //Thread créé lors du lancement de serveur
 
         #endregion
@@ -46,18 +47,24 @@ namespace PongGame
             InitializeComponent();
             bEstClient = bClient;
             strAddressIP = adresseIPServeur;
-
+            Rectangle r = Screen.PrimaryScreen.WorkingArea;
             if (bEstClient)
             {
+                this.StartPosition = FormStartPosition.Manual;
+                this.Location = new Point(0,
+                    (Screen.PrimaryScreen.WorkingArea.Height/2) - (this.Height/2));
                 pbxPlayer1.Left = this.ClientSize.Width - 30;
                 pbxBalle.Left = -10;
                 lblWho.Text = "Je suis client";
-                Thread threadClient = new Thread(new ThreadStart(StartClient));
+                threadClient = new Thread(new ThreadStart(StartClient));
                 threadClient.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
                 threadClient.Start();
             }
             else
             {
+                this.StartPosition = FormStartPosition.Manual;
+                this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - this.Width,
+                    (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2));
                 lblWho.Text = "Je suis serveur :" + strAddressIP ;
                 threadServer = new Thread(new ThreadStart(StartServer));
                 threadServer.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
@@ -73,29 +80,39 @@ namespace PongGame
             //Création du socket
             SocketServer server = new SocketServer(strAddressIP);
 
+            //En attente de la connexion du client
             server.WaitInGame();
-            int iPos;
 
+            //Contiendra la position de la balle en hauteur (TOP)
+            int iPos =0;
+
+            //Tant qu'on n'arrête pas le jeux
             while (!bStopServer)
             {
-                if (pbxBalle.Left >= this.ClientSize.Width)
+                //Si la balle dépasse de l'écran du serveur
+                if (pbxBalle.Left > this.ClientSize.Width)
                 {
+                    //Envoie d'un message contenant la position en hauteur de la balle du client
                     server.Send(pbxBalle.Top.ToString());
+
+                    /*ball.x = 5;
                    
-                    /*pbxBalle.Invoke(new Action(() =>
+                    pbxBalle.Invoke(new Action(() =>
                     {
-                        pbxBalle.Left = -20;
+                        pbxBalle.Left = -15;
                     }));*/
 
+                    //On récupère la position en hauteur de l
                     iPos = Convert.ToInt32(server.Receive());
 
                     ball.x = 5; //Vitesse par défaut de la balle
 
+                    //Repositionnement de la balle (pour avoir l'effet du passage entre les écrans)
                     pbxBalle.Invoke(new Action(() =>
                     {
                         pbxBalle.Top = iPos;
-                        pbxBalle.Left = this.ClientSize.Width;
-                    }));
+                        pbxBalle.Left = this.ClientSize.Width-3;
+                    }));                    
                 }
             }
 
@@ -114,6 +131,8 @@ namespace PongGame
                     //lblWho.Text = server.Receive().ToString();
                 }
             }*/
+
+            //Fermeture de la connexion
             server.Close();
 
             //Arrêt du thread
@@ -126,56 +145,69 @@ namespace PongGame
             //Création du socket
             SocketClient client = new SocketClient(strAddressIP);
 
+            //Connexion au serveur
             client.ConnectInGame();
 
+            //Contiendra la position de la balle en hauteur (TOP)
             int iPos;
 
-            //lblWho.Text = client.Receive().ToString();
-
-            //Envoie d'un message au client
-            //client.Send("Connexion réussi (Super)!");
-
+            //Récupère le message du serveur qui est la position de la balle chez le serveur
             iPos = Convert.ToInt32(client.Receive());
 
-            ball.x = -5; //Vitesse par défaut de la balle
+            //Déplacement par défaut de la balle
+            ball.x = -5;
+
+            //Repositionnement de la balle (pour avoir l'effet du passage entre les écrans)
             pbxBalle.Invoke(new Action(() =>
             {
                 pbxBalle.Top = iPos;
-                pbxBalle.Left = 1;
+                pbxBalle.Left = 3;
             }));
 
+            //Tant qu'on arrête pas le jeux
             while (!bStopClient)
             {
-                if (pbxBalle.Left < 0)
+                //Si la balle dépasse l'écran du client
+                if (pbxBalle.Left < -10)
                 {
-                    //Envoie d'un message au client
-                    /*client.Send(pbxBalle.Top.ToString());
+                    //Envoie d'un message contenant la position en hauteur de la balle du client
+                    client.Send(pbxBalle.Top.ToString());
+
+                    #region Position de la balle pas que le client la voit quand elle n'est pas censé être sur son écran
+
+                    ball.x = -5;
 
                     pbxBalle.Invoke(new Action(() =>
                     {
-                        pbxBalle.Left = 700;
-                    }));*/                
+                        pbxBalle.Left = 630;
+                    }));
 
+                    #endregion
+
+                    /*if (Convert.ToInt32(client.Receive())!=iPos)
+                    {*/
+
+                    //Récupère le message du serveur qui est la position de la balle chez le serveur
                     iPos = Convert.ToInt32(client.Receive());
 
-                    ball.x = -5; //Vitesse par défaut de la balle
+                    //Déplacement par défaut de la balle
+                    ball.x = -5;
 
+                    //Repositionnement de la balle (pour avoir l'effet du passage entre les écrans)
                     pbxBalle.Invoke(new Action(() =>
                     {
                         pbxBalle.Top = iPos;
-                        pbxBalle.Left = 1;
+                        pbxBalle.Left = 3;
                     }));
-                }
-                /*else
-                {
-                    //Affichage du message reçu du serveur
-                    //lblWho.Text = client.Receive().ToString();
-                }*/
+                    //}
 
-                //Envoie d'un message au serveur
-                //client.Send("Connexion réussi !");
+                }
             }
+            //Fermeture de la connexion
             client.Close();
+
+            //Arrêt du thread
+            threadClient.Abort();
         }
 
         #region Touches de déplacement
@@ -274,7 +306,7 @@ namespace PongGame
             #region Rebonds et Collision de la balle
 
             //Si la balle atteint le haut de l'écran ou le bas
-            if (pbxBalle.Top < TOP_BOX || pbxBalle.Top + pbxBalle.Height > BOTTOM_BOX)
+            if (pbxBalle.Top < TOP_BOX || pbxBalle.Top + pbxBalle.Height > this.ClientSize.Height)
             {
                 //On change la direction de la balle
                 ball.y = -ball.y;
