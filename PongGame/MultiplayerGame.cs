@@ -37,11 +37,12 @@ namespace PongGame
         string strQuerySelectId = "Select @@Identity"; //Permettra de récupérer l'ID d'une partie lors de l'ajout dans la BDD
         Player[] tblPlayers = new Player[2] { new Player(), new Player() }; //Tableau de joueurs
         Ball ball = new Ball(5, 5); //Vitesse de la balle
-        
+
         #endregion
 
         #region Variables nécessaire au mode en ligne
 
+        bool bBallIsIn; //Utilisé pour voir sur quelle terrain est la balle
         string strAddressIP; //Adresse IPs des joueurs | [0] -> Server / [1] -> Client
         bool bEstClient; //Interface Client ou Serveur
         bool bStopServer=false; //Utilisé pour stopper le serveur
@@ -51,9 +52,18 @@ namespace PongGame
 
         #endregion
 
+        /// <summary>
+        /// Load du serveur
+        /// </summary>
+        /// <param name="bClient"></param>
+        /// <param name="adresseIPServeur"></param>
+        /// <param name="tblNames"></param>
+        /// <param name="tblID"></param>
         public MultiplayerGame(bool bClient, string adresseIPServeur, string[] tblNames, string[] tblID)
         {
             InitializeComponent();
+            //True car la balle est dans son camps
+            bBallIsIn = true;
             //Permettra de déterminer si le joueur est client ou serveur
             bEstClient = bClient;
             //Récupération de l'adresse IP du serveur
@@ -75,16 +85,24 @@ namespace PongGame
             //Ajout de la partie dans la base de donnée
             AddGamesInBDD(tblPlayers[0].Id, tblPlayers[1].Id);
 
-            lblWho.Text = tblNames[0];
+            lblNamePlayer.Text = tblNames[0];
             //Lancement du thread
             threadServer = new Thread(new ThreadStart(StartServer));
             threadServer.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
             threadServer.Start();
         }
 
+        /// <summary>
+        /// Load du client
+        /// </summary>
+        /// <param name="bClient"></param>
+        /// <param name="adresseIPServeur"></param>
+        /// <param name="strNameClient"></param>
         public MultiplayerGame(bool bClient, string adresseIPServeur, string strNameClient)
         {
             InitializeComponent();
+            //False car la balle n'est pas dans son camps
+            bBallIsIn = false;
             //Permettra de déterminer si le joueur est client ou serveur
             bEstClient = bClient;
             //Récupération de l'adresse IP du serveur
@@ -99,7 +117,7 @@ namespace PongGame
             pbxPlayer1.Left = this.ClientSize.Width - 30;
             pbxBalle.Left = -10;
 
-            lblWho.Text = strNameClient;
+            lblNamePlayer.Text = strNameClient;
             //Lancement du thread
             threadClient = new Thread(new ThreadStart(StartClient));
             threadClient.IsBackground = true; //Pour que lorsqu'on ferme l'application le thread ne continue pas de tourner
@@ -127,6 +145,25 @@ namespace PongGame
         #endregion
 
         /// <summary>
+        /// Affiche les différents scores des joueurs sur l'écran
+        /// </summary>
+        private void SetScoreOnScreen()
+        {
+            if (bEstClient)
+            {
+                lblPlayerScore.Text = "" + tblPlayers[1].Score; //Score du joueur client
+                lblSetPlayer.Text = "" + tblPlayers[1].WinSet; //Set gagné par le joueur client
+            }
+            else
+            {
+                lblPlayerScore.Text = "" + tblPlayers[0].Score; //Score du joueur serveur
+                lblSetPlayer.Text = "" + tblPlayers[0].WinSet; //Set gagné par le joueur serveur
+            }
+        }
+
+        #region Threads Server et Client
+
+        /// <summary>
         /// Fonction utilisé dans le thread de lancement du serveur
         /// </summary>
         private void StartServer()
@@ -149,6 +186,8 @@ namespace PongGame
                     //Envoie d'un message contenant la position en hauteur de la balle du client
                     server.Send(pbxBalle.Top.ToString());
 
+                    bBallIsIn = false;
+
                     /*ball.x = 5;
                    
                     pbxBalle.Invoke(new Action(() =>
@@ -166,7 +205,9 @@ namespace PongGame
                     {
                         pbxBalle.Top = iPos;
                         pbxBalle.Left = this.ClientSize.Width-3;
-                    }));                    
+                    }));
+
+                    bBallIsIn = true;
                 }
             }
 
@@ -182,7 +223,7 @@ namespace PongGame
                 else
                 {
                     //Affichage du message reçu du serveur
-                    //lblWho.Text = server.Receive().ToString();
+                    //lblNamePlayer.Text = server.Receive().ToString();
                 }
             }*/
 
@@ -218,6 +259,8 @@ namespace PongGame
                 pbxBalle.Left = 3;
             }));
 
+            bBallIsIn = true;
+
             //Tant qu'on arrête pas le jeux
             while (!bStopClient)
             {
@@ -226,6 +269,8 @@ namespace PongGame
                 {
                     //Envoie d'un message contenant la position en hauteur de la balle du client
                     client.Send(pbxBalle.Top.ToString());
+
+                    bBallIsIn = false;
 
                     #region Position de la balle pas que le client la voit quand elle n'est pas censé être sur son écran
 
@@ -253,8 +298,10 @@ namespace PongGame
                         pbxBalle.Top = iPos;
                         pbxBalle.Left = 3;
                     }));
-                    //}
 
+                    bBallIsIn = true;
+
+                    //}
                 }
             }
             //Fermeture de la connexion
@@ -263,6 +310,8 @@ namespace PongGame
             //Arrêt du thread
             threadClient.Abort();
         }
+
+        #endregion
 
         #region Touches de déplacement
 
@@ -327,7 +376,43 @@ namespace PongGame
             pbxBalle.Top -= ball.y; //axe Y
             pbxBalle.Left -= ball.x; //axe X
 
-            //AJOUT - Marquage de la balle
+            //Affichage des scores des joueurs
+            SetScoreOnScreen();
+
+            #region Marquage de la balle
+
+            if (bBallIsIn)
+            {
+                if (!bEstClient)
+                {
+                    // Si la balle est marqué à gauche
+                    if (pbxBalle.Left < -10)
+                    {
+                        //Reposition de la balle au milieu de l'écran
+                        pbxBalle.Left = 300;
+                        //Change la balle de direction
+                        ball.x = -ball.x;
+                        //+1 au score du joueur 2 (droite)
+                        tblPlayers[0].Score++;
+                    }
+                }
+                else
+                {
+                    if (pbxBalle.Left + pbxBalle.Width > this.ClientSize.Width)
+                    {
+                        //Reposition de la balle au milieu de l'écran
+                        pbxBalle.Left = 300;
+                        //Change la balle de direction
+                        ball.x = -ball.x;
+                        //+1 au score du joueur 2 (droite)
+                        tblPlayers[1].Score++;
+                    }
+
+                }
+            }
+            
+
+            #endregion
 
             #region Rebonds et Collision de la balle
 
@@ -395,6 +480,38 @@ namespace PongGame
             //AJOUT - Déplacement joueur 2 + le reste
 
 
+        }
+
+        #endregion
+
+        #region Compteur de début de jeu
+
+        /// <summary>
+        /// Compteur de début de jeu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tmrStart_Tick(object sender, EventArgs e)
+        {
+            if (iStartCount == 0)
+            {
+                tmrGameTimer.Start();
+                tmrStart.Stop();
+                lblStarTimer.Visible = false;
+
+                //Si la partie a été relancée
+                /*if (bRestartGame)
+                {
+                    bRestartGame = false;
+                    //Ajout de la partie dans la base de donnée
+                    AddGamesInBDD(tblPlayers[0].Id, tblPlayers[1].Id);
+                }*/
+            }
+            else
+            {
+                iStartCount--;
+                lblStarTimer.Text = iStartCount.ToString();
+            }
         }
 
         #endregion

@@ -96,7 +96,7 @@
             this.tbxSurnamePlayer.MaxLength = 10;
             this.tbxSurnamePlayer.Name = "tbxSurnamePlayer";
             this.tbxSurnamePlayer.Size = new System.Drawing.Size(195, 26);
-            this.tbxSurnamePlayer.TabIndex = 25;
+            this.tbxSurnamePlayer.TabIndex = 2;
             this.tbxSurnamePlayer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblNamePlayer
@@ -120,7 +120,7 @@
             this.tbxNamePlayer.MaxLength = 10;
             this.tbxNamePlayer.Name = "tbxNamePlayer";
             this.tbxNamePlayer.Size = new System.Drawing.Size(195, 26);
-            this.tbxNamePlayer.TabIndex = 23;
+            this.tbxNamePlayer.TabIndex = 1;
             this.tbxNamePlayer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblIpServer
@@ -194,7 +194,7 @@
             this.btnServer.Location = new System.Drawing.Point(116, 381);
             this.btnServer.Name = "btnServer";
             this.btnServer.Size = new System.Drawing.Size(143, 44);
-            this.btnServer.TabIndex = 40;
+            this.btnServer.TabIndex = 5;
             this.btnServer.Text = "JOUER";
             this.btnServer.UseVisualStyleBackColor = false;
             this.btnServer.Click += new System.EventHandler(this.btnServer_Click);
@@ -211,7 +211,7 @@
             this.btnClient.Location = new System.Drawing.Point(508, 381);
             this.btnClient.Name = "btnClient";
             this.btnClient.Size = new System.Drawing.Size(143, 44);
-            this.btnClient.TabIndex = 41;
+            this.btnClient.TabIndex = 6;
             this.btnClient.Text = "JOUER";
             this.btnClient.UseVisualStyleBackColor = false;
             this.btnClient.Click += new System.EventHandler(this.btnClient_Click);
@@ -226,7 +226,7 @@
             this.tbxIpClient.MaxLength = 0;
             this.tbxIpClient.Name = "tbxIpClient";
             this.tbxIpClient.Size = new System.Drawing.Size(249, 26);
-            this.tbxIpClient.TabIndex = 42;
+            this.tbxIpClient.TabIndex = 4;
             this.tbxIpClient.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tbxIPServer
@@ -239,7 +239,7 @@
             this.tbxIPServer.MaxLength = 0;
             this.tbxIPServer.Name = "tbxIPServer";
             this.tbxIPServer.Size = new System.Drawing.Size(249, 26);
-            this.tbxIPServer.TabIndex = 43;
+            this.tbxIPServer.TabIndex = 3;
             this.tbxIPServer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tmrCheck
