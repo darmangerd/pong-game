@@ -193,7 +193,7 @@
             this.lblStarTimer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblStarTimer.Font = new System.Drawing.Font("Segoe UI", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStarTimer.ForeColor = System.Drawing.Color.White;
-            this.lblStarTimer.Location = new System.Drawing.Point(483, 245);
+            this.lblStarTimer.Location = new System.Drawing.Point(484, 245);
             this.lblStarTimer.Name = "lblStarTimer";
             this.lblStarTimer.Size = new System.Drawing.Size(110, 128);
             this.lblStarTimer.TabIndex = 23;
@@ -225,9 +225,9 @@
             // pbxBalle
             // 
             this.pbxBalle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(68)))), ((int)(((byte)(125)))));
-            this.pbxBalle.Location = new System.Drawing.Point(516, 301);
+            this.pbxBalle.Location = new System.Drawing.Point(523, 301);
             this.pbxBalle.Name = "pbxBalle";
-            this.pbxBalle.Size = new System.Drawing.Size(33, 32);
+            this.pbxBalle.Size = new System.Drawing.Size(26, 23);
             this.pbxBalle.TabIndex = 9;
             this.pbxBalle.TabStop = false;
             // 

@@ -38,3 +38,6 @@ D:\pong-game\PongGame\obj\Debug\PongGame.csproj.GenerateResource.Cache
 D:\pong-game\PongGame\obj\Debug\PongGame.csproj.CoreCompileInputs.cache
 D:\pong-game\PongGame\obj\Debug\PongGame.exe
 D:\pong-game\PongGame\obj\Debug\PongGame.pdb
+D:\Darmangerd\pong-game\PongGame\bin\Debug\System.Runtime.WindowsRuntime.dll
+D:\Darmangerd\pong-game\PongGame\bin\Debug\System.Runtime.WindowsRuntime.xml
+D:\Darmangerd\pong-game\PongGame\obj\Debug\PongGame.csproj.CopyComplete

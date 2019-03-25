@@ -45,6 +45,11 @@ namespace PongGame
         /// </summary>
         public bool MoveDown { get; set; }
 
+        /// <summary>
+        /// Bool utilisé pour savoir si le joueur utilise une manette
+        /// </summary>
+        public bool HasGamePad { get; set; }
+
         #endregion
 
         #region Constructeur

@@ -53,8 +53,21 @@ namespace PongGame
 
                 //Lancement de la partie
                 this.Hide();
-                SoloGame solo = new SoloGame(tbxNamePlayer1.Text, tbxNamePlayer2.Text, tblId ,true);
-                solo.Show();
+                if (rbtnJ1.Checked)
+                {
+                    SoloGame solo = new SoloGame(tbxNamePlayer1.Text, tbxNamePlayer2.Text, tblId, true, 1);
+                    solo.Show();
+                }
+                else if (rbtnJ2.Checked)
+                {
+                    SoloGame solo = new SoloGame(tbxNamePlayer1.Text, tbxNamePlayer2.Text, tblId, true, 2);
+                    solo.Show();
+                }
+                else if (rbtnNo.Checked)
+                {
+                    SoloGame solo = new SoloGame(tbxNamePlayer1.Text, tbxNamePlayer2.Text, tblId, true, 0);
+                    solo.Show();
+                }
             }
         }
 

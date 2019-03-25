@@ -75,9 +75,17 @@ namespace PongGame
                 #endregion
 
                 //Commencement de partie
+                if (rbtnUseGamepad.Checked)
+                {
+                    SoloGame solo = new SoloGame(tbxName.Text, "IA", tblId, false, 1);
+                    solo.Show();
+                }
+                else if (rbtnDontUseGamepad.Checked)
+                {
+                    SoloGame solo = new SoloGame(tbxName.Text, "IA", tblId, false, 0);
+                    solo.Show();
+                }
                 this.Hide();
-                SoloGame solo = new SoloGame(tbxName.Text, "IA", tblId, false);
-                solo.Show();
             }
         }
 

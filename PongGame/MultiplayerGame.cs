@@ -115,8 +115,7 @@ namespace PongGame
                 (Screen.PrimaryScreen.WorkingArea.Height/2) - (this.Height/2));
             //Position du joueur et de la balle
             pbxPlayer1.Left = this.ClientSize.Width - 30;
-            pbxBalle.Left = -10;
-
+            pbxBalle.Left = -30;
             lblNamePlayer.Text = strNameClient;
             //Lancement du thread
             threadClient = new Thread(new ThreadStart(StartClient));
@@ -195,7 +194,22 @@ namespace PongGame
                         pbxBalle.Left = -15;
                     }));*/
 
-                    //On récupère la position en hauteur de l
+                    //On récupère la position en hauteur
+                    /*//Récupère le message du serveur qui est la position de la balle chez le serveur
+                    if (server.Receive().ToString() == "+1")
+                    {
+                        tblPlayers[0].Score++;
+                        lblPlayerScore.Invoke(new Action(() =>
+                        {
+                            lblPlayerScore.Text = "" + tblPlayers[0].Score; //Score du joueur client
+                        }));
+                        iPos = Convert.ToInt32(server.Receive());
+                    }
+                    else
+                    {
+                        iPos = Convert.ToInt32(server.Receive());
+                    }*/
+
                     iPos = Convert.ToInt32(server.Receive());
 
                     ball.x = 5; //Vitesse par défaut de la balle
@@ -209,9 +223,29 @@ namespace PongGame
 
                     bBallIsIn = true;
                 }
+                /* //Si la balle est marqué à gauche
+                else if(bBallIsIn)
+                {
+                    if (pbxBalle.Left < -10)
+                    {
+                        //Reposition de la balle au milieu de l'écran
+                        pbxBalle.Invoke(new Action(() =>
+                        {
+                            pbxBalle.Left = 300;
+                        }));
+                        //Change la balle de direction
+                        ball.x = -ball.x;
+                        //+1 au score du joueur 2 (droite)
+                        server.Send("+1");
+                    }
+                }
+                else if (server.Receive().ToString() == "+1")
+                {
+                    tblPlayers[0].Score++;
+                }*/
             }
 
-            //server.Send("Je te passe la ball");
+            //server.Send("Je te passe la balle");
 
             /*while (!bStopServer)
             {
@@ -246,7 +280,20 @@ namespace PongGame
             //Contiendra la position de la balle en hauteur (TOP)
             int iPos;
 
-            //Récupère le message du serveur qui est la position de la balle chez le serveur
+            /* //Récupère le message du serveur qui est la position de la balle chez le serveur
+            if (client.Receive().ToString() == "+1")
+            {
+                tblPlayers[1].Score++;
+                lblPlayerScore.Invoke(new Action(() =>
+                {
+                    lblPlayerScore.Text = "" + tblPlayers[1].Score; //Score du joueur client
+                }));
+            }
+            else
+            {
+                iPos = Convert.ToInt32(client.Receive());
+            }*/
+
             iPos = Convert.ToInt32(client.Receive());
 
             //Déplacement par défaut de la balle
@@ -286,7 +333,21 @@ namespace PongGame
                     /*if (Convert.ToInt32(client.Receive())!=iPos)
                     {*/
 
-                    //Récupère le message du serveur qui est la position de la balle chez le serveur
+                    /* //Récupère le message du serveur qui est la position de la balle chez le serveur
+                    if (client.Receive().ToString() == "+1")
+                    {
+                        tblPlayers[1].Score++;
+                        lblPlayerScore.Invoke(new Action(() =>
+                        {
+                            lblPlayerScore.Text = "" + tblPlayers[1].Score; //Score du joueur client
+                        }));
+                        iPos = Convert.ToInt32(client.Receive());
+                    }
+                    else
+                    {
+                        iPos = Convert.ToInt32(client.Receive());
+                    }*/
+
                     iPos = Convert.ToInt32(client.Receive());
 
                     //Déplacement par défaut de la balle
@@ -303,6 +364,25 @@ namespace PongGame
 
                     //}
                 }
+                /*else if (bBallIsIn)
+                {
+                    if (pbxBalle.Left + pbxBalle.Width > this.ClientSize.Width)
+                    {
+                        //Reposition de la balle au milieu de l'écran
+                        pbxBalle.Invoke(new Action(() =>
+                        {
+                            pbxBalle.Left = 300;
+                        }));
+                        //Change la balle de direction
+                        ball.x = -ball.x;
+                        //+1 au score du joueur 1 (gauche)
+                        client.Send("+1");
+                    }
+                }
+                else if (client.Receive().ToString()== "+1")
+                {
+                    tblPlayers[1].Score++;
+                }*/
             }
             //Fermeture de la connexion
             client.Close();

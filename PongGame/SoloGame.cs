@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Windows.Gaming.Input;
 
 namespace PongGame
 {
@@ -34,17 +35,24 @@ namespace PongGame
         int iStartCount = 3; //Compteur de comencement de la partie
         int iSet = 1; //Set actuel
         int iIdGame; //ID de la partie dans la base de donnée
+        int iGamepadPlayer; //Permet de définir quelle joueur a la manette
+
         string strQuerySelectId = "Select @@Identity"; //Permettra de récupérer l'ID d'une partie lors de l'ajout dans la BDD
         Ball ball = new Ball(5, 5); //Vitesse de la balle
         Random random = new Random(); //Variable pour déplacement aléatoire de L'IA
         Player[] tblPlayers = new Player[2] {new Player(), new Player() }; //Tableau de joueurs
+        Gamepad Controller; //Manette Xbox
 
         #endregion
 
 
-        public SoloGame(string strPlayer1_name, string strPlayer2_name, string[] tblID, bool bTwoPlayers)
+        public SoloGame(string strPlayer1_name, string strPlayer2_name, string[] tblID, bool bTwoPlayers, int iPlayerPad)
         {
             InitializeComponent();
+            Gamepad.GamepadAdded += Gamepad_GamepadAdded;
+            Gamepad.GamepadRemoved += Gamepad_GamepadRemoved;
+            iGamepadPlayer = iPlayerPad;
+
             tblPlayers[0].Name = strPlayer1_name; //Nom du joueur 1 entré dans le lobby
             tblPlayers[1].Name = strPlayer2_name; //Nom du joueur 2 entré dans le lobby ou de l'IA
             bTwoPlayer = bTwoPlayers; //2 Joueur ou 1 joueur contre 1 IA
@@ -59,6 +67,31 @@ namespace PongGame
 
             //Ajout de la partie dans la base de donnée
             AddGamesInBDD(tblPlayers[0].Id, tblPlayers[1].Id);
+        }
+
+        //Lors de l'enlevement de la manette
+        private void Gamepad_GamepadRemoved(object sender, Gamepad e)
+        {
+            for (int i=0; i<=1; i++)
+            {
+                tblPlayers[i].HasGamePad = false;
+            }
+        }
+
+        //Lors de l'ajout de la manette
+        private void Gamepad_GamepadAdded(object sender, Gamepad e)
+        {
+            //Manette
+            switch (iGamepadPlayer)
+            {
+                case 1:
+                    tblPlayers[0].HasGamePad = true;
+                    break;
+
+                case 2:
+                    tblPlayers[1].HasGamePad = true;
+                    break;
+            }
         }
 
         private void AddGamesInBDD(int IDJoueur1, int IDJoueur2)
@@ -206,6 +239,31 @@ namespace PongGame
             KeyMove(tblPlayers, false, e);
         }
 
+        private void GamePadMove(PictureBox pbx)
+        {
+            //On prend la première (dans le cas de 2 manettes branchées)
+            Controller = Gamepad.Gamepads.First();
+            var Reading = Controller.GetCurrentReading();
+            switch (Reading.Buttons)
+            {
+                case GamepadButtons.Y:
+                    if (pbx.Top > TOP_BOX)
+                    {
+                        //Déplacement vers le haut
+                        pbx.Top -= 8;
+                    }
+                    break;
+
+                case GamepadButtons.A:
+                    if (pbx.Top < 452)
+                    {
+                        //Déplacement vers le bas
+                        pbx.Top += 8;
+                    }
+                    break;
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -321,16 +379,34 @@ namespace PongGame
 
             #endregion
 
-            #region Déplacement du joueur 1
+            #region Déplacement manette
+
+            //S'il y a une manette branché
+            if (Gamepad.Gamepads.Count > 0)
+            {
+                if (tblPlayers[0].HasGamePad)
+                {
+                    GamePadMove(pbxPlayer1);
+                }
+                else if (tblPlayers[1].HasGamePad)
+                {
+                    GamePadMove(pbxPlayer2);
+                }
+            }
+
+            #endregion
+
+            #region Déplacement du joueur 1            
+
             //OPTIMISATION - FAIRE UNE FONCTION
             //Si le déplacement vers le haut est autorisé et que le joueur se trouve avant la limite supérieure
-            if (tblPlayers[0].MoveUp == true && pbxPlayer1.Top > TOP_BOX)
+            if (tblPlayers[0].MoveUp == true && pbxPlayer1.Top > TOP_BOX && !tblPlayers[0].HasGamePad)
             {
                 //Déplacement vers le haut
                 pbxPlayer1.Top -= 8;
             }
             //Si le déplacement vers le bas est autorisé et que le joueur se trouve avant la limite inférieure
-            if (tblPlayers[0].MoveDown == true && pbxPlayer1.Top < 452)
+            if (tblPlayers[0].MoveDown == true && pbxPlayer1.Top < 452 && !tblPlayers[0].HasGamePad)
             {
                 //Déplacement vers le bas
                 pbxPlayer1.Top += 8;
@@ -343,13 +419,13 @@ namespace PongGame
             if (bTwoPlayer)
             {
                 //Si le déplacement vers le bas est autorisé et que le joueur se trouve avant la limite supérieure
-                if (tblPlayers[1].MoveUp == true && pbxPlayer2.Top > TOP_BOX)
+                if (tblPlayers[1].MoveUp == true && pbxPlayer2.Top > TOP_BOX && !tblPlayers[1].HasGamePad)
                 {
                     //Déplacement vers le haut
                     pbxPlayer2.Top -= 8;
                 }
                 //Si le déplacement vers le bas est autorisé et que le joueur se trouve avant la limite inférieure
-                if (tblPlayers[1].MoveDown == true && pbxPlayer2.Top < 452)
+                if (tblPlayers[1].MoveDown == true && pbxPlayer2.Top < 452 && !tblPlayers[1].HasGamePad)
                 {
                     //Déplacement vers le bas
                     pbxPlayer2.Top += 8;
