@@ -100,7 +100,7 @@
             // 
             // tmrGameTimer
             // 
-            this.tmrGameTimer.Interval = 16;
+            this.tmrGameTimer.Interval = 1;
             this.tmrGameTimer.Tick += new System.EventHandler(this.tmrGameTimer_Tick);
             // 
             // pictureBox1

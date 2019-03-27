@@ -29,9 +29,9 @@ namespace PongGame
 
         #region Déclaration des variables pour les règles du jeux
 
-        bool bRestartGame = false; //Utilisé pour vérifier si on recommence une partie
+        bool bClientConnected = false;
         int iPoints = POINTS; //Nombre de points par set
-        int iStartCount = 3; //Compteur de comencement de la partie
+        int iStartCount = 4; //Compteur de comencement de la partie
         int iSet = 1; //Set actuel
         int iIdGame; //ID de la partie dans la base de donnée
         string strQuerySelectId = "Select @@Identity"; //Permettra de récupérer l'ID d'une partie lors de l'ajout dans la BDD
@@ -277,22 +277,11 @@ namespace PongGame
             //Connexion au serveur
             client.ConnectInGame();
 
+            //Client est connecté
+            bClientConnected = true;
+
             //Contiendra la position de la balle en hauteur (TOP)
             int iPos;
-
-            /* //Récupère le message du serveur qui est la position de la balle chez le serveur
-            if (client.Receive().ToString() == "+1")
-            {
-                tblPlayers[1].Score++;
-                lblPlayerScore.Invoke(new Action(() =>
-                {
-                    lblPlayerScore.Text = "" + tblPlayers[1].Score; //Score du joueur client
-                }));
-            }
-            else
-            {
-                iPos = Convert.ToInt32(client.Receive());
-            }*/
 
             iPos = Convert.ToInt32(client.Receive());
 
@@ -330,24 +319,6 @@ namespace PongGame
 
                     #endregion
 
-                    /*if (Convert.ToInt32(client.Receive())!=iPos)
-                    {*/
-
-                    /* //Récupère le message du serveur qui est la position de la balle chez le serveur
-                    if (client.Receive().ToString() == "+1")
-                    {
-                        tblPlayers[1].Score++;
-                        lblPlayerScore.Invoke(new Action(() =>
-                        {
-                            lblPlayerScore.Text = "" + tblPlayers[1].Score; //Score du joueur client
-                        }));
-                        iPos = Convert.ToInt32(client.Receive());
-                    }
-                    else
-                    {
-                        iPos = Convert.ToInt32(client.Receive());
-                    }*/
-
                     iPos = Convert.ToInt32(client.Receive());
 
                     //Déplacement par défaut de la balle
@@ -359,30 +330,8 @@ namespace PongGame
                         pbxBalle.Top = iPos;
                         pbxBalle.Left = 3;
                     }));
-
                     bBallIsIn = true;
-
-                    //}
                 }
-                /*else if (bBallIsIn)
-                {
-                    if (pbxBalle.Left + pbxBalle.Width > this.ClientSize.Width)
-                    {
-                        //Reposition de la balle au milieu de l'écran
-                        pbxBalle.Invoke(new Action(() =>
-                        {
-                            pbxBalle.Left = 300;
-                        }));
-                        //Change la balle de direction
-                        ball.x = -ball.x;
-                        //+1 au score du joueur 1 (gauche)
-                        client.Send("+1");
-                    }
-                }
-                else if (client.Receive().ToString()== "+1")
-                {
-                    tblPlayers[1].Score++;
-                }*/
             }
             //Fermeture de la connexion
             client.Close();
@@ -528,15 +477,6 @@ namespace PongGame
                 }
 
             }
-            /*else if (pbxBalle.Bounds.IntersectsWith(pbxPlayer2.Bounds))
-            {
-                //Problème de collision
-                pbxBalle.Left -= 4;
-                //On change la direction de la balle
-                ball.x = -ball.x;
-                /*Augmente la vitesse de la balle
-               ball.x += 1;*/
-            //} 
 
             #endregion
 
@@ -557,14 +497,29 @@ namespace PongGame
 
             #endregion
 
-            //AJOUT - Déplacement joueur 2 + le reste
-
-
         }
 
         #endregion
 
         #region Compteur de début de jeu
+
+        /// <summary>
+        /// Décompte en début de jeu/set
+        /// </summary>
+        private void StartCountdown()
+        {
+            if (iStartCount == 0)
+            {
+                tmrGameTimer.Start();
+                tmrStart.Stop();
+                lblStarTimer.Visible = false;
+            }
+            else
+            {
+                iStartCount--;
+                lblStarTimer.Text = iStartCount.ToString();
+            }
+        }
 
         /// <summary>
         /// Compteur de début de jeu
@@ -573,24 +528,16 @@ namespace PongGame
         /// <param name="e"></param>
         private void tmrStart_Tick(object sender, EventArgs e)
         {
-            if (iStartCount == 0)
+            if(bEstClient)
             {
-                tmrGameTimer.Start();
-                tmrStart.Stop();
-                lblStarTimer.Visible = false;
-
-                //Si la partie a été relancée
-                /*if (bRestartGame)
+                if(bClientConnected)
                 {
-                    bRestartGame = false;
-                    //Ajout de la partie dans la base de donnée
-                    AddGamesInBDD(tblPlayers[0].Id, tblPlayers[1].Id);
-                }*/
+                    StartCountdown();
+                }
             }
             else
             {
-                iStartCount--;
-                lblStarTimer.Text = iStartCount.ToString();
+                StartCountdown();
             }
         }
 

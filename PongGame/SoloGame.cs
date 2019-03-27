@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Windows.Gaming.Input;
 
@@ -27,7 +22,8 @@ namespace PongGame
         #endregion
 
         #region Déclaration des variables
-
+        //bool bParabolic = true;
+        //int TimerCounter = 0;
         bool bTwoPlayer; //Si la partie est en mode 2 joueur (utilisateur contre utilisateur)
         bool bRestartGame = false; //Utilisé pour vérifier si on recommence une partie
         int iPoints = POINTS; //Nombre de points par set
@@ -281,6 +277,38 @@ namespace PongGame
             // += augmente la vitesse de la balle vers la droite et le bas de l'écran
             pbxBalle.Top -= ball.y; //axe Y
             pbxBalle.Left -= ball.x; //axe X
+
+            #region Test pour mouvement parabolique
+
+            /*
+            TimerCounter++;
+            if (TimerCounter <= 10)
+                pbxBalle.Location = new Point(pbxBalle.Location.X - 4, pbxBalle.Location.Y - 6);
+            else if (TimerCounter > 10 && TimerCounter <= 15)
+                pbxBalle.Location = new Point(pbxBalle.Location.X - 6, pbxBalle.Location.Y - 4);
+            else if (TimerCounter > 15 && TimerCounter <= 20)
+                pbxBalle.Location = new Point(pbxBalle.Location.X - 8, pbxBalle.Location.Y + 4);
+            else if (TimerCounter > 20 && TimerCounter <= 30)
+                pbxBalle.Location = new Point(pbxBalle.Location.X - 8, pbxBalle.Location.Y + 6);
+            else
+            {
+                TimerCounter = 0;
+                bParabolic = false;
+            }
+            
+            if (!bParabolic)
+            {
+                pbxBalle.Top -= ball.y; //axe Y
+                pbxBalle.Left -= ball.x; //axe X
+            }
+                        
+            for (int i=-10; i>=10; i+=2)
+            {
+                pbxBalle.Left += i;
+                pbxBalle.Top += Convert.ToInt32(Math.Sqrt(4.00 * 2 * pbxBalle.Left));
+            }*/
+
+            #endregion
 
             #region IA
 
